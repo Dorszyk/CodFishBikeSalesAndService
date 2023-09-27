@@ -43,7 +43,7 @@ public class InvoiceEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bike_to_buy_id")
-    private BikeToBuyEntity car;
+    private BikeToBuyEntity bike;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
