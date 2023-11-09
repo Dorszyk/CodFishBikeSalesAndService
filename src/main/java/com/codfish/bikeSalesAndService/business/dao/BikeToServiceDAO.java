@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BikeToServiceDAO {
 
-    Optional<BikeToBuy> findBikeToServiceBySerial(String bikeSerial);
+    Optional<BikeToService> findBikeToServiceBySerial(String bikeSerial);
 
     BikeToService saveBikeToService(BikeToService bike);
 
