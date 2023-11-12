@@ -68,4 +68,8 @@ public class CustomerRepository implements CustomerDAO {
         CustomerEntity saved = customerJpaRepository.save(toSave);
         return customerEntityMapper.mapFromEntity(saved);
     }
+    @Override
+    public boolean existsByEmail(String email) {
+        return customerJpaRepository.existsByEmail(email);
+    }
 }

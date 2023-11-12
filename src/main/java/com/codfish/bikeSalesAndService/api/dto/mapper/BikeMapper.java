@@ -6,11 +6,13 @@ import com.codfish.bikeSalesAndService.api.dto.BikeToServiceDTO;
 import com.codfish.bikeSalesAndService.domain.BikeHistory;
 import com.codfish.bikeSalesAndService.domain.BikeToBuy;
 import com.codfish.bikeSalesAndService.domain.BikeToService;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
 
+@Mapper(componentModel = "spring")
 public interface BikeMapper extends OffsetDateTimeMapper {
 
     BikeToBuyDTO map(final BikeToBuy bike);

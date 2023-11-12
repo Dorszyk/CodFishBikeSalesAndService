@@ -14,4 +14,5 @@ public interface CustomerDAO {
 
     Customer saveCustomer(Customer customer);
 
+    boolean existsByEmail(String customerEmail);
 }

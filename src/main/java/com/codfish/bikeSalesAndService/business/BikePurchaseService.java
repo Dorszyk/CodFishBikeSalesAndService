@@ -1,6 +1,8 @@
 package com.codfish.bikeSalesAndService.business;
 
+import com.codfish.bikeSalesAndService.business.dao.CustomerDAO;
 import com.codfish.bikeSalesAndService.domain.*;
+import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +20,8 @@ public class BikePurchaseService {
     private final BikeService bikeService;
     private final SalesmanService salesmanService;
     private final CustomerService customerService;
+    private final CustomerDAO customerDAO;
+    private final ConcurrentHashMap<String, Integer> dailySequenceNumbers = new ConcurrentHashMap<>();
 
     public List<BikeToBuy> availableBikes() {
         return bikeService.findAvailableBike();
@@ -29,9 +33,17 @@ public class BikePurchaseService {
 
     @Transactional
     public Invoice purchase(final BikePurchaseRequest request) {
-        return existingCustomerEmailExists(request.getExistingCustomerEmail())
-                ? processNextTimeToBuYCustomer(request)
-                : processFirstTimeToBuyCustomer(request);
+        if (!existingCustomerEmailExists(request.getExistingCustomerEmail())) {
+            boolean customerExists = customerDAO.existsByEmail(request.getCustomerEmail());
+            if (customerExists) {
+                throw new NotFoundException("A customer with this email already exists.");
+            } else {
+                return processFirstTimeToBuyCustomer(request);
+            }
+        } else {
+            return processNextTimeToBuyCustomer(request);
+
+        }
     }
 
     private boolean existingCustomerEmailExists(String email) {
@@ -48,7 +60,7 @@ public class BikePurchaseService {
         return invoice;
     }
 
-    private Invoice processNextTimeToBuYCustomer(BikePurchaseRequest request) {
+    private Invoice processNextTimeToBuyCustomer(BikePurchaseRequest request) {
         Customer existingCustomer = customerService.findCustomer(request.getExistingCustomerEmail());
         BikeToBuy bike = bikeService.findBikeToBuy(request.getBikeSerial());
         Salesman salesman = salesmanService.findSalesman(request.getSalesmanCodeNameSurname());
@@ -80,10 +92,23 @@ public class BikePurchaseService {
 
     private Invoice buildInvoice(BikeToBuy bike, Salesman salesman) {
         return Invoice.builder()
-                .invoiceNumber(UUID.randomUUID().toString())
+                .invoiceNumber(generateInvoiceNumber(OffsetDateTime.now()))
                 .dateTime(OffsetDateTime.now())
                 .bike(bike)
                 .salesman(salesman)
                 .build();
+    }
+
+    public String generateInvoiceNumber(OffsetDateTime when) {
+        String dateKey = when.toLocalDate().toString().replace("-", "");
+        Integer sequenceNumber = dailySequenceNumbers.compute(dateKey, (key, currentValue) -> {
+            if (currentValue == null) {
+                return 1;
+            } else {
+                return currentValue + 1;
+            }
+        });
+
+        return String.format("%s%03d", dateKey, sequenceNumber);
     }
 }
