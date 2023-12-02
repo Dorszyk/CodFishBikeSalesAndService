@@ -29,14 +29,14 @@ public class SalesmanController {
         var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
                 .map(salesmanMapper::map)
                 .toList();
-        var availableMechanics = bikeServiceRequestService.availablePersonRepairing().stream()
+        var availablePersonRepairing = bikeServiceRequestService.availablePersonRepairing().stream()
                 .map(personRepairingMapper::map)
                 .toList();
 
         model.addAttribute("availableBikeDTOs", availableBikes);
         model.addAttribute("availableSalesmenDTOs", availableSalesmen);
-        model.addAttribute("availablePersonRepairingDTOs", availableMechanics);
+        model.addAttribute("availablePersonRepairingDTOs", availablePersonRepairing);
 
-        return "salesmen_portal";
+        return "salesman_portal";
     }
 }

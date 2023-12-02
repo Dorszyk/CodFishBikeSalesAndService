@@ -20,7 +20,6 @@ public class BikeHistoryController {
     private static final String BIKE_HISTORY = "/bike/history";
 
     private final BikeService bikeService;
-
     private final BikeMapper bikeMapper;
 
     @GetMapping(value = BIKE_HISTORY)
@@ -28,11 +27,11 @@ public class BikeHistoryController {
             @RequestParam(value = "bikeSerial", required = false) String bikeSerial,
             Model model
     ) {
-        var allBikes = bikeService.findAllBikesWithHistory().stream().map(bikeMapper::map).toList();
-        var allBikeSerial = allBikes.stream().map(BikeToServiceDTO::getBikeSerial).toList();
+        var allBike = bikeService.findAllBikesWithHistory().stream().map(bikeMapper::map).toList();
+        var allBikeSerials = allBike.stream().map(BikeToServiceDTO::getSerial).toList();
 
-        model.addAttribute("allBikeDTOs", allBikes);
-        model.addAttribute("allBikeSerial", allBikeSerial);
+        model.addAttribute("allBikeDTOs", allBike);
+        model.addAttribute("allBikeSerials", allBikeSerials);
 
         if (Objects.nonNull(bikeSerial)) {
             BikeHistory bikeHistory = bikeService.findBikeHistoryBySerial(bikeSerial);

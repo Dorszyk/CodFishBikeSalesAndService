@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BikeServiceRequestDTO {
 
-    private String carServiceRequestNumber;
+    private String bikeServiceRequestNumber;
     private String receivedDateTime;
     private String completedDateTime;
     private String customerComment;
     private String bikeSerial;
 }
+

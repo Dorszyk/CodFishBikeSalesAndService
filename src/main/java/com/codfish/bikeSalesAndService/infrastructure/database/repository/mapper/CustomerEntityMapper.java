@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,18 +25,28 @@ public interface CustomerEntityMapper {
 
     @Named("mapInvoices")
     default Set<Invoice> mapInvoices(Set<InvoiceEntity> invoiceEntities) {
-        return invoiceEntities.stream().map(this::mapFromEntity).collect(Collectors.toSet());
+        if (invoiceEntities != null) {
+            return invoiceEntities.stream()
+                    .map(this::mapFromEntity)
+                    .collect(Collectors.toSet());
+        } else {
+            return new HashSet<>();
+        }
     }
 
     @Named("mapBikeServiceRequests")
     default Set<BikeServiceRequest> mapBikeServiceRequests(Set<BikeServiceRequestEntity> entities) {
-        return entities.stream().map(this::mapFromEntity).collect(Collectors.toSet());
+        if (entities != null) {
+            return entities.stream().map(this::mapFromEntity).collect(Collectors.toSet());
+        } else {
+            return new HashSet<>();
+        }
     }
 
     @Mapping(target = "bike", ignore = true)
     @Mapping(target = "customer", ignore = true)
     @Mapping(target = "servicePersons", ignore = true)
-    @Mapping(target = "serviceParts", ignore = true)
+    @Mapping(target = "servicePart", ignore = true)
     BikeServiceRequest mapFromEntity(BikeServiceRequestEntity entity);
 
     @Mapping(target = "bike", ignore = true)

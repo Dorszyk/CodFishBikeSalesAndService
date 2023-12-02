@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BikeToServiceDTO {
 
-    private String bikeSerial;
+    private String serial;
     private String brand;
     private String model;
     private Integer year;

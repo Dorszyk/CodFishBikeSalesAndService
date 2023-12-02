@@ -32,23 +32,22 @@ public class PurchaseController {
     @GetMapping(value = PURCHASE)
     public ModelAndView bikePurchasePage() {
         Map<String, ?> model = prepareBikePurchaseData();
-        return new ModelAndView("bike_purchase, model");
+        return new ModelAndView("bike_purchase", model);
     }
-
     private Map<String, ?> prepareBikePurchaseData() {
         var availableBike = bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
                 .toList();
-        var availableBikeSerial = availableBike.stream()
-                .map(BikeToBuyDTO::getBikeSerial)
+        var availableBikeSerials = availableBike.stream()
+                .map(BikeToBuyDTO::getSerial)
                 .toList();
-        var availableSalesmanCodeNameSurname = bikePurchaseService.availableSalesmen().stream()
+        var availableSalesmanCodeNameSurnames = bikePurchaseService.availableSalesmen().stream()
                 .map(Salesman::getCodeNameSurname)
                 .toList();
         return Map.of(
                 "availableBikeDTOs", availableBike,
-                "availableBikeSerial", availableBikeSerial,
-                "availableSalesmanCodeNameSurname", availableSalesmanCodeNameSurname,
+                "availableBikeSerials", availableBikeSerials,
+                "availableSalesmanCodeNameSurnames", availableSalesmanCodeNameSurnames,
                 "bikePurchaseDTO", BikePurchaseDTO.buildDefaultData()
         );
     }

@@ -42,24 +42,24 @@ public class PersonRepairingController {
     @GetMapping(value = PERSON_REPAIRING)
     public ModelAndView personRepairingCheckPage() {
         Map<String, ?> data = prepareNecessaryData();
-        return new ModelAndView("personRepairing_service", data);
+        return new ModelAndView("person_repairing_service", data);
     }
 
     private Map<String, ?> prepareNecessaryData() {
         var availableServiceRequests = getAvailableServiceRequests();
-        var availableBikeSerial = availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
+        var availableBikeSerials = availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
         var availablePersonRepairing = getAvailablePersonRepairing();
-        var availablePersonRepairingCodeNameSurname = availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
+        var availablePersonRepairingCodeNameSurnames = availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
         var parts = findParts();
         var services = findServices();
         var partSerialNumbers = preparePartSerialNumbers(parts);
         var serviceCodes = services.stream().map(ServiceDTO::getServiceCode).toList();
 
         return Map.of(
-                "availableServiceRequestsDTOs", availableServiceRequests,
-                "availableBikeSerial", availableBikeSerial,
+                "availableServiceRequestDTOs", availableServiceRequests,
+                "availableBikeSerials", availableBikeSerials,
                 "availablePersonRepairingDTOs", availablePersonRepairing,
-                "availablePersonRepairingCodeNameSurname", availablePersonRepairingCodeNameSurname,
+                "availablePersonRepairingCodeNameSurnames", availablePersonRepairingCodeNameSurnames,
                 "partDTOs", parts,
                 "partSerialNumbers", partSerialNumbers,
                 "serviceDTOs", services,
@@ -75,7 +75,7 @@ public class PersonRepairingController {
         BikeServiceProcessingRequest request =  bikeServiceRequestMapper.map(dto);
         bikeServiceProcessingService.process(request);
         if(dto.getDone()){
-            return "personRepairing_service_done";
+            return "person_repairing_service_done";
         }else {
             modelMap.addAllAttributes(prepareNecessaryData());
             return "redirect:/personRepairing";

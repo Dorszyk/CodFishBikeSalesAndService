@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BikeServicePersonProcessingUnitDTO {
 
-    private String codeNameSurname;
+    private String personRepairingCodeNameSurname;
     private String bikeSerial;
     private String partSerialNumber;
     private Integer partQuantity;

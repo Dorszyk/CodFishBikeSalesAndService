@@ -29,7 +29,7 @@ public class BikeServiceProcessingService {
 
         ServicePerson servicePerson = buildServicePerson(request, personRepairing, serviceRequest, service);
 
-        if (request.getDone()) {
+        if (request.getDone()!= null && request.getDone().booleanValue()) {
             serviceRequest = serviceRequest.withCompletedDateTime(OffsetDateTime.now());
         }
 

@@ -57,8 +57,8 @@ public class BikeServiceRequestEntity {
     private BikeToServiceEntity bike;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bikeServiceRequest")
-    private Set<ServicePersonEntity> servicePersons;
+    private Set<ServicePersonEntity> servicePerson;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bikeServiceRequest")
-    private Set<ServicePartEntity> serviceParts;
+    private Set<ServicePartEntity> servicePart;
 }

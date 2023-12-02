@@ -14,7 +14,7 @@ public interface BikeServiceRequestEntityMapper {
     @Mapping(target = "customer", ignore = true)
     @Mapping(target = "bike", ignore = true)
     @Mapping(target = "servicePersons", ignore = true)
-    @Mapping(target = "serviceParts", ignore = true)
+    @Mapping(target = "servicePart", ignore = true)
     BikeServiceRequest mapFromEntity(BikeServiceRequestEntity entity);
 
     default BikeServiceRequest mapFromEntityWithBike(BikeServiceRequestEntity entity) {

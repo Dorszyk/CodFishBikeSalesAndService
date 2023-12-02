@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PartEntityMapper {
 
-    @Mapping(target = "serviceParts",ignore = true)
+    @Mapping(target = "servicePart",ignore = true)
     Part mapFromEntity(PartEntity entity);
 
 }

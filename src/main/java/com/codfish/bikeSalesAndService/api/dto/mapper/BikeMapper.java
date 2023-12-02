@@ -22,6 +22,7 @@ public interface BikeMapper extends OffsetDateTimeMapper {
     @Mapping(source = "bikeServiceRequests", target = "bikeServiceRequests", qualifiedByName = "mapServiceRequests")
     BikeHistoryDTO map(BikeHistory bikeHistory);
 
+    @SuppressWarnings("unused")
     @Named("mapServiceRequests")
     default List<BikeHistoryDTO.ServiceRequestDTO> mapServiceRequests(
             List<BikeHistory.BikeServiceRequest> requests

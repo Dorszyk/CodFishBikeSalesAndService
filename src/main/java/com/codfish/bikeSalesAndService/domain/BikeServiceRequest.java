@@ -25,5 +25,5 @@ public class BikeServiceRequest {
     Customer customer;
     BikeToService bike;
     Set<ServicePerson> servicePersons;
-    Set<ServicePart> serviceParts;
+    Set<ServicePart> servicePart;
 }
