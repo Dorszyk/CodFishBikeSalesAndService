@@ -1,7 +1,7 @@
 CREATE TABLE bike_service_request
 (
     bike_service_request_id     SERIAL                   NOT NULL,
-    bike_service_request_number VARCHAR(32)              NOT NULL,
+    bike_service_request_number VARCHAR(64)              NOT NULL,
     received_date_time          TIMESTAMP WITH TIME ZONE NOT NULL,
     completed_date_time         TIMESTAMP WITH TIME ZONE,
     customer_comment            TEXT,

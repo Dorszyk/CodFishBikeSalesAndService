@@ -5,7 +5,7 @@ CREATE TABLE bike_to_buy
     subcategory     VARCHAR(32)    NOT NULL,
     serial          VARCHAR(32)    NOT NULL,
     brand           VARCHAR(32)    NOT NULL,
-    model           VARCHAR(96)    NOT NULL,
+    model           VARCHAR(128)   NOT NULL,
     production_year SMALLINT       NOT NULL,
     color           VARCHAR(32),
     price           NUMERIC(19, 2) NOT NULL,
