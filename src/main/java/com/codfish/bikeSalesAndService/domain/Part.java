@@ -13,7 +13,7 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "serialNumber")
-@ToString(of = {})
+@ToString(of = {"partId", "serialNumber", "description", "price"})
 public class Part {
 
     public static final String NONE = "NONE";
@@ -21,5 +21,5 @@ public class Part {
     String serialNumber;
     String description;
     BigDecimal price;
-    Set<ServicePart> serviceParts;
+    Set<ServicePart> servicePart;
 }

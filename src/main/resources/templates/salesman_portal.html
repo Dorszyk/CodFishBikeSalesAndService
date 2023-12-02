@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>CodFish Bike&Service</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>CodFish Bike&Service</h1>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/purchase}" class="btn btn-success" role="button">Buy a bike</a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/service/new}" class="btn btn-success" role="button">Service a bike</a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/bike/history}" class="btn btn-success" role="button">Bike history</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back</a>
+        </div>
+    </div>
+    <br>
+    <h4><p>Available bikes!</p></h4>
+
+    <div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Serial</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bike : ${availableBikeDTOs}">
+                <td th:text="${bike.serial}"></td>
+                <td th:text="${bike.brand}"></td>
+                <td th:text="${bike.model}"></td>
+                <td th:text="${bike.year}"></td>
+                <td th:text="${bike.color}"></td>
+                <td th:text="${bike.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <h4><p>Available salesmen:</p></h4>
+    <div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Code NameSurname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="salesman : ${availableSalesmenDTOs}">
+                <td th:text="${salesman.name}"></td>
+                <td th:text="${salesman.surname}"></td>
+                <td th:text="${salesman.codeNameSurname}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+   <h4><p>Available person repairing:</p></h4>
+    <div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Code NameSurname</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="personRepairing : ${availablePersonRepairingDTOs}">
+                <td th:text="${personRepairing.name}"></td>
+                <td th:text="${personRepairing.surname}"></td>
+                <td th:text="${personRepairing.codeNameSurname}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,8 +1,0 @@
-server:
-  port: 8190
-  servlet:
-    context-path: /codfish-bike
-
-spring:
-  security:
-    enabled:false
