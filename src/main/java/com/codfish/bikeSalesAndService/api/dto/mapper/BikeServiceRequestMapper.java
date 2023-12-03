@@ -43,6 +43,7 @@ public interface BikeServiceRequestMapper extends OffsetDateTimeMapper {
                     .bike(BikeToService.builder()
                             .serial(dto.getExistingBikeSerial())
                             .build())
+                    .customerComment(dto.getCustomerComment())
                     .build();
         }
     }
