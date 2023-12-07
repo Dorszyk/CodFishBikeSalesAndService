@@ -7,41 +7,147 @@
           rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
           crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+
     <title>CodFish Bike&Service</title>
+    <style>
+        .centered-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        #pagination-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border-radius: 10px;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 
 <body>
 <div class="container">
-    <h1>CodFish Bike&Service</h1>
-</div>
+    <h1 class="centered-title">CodFish Bike&Service</h1>
 
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <a th:href="@{/purchase}" class="btn btn-success" role="button">Buy a bike</a>
-        </div>
-        <div class="col-md-4">
-            <a th:href="@{/service/new}" class="btn btn-success" role="button">Service a bike</a>
-        </div>
-        <div class="col-md-4">
-            <a th:href="@{/bike/history}" class="btn btn-success" role="button">Bike history</a>
+    <div class="row">
+        <div class="col-12">
+            <div class="button-row">
+                <a th:href="@{/purchase}" class="btn btn-success" role="button"><i class="fas fa-bicycle"></i> Buy a
+                    bike</a>
+                <a th:href="@{/service/new}" class="btn btn-success" role="button"><i class="fas fa-tools"></i> Service
+                    a bike</a>
+                <a th:href="@{/bike/history}" class="btn btn-success" role="button"><i class="fas fa-history"></i> Bike
+                    history</a>
+                <a th:href="@{/}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+            </div>
+            <br>
         </div>
     </div>
 </div>
-
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <a th:href="@{/}" class="btn btn-info" role="button">Go back</a>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add a bike</h4>
+            <form action="#" th:action="@{/add_bike}" th:object="${availableBikeDTOs}" method="POST">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category" name="category" required>
+                </div>
+                <div class="form-group">
+                    <label for="subcategory">Subcategory</label>
+                    <input type="text" class="form-control" id="subcategory" name="subcategory" required>
+                </div>
+                <div class="form-group">
+                    <label for="serial">Serial</label>
+                    <input type="text" class="form-control" id="serial" name="serial" required>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" class="form-control" id="brand" name="brand" required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input type="text" class="form-control" id="model" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <input type="text" class="form-control" id="color" name="color" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Add Bike</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Update a bike</h4>
+            <form action="#" th:action="@{/update_bike}" th:object="${availableBikeDTOs}" method="PUT">
+                <div class="form-group">
+                    <label for="serial">Serial of Bike to Update</label>
+                    <input type="text" class="form-control" id="serial" name="serial" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category" name="category" required>
+                </div>
+                <div class="form-group">
+                    <label for="subcategory">Subcategory</label>
+                    <input type="text" class="form-control" id="subcategory" name="subcategory" required>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" class="form-control" id="brand" name="brand" required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input type="text" class="form-control" id="model" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <input type="text" class="form-control" id="color" name="color" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">Update Bike</button>
+            </form>
         </div>
     </div>
+</div>
+<div class="container">
     <br>
-    <h4><p>Available bikes!</p></h4>
-
+    <h4><p>Available bikes:</p></h4>
     <div>
-        <table class="table">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+        <table class="table" id="bikes-table">
             <thead class="table-dark">
             <tr>
+                <th>Category</th>
+                <th>Subcategory</th>
                 <th>Serial</th>
                 <th>Brand</th>
                 <th>Model</th>
@@ -52,6 +158,8 @@
             </thead>
             <tbody>
             <tr th:each="bike : ${availableBikeDTOs}">
+                <td th:text="${bike.category}"></td>
+                <td th:text="${bike.subcategory}"></td>
                 <td th:text="${bike.serial}"></td>
                 <td th:text="${bike.brand}"></td>
                 <td th:text="${bike.model}"></td>
@@ -61,6 +169,7 @@
             </tr>
             </tbody>
         </table>
+        <div id="pagination-container"></div>
     </div>
     <br>
     <h4><p>Available salesmen:</p></h4>
@@ -83,7 +192,7 @@
         </table>
     </div>
     <br>
-   <h4><p>Available person repairing:</p></h4>
+    <h4><p>Available person repairing:</p></h4>
     <div>
         <table class="table">
             <thead class="table-dark">
@@ -103,5 +212,36 @@
         </table>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var items = $("#bikes-table tr");
+        var numItems = items.length;
+        var perPage = 10;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#bikes-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

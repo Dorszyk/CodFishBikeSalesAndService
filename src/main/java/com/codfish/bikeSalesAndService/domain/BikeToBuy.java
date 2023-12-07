@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 public class BikeToBuy {
 
     Integer bikeToBuyId;
+    String category;
+    String subcategory;
     String serial;
     String brand;
     String model;
