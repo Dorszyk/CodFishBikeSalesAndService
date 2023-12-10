@@ -30,7 +30,7 @@ public class ServiceController {
         Map<String, ?> model = Map.of(
                 "bikeServiceRequestDTO", BikeServiceCustomerRequestDTO.buildDefault()
         );
-        return new ModelAndView("bike_service_request",model);
+        return new ModelAndView("info/bike_service_request",model);
     }
 
     @PostMapping(value = SERVICE_REQUEST)
@@ -39,11 +39,11 @@ public class ServiceController {
             BindingResult result
     ){
         if(result.hasErrors()){
-            return "error";
+            return "info/error";
         }
         BikeServiceRequest serviceRequest = bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
         bikeServiceRequestService.makeServiceRequest(serviceRequest);
 
-        return "bike_service_request_done";
+        return "info/bike_service_request_done";
     }
 }

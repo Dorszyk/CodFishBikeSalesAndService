@@ -39,6 +39,6 @@ public class BikeHistoryController {
         } else {
             model.addAttribute("bikeHistoryDTO", BikeHistoryDTO.buildDefault());
         }
-        return "bike_history";
+        return "info/bike_history";
     }
 }

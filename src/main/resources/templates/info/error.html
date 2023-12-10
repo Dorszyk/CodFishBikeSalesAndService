@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br>
+<br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">CodFish sales & service-error</h1>
+
+</div>
+<div class="centered">
+    <div>
+        <img th:src="@{/images/oh_no.png}" alt="OH NO" height="200px">
+    </div>
+    <br>
+    <div>
+        <b><span th:if="${errorMessage}" th:text="${errorMessage}"></span></b>
+    </div>
+</div>
+<br><br>
+<div class="container">
+    <div class="col-12">
+        <div class="button-row">
+            <a th:href="@{/}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+        </div>
+    </div>
+</div>
+</body>
+
+<br>
+<br>
+<br>
+
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>
+
+

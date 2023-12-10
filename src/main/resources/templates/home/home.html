@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace='~{/fragments/head.html :: template}'></div>
+<div th:replace='~{/fragments/header.html :: template}'></div>
+<br>
+<br>
+<br>
+<body class="bg-light">
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">Codfish Bike Sales & Service </h1>
+</div>
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-auto">
+            <a th:href="@{/salesman}" class="btn btn-info" role="button">Salesman Portal</a>
+        </div>
+        <div class="col-md-auto">
+            <a th:href="@{/personRepairing}" class="btn btn-info" role="button">Person Repairing Portal</a>
+        </div>
+    </div>
+</div>
+</body>
+<br>
+<br>
+<br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>

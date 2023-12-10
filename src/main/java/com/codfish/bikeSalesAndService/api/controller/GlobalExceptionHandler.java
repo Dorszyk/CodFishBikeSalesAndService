@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleException(Exception exception) {
         String message = String.format("Other exception occurred: [%s]", exception.getMessage());
         log.error(message, exception);
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("info/error");
         modelAndView.addObject("errorMessage", message);
         return modelAndView;
     }
@@ -29,9 +29,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handleNoResourceFound(NotFoundException exception) {
-        String message = String.format("Could not find resource: [%s]", exception.getMessage());
+        String message = String.format("Could not find: [%s]", exception.getMessage());
         log.error(message, exception);
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("info/error");
         modelAndView.addObject("errorMessage", message);
         return modelAndView;
     }
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleProcessingException(ProcessingException exception) {
         String message = String.format("Processing exception occurred: [%s]", exception.getMessage());
         log.error(message, exception);
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("info/error");
         modelAndView.addObject("errorMessage", message);
         return modelAndView;
     }
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 Optional.ofNullable(exception.getFieldError()).map(FieldError::getField).orElse(null),
                 Optional.ofNullable(exception.getFieldError()).map(FieldError::getRejectedValue).orElse(null));
         log.error(message, exception);
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("info/error");
         modelAndView.addObject("errorMessage", message);
         return modelAndView;
     }

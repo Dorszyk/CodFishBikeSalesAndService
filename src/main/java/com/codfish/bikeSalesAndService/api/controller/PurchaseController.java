@@ -32,7 +32,7 @@ public class PurchaseController {
     @GetMapping(value = PURCHASE)
     public ModelAndView bikePurchasePage() {
         Map<String, ?> model = prepareBikePurchaseData();
-        return new ModelAndView("bike_purchase", model);
+        return new ModelAndView("/info/bike_purchase", model);
     }
     private Map<String, ?> prepareBikePurchaseData() {
         var availableBike = bikePurchaseService.availableBikes().stream()
@@ -68,7 +68,7 @@ public class PurchaseController {
         }
         model.addAttribute("invoiceNumber", invoice.getInvoiceNumber());
 
-        return "bike_purchase_done";
+        return "info/bike_purchase_done";
     }
 
     private boolean existingCustomerEmailExists(String email) {

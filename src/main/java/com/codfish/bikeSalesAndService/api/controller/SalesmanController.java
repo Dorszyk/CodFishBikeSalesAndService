@@ -47,7 +47,7 @@ public class SalesmanController {
         model.addAttribute("availableSalesmenDTOs", availableSalesmen);
         model.addAttribute("availablePersonRepairingDTOs", availablePersonRepairing);
 
-        return "salesman_portal";
+        return "info/salesman_portal";
     }
 
     @PostMapping(value = ADD_BIKE)
@@ -71,7 +71,7 @@ public class SalesmanController {
                 .toList();
         model.addAttribute("availableBikeDTOs", availableBikes);
 
-        return "add_bike";
+        return "info/add_bike";
 
     }
 
@@ -98,6 +98,6 @@ public class SalesmanController {
                 .toList();
         model.addAttribute("availableBikeDTOs", availableBikes);
 
-        return "update_bike";
+        return "info/update_bike";
     }
 }

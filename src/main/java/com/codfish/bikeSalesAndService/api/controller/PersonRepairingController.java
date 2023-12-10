@@ -42,7 +42,7 @@ public class PersonRepairingController {
     @GetMapping(value = PERSON_REPAIRING)
     public ModelAndView personRepairingCheckPage() {
         Map<String, ?> data = prepareNecessaryData();
-        return new ModelAndView("person_repairing_service", data);
+        return new ModelAndView("info/person_repairing_service", data);
     }
 
     private Map<String, ?> prepareNecessaryData() {
@@ -75,7 +75,7 @@ public class PersonRepairingController {
         BikeServiceProcessingRequest request =  bikeServiceRequestMapper.map(dto);
         bikeServiceProcessingService.process(request);
         if(dto.getDone()){
-            return "person_repairing_service_done";
+            return "info/person_repairing_service_done";
         }else {
             modelMap.addAllAttributes(prepareNecessaryData());
             return "redirect:/personRepairing";

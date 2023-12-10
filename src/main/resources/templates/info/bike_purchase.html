@@ -1,72 +1,75 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-          crossorigin="anonymous">
-    <title>CodFish Bike&Service</title>
-</head>
+<div th:replace='~{/fragments/head.html :: template}'></div>
 
-<body>
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br>
+<br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">Salesman-retail sales</h1>
+</div>
 <div class="container">
-    <h1>CodFish Bike & Service</h1>
+    <div class="col-12">
+        <div class="button-row">
+            <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+        </div>
+    </div>
+    <div>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+        <h4><p>Available bikes:</p></h4>
+        <table class="table" id="bikes-table">
+            <thead class="table-dark">
+            <tr>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Serial</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bike : ${availableBikeDTOs}">
+                <td th:text="${bike.category}"></td>
+                <td th:text="${bike.subcategory}"></td>
+                <td th:text="${bike.serial}"></td>
+                <td th:text="${bike.brand}"></td>
+                <td th:text="${bike.model}"></td>
+                <td th:text="${bike.year}"></td>
+                <td th:text="${bike.color}"></td>
+                <td th:text="${bike.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagination-container"></div>
+    </div>
 </div>
 
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <a th:href="@{/}" class="btn btn-info" role="button">Go back</a>
-        </div>
-    </div>
-    <br>
-    <br>
-    <h2>Bike service:</h2>
-    <br>
-    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
+    <form action="#" th:action="@{/purchase}" method="POST" th:object="${bikePurchaseDTO}">
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Existing customer:</h3>
-                <br>
                 <div class="row mt-3">
                     <div class="col-md-3">
                         <label for="existingCustomerEmail">Customer email:</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="existingCustomerEmail" th:field="*{existingCustomerEmail}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="existingBikeSerial">Bike Serial:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}">
-                    </div>
-                </div>
-                <br>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerComment">Service comment:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <textarea id="customerComment" th:field="*{customerComment}" rows="10" cols="50"
-                                  required="required"></textarea>
-                    </div>
-                </div>
-                <br>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <input type="submit" value="Request!" class="btn btn-success">
+                        <input type="text" id="existingCustomerEmail"
+                               th:field="*{existingCustomerEmail}">
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <h3>New customer:</h3>
                 <br>
-                <h5><p>Customer data:</p></h5>
+                <p>Customer data:</p>
                 <div class="row mt-3">
                     <div class="col-md-3">
                         <label for="customerName">Name:</label>
@@ -138,8 +141,7 @@
                         <label for="customerAddressHouseNumber">House Number:</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="customerAddressHouseNumber"
-                               th:field="*{customerAddressHouseNumber}">
+                        <input type="text" id="customerAddressHouseNumber" th:field="*{customerAddressHouseNumber}">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -153,47 +155,64 @@
                 </div>
             </div>
         </div>
-
-
-        <h5><p>Bike data:</p></h5>
         <div class="row mt-3">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label for="bikeSerial">Bike Serial:</label>
+                <select id="bikeSerial" th:field="*{bikeSerial}">
+                    <option th:each="availableBikeSerial : ${availableBikeSerials}"
+                            th:value="${availableBikeSerial}"
+                            th:text="${availableBikeSerial}"></option>
+                </select>
             </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeSerial" th:field="*{bikeSerial}">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeBrand">Bike Brand:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeBrand" th:field="*{bikeBrand}">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeModel">Bike Model:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeModel" th:field="*{bikeModel}">
+            <div class="col-md-6">
+                <label for="salesmanCodeNameSurname">Salesman CodeNameSurname:</label>
+                <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}">
+                    <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
+                            th:value="${availableSalesmanCodeNameSurname}"
+                            th:text="${availableSalesmanCodeNameSurname}"></option>
+                </select>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeYear">Bike Year:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeYear" th:field="*{bikeYear}">
+            <div class="col-md-6">
+                <input type="submit" value="Purchase!" class="btn btn-success">
             </div>
         </div>
     </form>
-
 </div>
+<script>
+    $(document).ready(function () {
+        var items = $("#bikes-table tr");
+        var numItems = items.length;
+        var perPage = 10;
 
-<br>
-<br>
+        items.slice(perPage).hide();
+
+        $('#pagination-container').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#bikes-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
-
+<br>
+<br>
+<br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>

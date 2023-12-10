@@ -13,6 +13,6 @@ public class HomeController {
 
     @RequestMapping(value = HOME,method = RequestMethod.GET)
     public String homePage(){
-        return "home";
+        return "home/home";
     }
 }
