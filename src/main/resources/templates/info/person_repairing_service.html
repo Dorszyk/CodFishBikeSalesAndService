@@ -15,6 +15,8 @@
 <div class="container my-4">
     <div class="col-12">
         <div class="button-row">
+            <a th:href="@{/add_update_parts}" class="btn btn-info" role="button"> Parts</a>
+            <a th:href="@{/}" class="btn btn-info" role="button"> Services</a>
             <a th:href="@{/}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
@@ -63,11 +65,11 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="partSerialNumber">Part serial number: </label>
-                    <select id="partSerialNumber" th:field="*{partSerialNumber}" class="form-control">
-                        <option th:each="partSerialNumber : ${partSerialNumbers}"
-                                th:value="${partSerialNumber}"
-                                th:text="${partSerialNumber}"></option>
+                    <label for="description">Part serial number: </label>
+                    <select id="description" th:field="*{description}" class="form-control">
+                        <option th:each="descriptionDTO : ${descriptionDTOs}"
+                                th:value="${descriptionDTO}"
+                                th:text="${descriptionDTO}"></option>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -162,7 +164,7 @@
         $(document).ready(function () {
             var items = $("#parts-bikes tr");
             var numItems = items.length;
-            var perPage = 5;
+            var perPage = 7;
 
             items.slice(perPage).hide();
 
@@ -180,7 +182,7 @@
         $(document).ready(function () {
             var items = $("#parts-serial tr");
             var numItems = items.length;
-            var perPage = 5;
+            var perPage = 7;
 
             items.slice(perPage).hide();
 

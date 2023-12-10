@@ -15,6 +15,7 @@ public class BikeServicePersonProcessingUnitDTO {
     private String personRepairingCodeNameSurname;
     private String bikeSerial;
     private String partSerialNumber;
+    private String description;
     private Integer partQuantity;
     private String serviceCode;
     private Integer hours;

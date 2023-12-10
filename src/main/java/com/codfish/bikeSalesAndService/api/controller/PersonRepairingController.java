@@ -11,13 +11,18 @@ import com.codfish.bikeSalesAndService.business.PartCatalogService;
 import com.codfish.bikeSalesAndService.business.ServiceCatalogService;
 import com.codfish.bikeSalesAndService.domain.BikeServiceProcessingRequest;
 import com.codfish.bikeSalesAndService.domain.Part;
+import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.infrastructure.database.entity.PartEntity;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.PartJpaRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -38,19 +43,22 @@ public class PersonRepairingController {
     private final PersonRepairingMapper personRepairingMapper;
     private final PartMapper partMapper;
     private final ServiceMapper serviceMapper;
+    private final PartJpaRepository partJpaRepository;
+
 
     @GetMapping(value = PERSON_REPAIRING)
     public ModelAndView personRepairingCheckPage() {
         Map<String, ?> data = prepareNecessaryData();
         return new ModelAndView("info/person_repairing_service", data);
     }
-
     private Map<String, ?> prepareNecessaryData() {
         var availableServiceRequests = getAvailableServiceRequests();
         var availableBikeSerials = availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
         var availablePersonRepairing = getAvailablePersonRepairing();
         var availablePersonRepairingCodeNameSurnames = availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
         var parts = findParts();
+        var description = findParts();
+        var partSerialDescription = preparePartSerialDescription(description);
         var services = findServices();
         var partSerialNumbers = preparePartSerialNumbers(parts);
         var serviceCodes = services.stream().map(ServiceDTO::getServiceCode).toList();
@@ -61,6 +69,7 @@ public class PersonRepairingController {
                 "availablePersonRepairingDTOs", availablePersonRepairing,
                 "availablePersonRepairingCodeNameSurnames", availablePersonRepairingCodeNameSurnames,
                 "partDTOs", parts,
+                "descriptionDTOs",partSerialDescription,
                 "partSerialNumbers", partSerialNumbers,
                 "serviceDTOs", services,
                 "serviceCodes", serviceCodes,
@@ -80,32 +89,27 @@ public class PersonRepairingController {
             modelMap.addAllAttributes(prepareNecessaryData());
             return "redirect:/personRepairing";
         }
-
     }
     private List<BikeServiceRequestDTO> getAvailableServiceRequests() {
         return bikeServiceRequestService.availableServiceRequest().stream()
                 .map(bikeServiceRequestMapper::map)
                 .toList();
     }
-
     private List<PersonRepairingDTO> getAvailablePersonRepairing() {
         return bikeServiceRequestService.availablePersonRepairing().stream()
                 .map(personRepairingMapper::map)
                 .toList();
     }
-
     private List<PartDTO> findParts() {
         return partCatalogService.findAll().stream()
                 .map(partMapper::map)
                 .toList();
     }
-
     private List<ServiceDTO> findServices() {
         return serviceCatalogService.findAll().stream()
                 .map(serviceMapper::map)
                 .toList();
     }
-
     private List<String> preparePartSerialNumbers(List<PartDTO> parts) {
 
         List<String> partSerialNumbers = new ArrayList<>(parts.stream()
@@ -116,6 +120,15 @@ public class PersonRepairingController {
 
     }
 
+    private List<String> preparePartSerialDescription(List<PartDTO> parts) {
+
+        List<String> partPartSerialDescription = new ArrayList<>(parts.stream()
+                .map(PartDTO::getDescription)
+                .toList());
+        partPartSerialDescription.add(Part.NONE);
+        return partPartSerialDescription;
+
+    }
 }
 
 

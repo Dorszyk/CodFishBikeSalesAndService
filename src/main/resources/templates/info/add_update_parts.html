@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br><br><br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">Salesman-add & update a parts</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="button-row">
+                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add a parts</h4>
+            <form action="#" th:action="@{/add_part}" th:object="${partDTOs}" method="POST">
+                <div class="form-group">
+                    <label for="serialNumber">Serial Number</label>
+                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price PLN</label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Add Part</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Update a parts</h4>
+            <form action="#" th:action="@{/update_part}" th:object="${partDTOs}" method="PUT">
+                <div class="form-group">
+                    <label for="serialNumber">Serial Number to Update </label>
+                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price PLN</label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">Update Bike</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div>
+        <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search available parts...">
+        <h3><p>Available parts:</p></h3>
+        <table class="table" id="parts-bikes">
+            <thead class="table-dark">
+            <tr>
+                <th>Serial Number:</th>
+                <th>Description:</th>
+                <th>Price PLN:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="part : ${partDTOs}">
+                <td th:text="${part.serialNumber}"></td>
+                <td th:text="${part.description}"></td>
+                <td th:text="${part.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagination-container"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var items = $("#parts-bikes tr");
+        var numItems = items.length;
+        var perPage = 10;
+        items.slice(perPage).hide();
+        $('#pagination-container').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#parts-bikes tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+</body>
+<br><br><br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>

@@ -14,6 +14,7 @@ public class BikeServiceProcessingRequest {
     String personRepairingCodeNameSurname;
     String bikeSerial;
     String partSerialNumber;
+    String description;
     Integer partQuantity;
     String serviceCode;
     Integer hours;
