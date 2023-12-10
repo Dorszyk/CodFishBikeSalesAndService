@@ -11,18 +11,14 @@ import com.codfish.bikeSalesAndService.business.PartCatalogService;
 import com.codfish.bikeSalesAndService.business.ServiceCatalogService;
 import com.codfish.bikeSalesAndService.domain.BikeServiceProcessingRequest;
 import com.codfish.bikeSalesAndService.domain.Part;
-import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
-import com.codfish.bikeSalesAndService.infrastructure.database.entity.PartEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.PartJpaRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -43,7 +39,6 @@ public class PersonRepairingController {
     private final PersonRepairingMapper personRepairingMapper;
     private final PartMapper partMapper;
     private final ServiceMapper serviceMapper;
-    private final PartJpaRepository partJpaRepository;
 
 
     @GetMapping(value = PERSON_REPAIRING)
@@ -51,6 +46,7 @@ public class PersonRepairingController {
         Map<String, ?> data = prepareNecessaryData();
         return new ModelAndView("info/person_repairing_service", data);
     }
+
     private Map<String, ?> prepareNecessaryData() {
         var availableServiceRequests = getAvailableServiceRequests();
         var availableBikeSerials = availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
@@ -69,47 +65,53 @@ public class PersonRepairingController {
                 "availablePersonRepairingDTOs", availablePersonRepairing,
                 "availablePersonRepairingCodeNameSurnames", availablePersonRepairingCodeNameSurnames,
                 "partDTOs", parts,
-                "descriptionDTOs",partSerialDescription,
+                "descriptionDTOs", partSerialDescription,
                 "partSerialNumbers", partSerialNumbers,
                 "serviceDTOs", services,
                 "serviceCodes", serviceCodes,
                 "bikeServiceProcessDTO", BikeServicePersonProcessingUnitDTO.buildDefault()
         );
     }
+
     @PostMapping(value = PERSON_REPAIRING_WORK_UNIT)
     public String PersonRepairingWorkUnit(
             @Valid @ModelAttribute("bikeServiceRequestProcessDTO") BikeServicePersonProcessingUnitDTO dto,
             ModelMap modelMap
-    ){
-        BikeServiceProcessingRequest request =  bikeServiceRequestMapper.map(dto);
+    ) {
+        BikeServiceProcessingRequest request = bikeServiceRequestMapper.map(dto);
         bikeServiceProcessingService.process(request);
-        if(dto.getDone()){
+        if (dto.getDone()) {
             return "info/person_repairing_service_done";
-        }else {
+        } else {
             modelMap.addAllAttributes(prepareNecessaryData());
             return "redirect:/personRepairing";
         }
     }
+
     private List<BikeServiceRequestDTO> getAvailableServiceRequests() {
         return bikeServiceRequestService.availableServiceRequest().stream()
                 .map(bikeServiceRequestMapper::map)
                 .toList();
     }
+
     private List<PersonRepairingDTO> getAvailablePersonRepairing() {
         return bikeServiceRequestService.availablePersonRepairing().stream()
                 .map(personRepairingMapper::map)
                 .toList();
     }
+
     private List<PartDTO> findParts() {
         return partCatalogService.findAll().stream()
                 .map(partMapper::map)
                 .toList();
     }
+
     private List<ServiceDTO> findServices() {
         return serviceCatalogService.findAll().stream()
                 .map(serviceMapper::map)
                 .toList();
     }
+
     private List<String> preparePartSerialNumbers(List<PartDTO> parts) {
 
         List<String> partSerialNumbers = new ArrayList<>(parts.stream()

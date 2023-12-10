@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br><br><br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">Salesman-add & update a services</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="button-row">
+                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+                    back</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add a service</h4>
+            <form action="#" th:action="@{/add_service}" th:object="${serviceDTOs}" method="POST">
+                <div class="form-group">
+                    <label for="serviceCode">Service Code </label>
+                    <input type="text" class="form-control" id="serviceCode" name="serviceCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description </label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price PLN </label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Add Services</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Update a service</h4>
+            <form action="#" th:action="@{/update_service}" th:object="${serviceDTOs}" method="PUT">
+                <div class="form-group">
+                    <label for="serviceCode">Service Code to Update </label>
+                    <input type="text" class="form-control" id="serviceCode" name="serviceCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description </label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price PLN </label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">Update Bike</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div>
+        <input type="text" id="searchInput1" class="form-control mb-2" placeholder="Search available parts...">
+        <h3>Available services:</h3>
+        <table class="table" id="parts-serial">
+            <thead class="table-dark">
+            <tr>
+                <th>Service Code:</th>
+                <th>Description:</th>
+                <th>Price PLN:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="service : ${serviceDTOs}">
+                <td th:text="${service.serviceCode}"></td>
+                <td th:text="${service.description}"></td>
+                <td th:text="${service.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagination-container1"></div>
+        </section>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var items = $("#parts-serial tr");
+            var numItems = items.length;
+            var perPage = 10;
+
+            items.slice(perPage).hide();
+
+            $('#pagination-container1').twbsPagination({
+                totalPages: Math.ceil(numItems / perPage),
+                visiblePages: 5,
+                onPageClick: function (event, page) {
+                    var start = perPage * (page - 1);
+                    var end = start + perPage;
+
+                    items.hide().slice(start, end).show();
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#parts-serial tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</div>
+</body>
+<br><br><br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>

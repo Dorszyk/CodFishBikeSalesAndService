@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @AllArgsConstructor
-public class AddUpdateParts {
+public class AddUpdatePartsController {
 
     public static final String PARTS_ADD_UPDATE = "/add_update_parts";
     public static final String PARTS_ADD = "/add_part";
