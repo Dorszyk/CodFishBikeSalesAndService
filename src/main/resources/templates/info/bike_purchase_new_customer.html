@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br>
+<br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">Salesman-retail sales new customer</h1>
+</div>
+
+<div class="container">
+    <div>
+        <form action="#" th:action="@{/purchase-new-customer}" method="POST" th:object="${bikePurchaseDTO}">
+            <div class="col-12">
+                <div class="button-row">
+                    <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+                        back</a>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>New Customer Information</h4>
+                        <div class="form-group">
+                            <label for="customerName">Name:</label>
+                            <input type="text" class="form-control" id="customerName" th:field="*{customerName}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerSurname">Surname:</label>
+                            <input type="text" class="form-control" id="customerSurname"
+                                   th:field="*{customerSurname}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerEmail">Email:</label>
+                            <input type="email" class="form-control" id="customerEmail" th:field="*{customerEmail}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone">Phone Number:</label>
+                            <input type="tel" class="form-control" id="customerPhone" th:field="*{customerPhone}"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Address Information</h4>
+                        <div class="form-group">
+                            <label for="customerAddressCountry">Country:</label>
+                            <input type="text" class="form-control" id="customerAddressCountry"
+                                   th:field="*{customerAddressCountry}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddressCity">City:</label>
+                            <input type="text" class="form-control" id="customerAddressCity"
+                                   th:field="*{customerAddressCity}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddressPostalCode">Postal Code:</label>
+                            <input type="text" class="form-control" id="customerAddressPostalCode"
+                                   th:field="*{customerAddressPostalCode}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddressStreet">Street:</label>
+                            <input type="text" class="form-control" id="customerAddressStreet"
+                                   th:field="*{customerAddressStreet}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddressHouseNumber">House Number:</label>
+                            <input type="text" class="form-control" id="customerAddressHouseNumber"
+                                   th:field="*{customerAddressHouseNumber}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddressApartmentNumber">Apartment Number:</label>
+                            <input type="text" class="form-control" id="customerAddressApartmentNumber"
+                                   th:field="*{customerAddressApartmentNumber}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Choose a bike:</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="bikeSerial">Bike Serial:</label>
+                        <select id="bikeSerial" th:field="*{bikeSerial}" class="form-control">
+                            <option th:each="availableBikeSerial : ${availableBikeSerials}"
+                                    th:value="${availableBikeSerial}"
+                                    th:text="${availableBikeSerial}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="salesmanCodeNameSurname">Salesman ID: </label>
+                        <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}"
+                                class="form-control">
+                            <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
+                                    th:value="${availableSalesmanCodeNameSurname}"
+                                    th:text="${availableSalesmanCodeNameSurname}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input type="submit" value="Purchase" class="btn btn-success">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div>
+            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+            <h4><p>Available bikes:</p></h4>
+            <table class="table" id="bikes-table">
+                <thead class="table-dark">
+                <tr>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Serial</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bike : ${availableBikeDTOs}">
+                    <td th:text="${bike.category}"></td>
+                    <td th:text="${bike.subcategory}"></td>
+                    <td th:text="${bike.serial}"></td>
+                    <td th:text="${bike.brand}"></td>
+                    <td th:text="${bike.model}"></td>
+                    <td th:text="${bike.year}"></td>
+                    <td th:text="${bike.color}"></td>
+                    <td th:text="${bike.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var items = $("#bikes-table tr");
+        var numItems = items.length;
+        var perPage = 10;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#bikes-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</body>
+</html>

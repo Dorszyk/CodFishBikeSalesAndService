@@ -12,9 +12,11 @@
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
     <h1 class="centered-title">Salesman-retail sales</h1>
 </div>
+
 <div class="container">
     <div class="col-12">
         <div class="button-row">
+            <a th:href="@{/purchase-new-customer}" class="btn btn-info" role="button">New Customer</a>
             <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
@@ -53,133 +55,50 @@
 
 <div class="container">
     <form action="#" th:action="@{/purchase}" method="POST" th:object="${bikePurchaseDTO}">
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-md-6">
-                <h3>Existing customer:</h3>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="existingCustomerEmail">Customer email:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="existingCustomerEmail"
-                               th:field="*{existingCustomerEmail}">
-                    </div>
-                </div>
+                <h4>Existing customer:</h4>
             </div>
-            <div class="col-md-6">
-                <h3>New customer:</h3>
-                <br>
-                <p>Customer data:</p>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerName">Name:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerName" th:field="*{customerName}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerSurname">Surname:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerSurname" th:field="*{customerSurname}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerEmail">Email:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerEmail" th:field="*{customerEmail}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerPhone">Phone number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerPhone" th:field="*{customerPhone}">
-                    </div>
-                </div>
-                <br>
-                <p>Customer address:</p>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressCountry">Country:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressCountry" th:field="*{customerAddressCountry}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressCity">City:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressCity" th:field="*{customerAddressCity}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressPostalCode">Postal code:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressPostalCode" th:field="*{customerAddressPostalCode}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressStreet">Street:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressStreet" th:field="*{customerAddressStreet}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressHouseNumber">House Number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressHouseNumber" th:field="*{customerAddressHouseNumber}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressApartmentNumber">Apartment Number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressApartmentNumber"
-                               th:field="*{customerAddressApartmentNumber}">
-                    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="existingCustomerEmail"
+                           th:field="*{existingCustomerEmail}" class="form-control " placeholder="Search for email..."/>
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
+        <br>
+        <div class="row">
             <div class="col-md-6">
-                <label for="bikeSerial">Bike Serial:</label>
-                <select id="bikeSerial" th:field="*{bikeSerial}">
-                    <option th:each="availableBikeSerial : ${availableBikeSerials}"
-                            th:value="${availableBikeSerial}"
-                            th:text="${availableBikeSerial}"></option>
-                </select>
+                <h4>Choose a bike:</h4>
             </div>
-            <div class="col-md-6">
-                <label for="salesmanCodeNameSurname">Salesman CodeNameSurname:</label>
-                <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}">
-                    <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
-                            th:value="${availableSalesmanCodeNameSurname}"
-                            th:text="${availableSalesmanCodeNameSurname}"></option>
-                </select>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="bikeSerial">Serial: </label>
+                    <select id="bikeSerial" th:field="*{bikeSerial}" class="form-control">
+                        <option th:each="availableBikeSerial : ${availableBikeSerials}"
+                                th:value="${availableBikeSerial}"
+                                th:text="${availableBikeSerial}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="salesmanCodeNameSurname">Salesman ID: </label>
+                    <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}" class="form-control">
+                        <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
+                                th:value="${availableSalesmanCodeNameSurname}"
+                                th:text="${availableSalesmanCodeNameSurname}"></option>
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="row mt-3">
+        <br>
+        <div class="row-mt-3">
             <div class="col-md-6">
-                <input type="submit" value="Purchase!" class="btn btn-success">
+                <input type="submit" value="Purchase" class="btn btn-success">
             </div>
         </div>
     </form>
 </div>
+
 <script>
     $(document).ready(function () {
         var items = $("#bikes-table tr");
@@ -200,7 +119,9 @@
         });
     });
 </script>
+
 <script>
+
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -211,8 +132,6 @@
     });
 </script>
 </body>
-<br>
-<br>
-<br>
+<br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>
