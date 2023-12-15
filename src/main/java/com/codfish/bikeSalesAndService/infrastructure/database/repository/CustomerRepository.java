@@ -38,6 +38,13 @@ public class CustomerRepository implements CustomerDAO {
     }
 
     @Override
+    public List<Customer> findAvailable() {
+      return customerJpaRepository.findAvailable().stream()
+              .map(customerEntityMapper::mapFromEntity)
+              .toList();
+    }
+
+    @Override
     public void issuerInvoice(Customer customer) {
         CustomerEntity customerToSave = customerEntityMapper.mapToEntity(customer);
         CustomerEntity customerSaved = customerJpaRepository.saveAndFlush(customerToSave);

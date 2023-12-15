@@ -6,17 +6,16 @@
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br>
-<br>
+<br><br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
     <h1 class="centered-title">Salesman-retail sales</h1>
 </div>
-
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/purchase-new-customer}" class="btn btn-info" role="button">New Customer</a>
+            <a th:href="@{/purchase-new-customer}" class="btn btn-info" role="button">New purchase customer</a>
+            <a th:href="@{/customers-purchases}" class="btn btn-info" role="button">Database customers</a>
             <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
@@ -52,7 +51,6 @@
         <div id="pagination-container"></div>
     </div>
 </div>
-
 <div class="container">
     <form action="#" th:action="@{/purchase}" method="POST" th:object="${bikePurchaseDTO}">
         <div class="row">
@@ -62,7 +60,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <input type="text" id="existingCustomerEmail"
-                           th:field="*{existingCustomerEmail}" class="form-control " placeholder="Search for email..."/>
+                           th:field="*{existingCustomerEmail}" required class="form-control "
+                           placeholder="Enter the customer email address"/>
                 </div>
             </div>
         </div>
@@ -90,7 +89,6 @@
                 </div>
             </div>
         </div>
-        <br>
         <div class="row-mt-3">
             <div class="col-md-6">
                 <input type="submit" value="Purchase" class="btn btn-success">
@@ -98,7 +96,46 @@
         </div>
     </form>
 </div>
-
+<div class="container-fluid">
+    <div class="container">
+        <input type="text" id="searchInput1" class="form-control mb-3" placeholder="Search customers...">
+        <form action="#" th:action="@{/purchase}" method="POST" th:object="${CustomerDTO}">
+            <table class="table" id="customer-table1">
+                <thead class="table-dark">
+                <tr>
+                    <th class="col-0">ID</th>
+                    <th class="col-2">Name:</th>
+                    <th class="col-2">Surname</th>
+                    <th class="col-3">Email</th>
+                    <th class="col-3">Phone number</th>
+                    <th class="col-1">Country</th>
+                    <th class="col-1">City</th>
+                    <th class="col-2">Postal code</th>
+                    <th class="col-2">Street</th>
+                    <th class="col-0">House number</th>
+                    <th class="col-0">Apartment number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${availableCustomerDTOs}">
+                    <td th:text="${customer.customerId}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.surname}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${customer.country}"></td>
+                    <td th:text="${customer.city}"></td>
+                    <td th:text="${customer.postalCode}"></td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.houseNumber}"></td>
+                    <td th:text="${customer.apartmentNumber}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination-container1"></div>
+        </form>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         var items = $("#bikes-table tr");
@@ -118,14 +155,38 @@
             }
         });
     });
+    $(document).ready(function () {
+        var items = $("#customer-table1 tr");
+        var numItems = items.length;
+        var perPage = 10;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container1').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
 </script>
-
 <script>
-
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#bikes-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("#searchInput1").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#customer-table1 tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });

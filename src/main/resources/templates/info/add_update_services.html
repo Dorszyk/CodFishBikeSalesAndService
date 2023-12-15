@@ -15,8 +15,7 @@
     <div class="row">
         <div class="col-12">
             <div class="button-row">
-                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
-                    back</a>
+                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
             </div>
             <br>
         </div>
@@ -67,7 +66,7 @@
 <br>
 <div class="container">
     <div>
-        <input type="text" id="searchInput1" class="form-control mb-2" placeholder="Search available parts...">
+        <input type="text" id="searchInput1" class="form-control mb-2" placeholder="Search available services...">
         <h3>Available services:</h3>
         <table class="table" id="parts-serial">
             <thead class="table-dark">
@@ -88,37 +87,37 @@
         <div id="pagination-container1"></div>
         </section>
     </div>
-    <script>
-        $(document).ready(function () {
-            var items = $("#parts-serial tr");
-            var numItems = items.length;
-            var perPage = 10;
-
-            items.slice(perPage).hide();
-
-            $('#pagination-container1').twbsPagination({
-                totalPages: Math.ceil(numItems / perPage),
-                visiblePages: 5,
-                onPageClick: function (event, page) {
-                    var start = perPage * (page - 1);
-                    var end = start + perPage;
-
-                    items.hide().slice(start, end).show();
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#searchInput1").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#parts-serial tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
 </div>
+<script>
+    $(document).ready(function () {
+        var items = $("#parts-serial tr");
+        var numItems = items.length;
+        var perPage = 10;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container1').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput1").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#parts-serial tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 <br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>

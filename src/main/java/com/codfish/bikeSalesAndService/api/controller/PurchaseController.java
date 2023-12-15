@@ -4,10 +4,12 @@ import com.codfish.bikeSalesAndService.api.dto.BikePurchaseDTO;
 import com.codfish.bikeSalesAndService.api.dto.BikeToBuyDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikeMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikePurchaseMapper;
+import com.codfish.bikeSalesAndService.api.dto.mapper.CustomerMapper;
 import com.codfish.bikeSalesAndService.business.BikePurchaseService;
 import com.codfish.bikeSalesAndService.domain.BikePurchaseRequest;
 import com.codfish.bikeSalesAndService.domain.Invoice;
 import com.codfish.bikeSalesAndService.domain.Salesman;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.CustomerRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,8 @@ public class PurchaseController {
     private final BikePurchaseService bikePurchaseService;
     private final BikePurchaseMapper bikePurchaseMapper;
     private final BikeMapper bikeMapper;
+    private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
 
     @GetMapping(value = PURCHASE)
     public ModelAndView bikePurchasePage() {
@@ -44,14 +48,17 @@ public class PurchaseController {
         var availableSalesmanCodeNameSurnames = bikePurchaseService.availableSalesmen().stream()
                 .map(Salesman::getCodeNameSurname)
                 .toList();
+        var availableCustomers = customerRepository.findAvailable().stream()
+                .map(customerMapper::map)
+                .toList();
         return Map.of(
                 "availableBikeDTOs", availableBike,
                 "availableBikeSerials", availableBikeSerials,
                 "availableSalesmanCodeNameSurnames", availableSalesmanCodeNameSurnames,
+                "availableCustomerDTOs", availableCustomers,
                 "bikePurchaseDTO", BikePurchaseDTO.buildDefaultData()
         );
     }
-
     @PostMapping(value = PURCHASE)
     public String makePurchase(
             @Valid @ModelAttribute("bikePurchaseDTO") BikePurchaseDTO bikePurchaseDTO,
