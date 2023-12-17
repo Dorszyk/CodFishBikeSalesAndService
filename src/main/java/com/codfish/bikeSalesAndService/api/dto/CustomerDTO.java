@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Data
 @Builder
@@ -28,21 +27,19 @@ public class CustomerDTO {
     private String houseNumber;
     private String apartmentNumber;
 
-    public Map<String, String> asMap(){
+    public Map<String, String> asMap() {
         Map<String, String> result = new HashMap<>();
-        Optional.ofNullable(customerId).ifPresent(value -> result.put("customerId",value.toString()));
-        Optional.ofNullable(name).ifPresent(value -> result.put("name",value.toString()));
-        Optional.ofNullable(surname).ifPresent(value -> result.put("surname",value.toString()));
-        Optional.ofNullable(email).ifPresent(value -> result.put("email",value.toString()));
-        Optional.ofNullable(phone).ifPresent(value -> result.put("phone",value.toString()));
-        Optional.ofNullable(country).ifPresent(value -> result.put("country", value.toString()));
-        Optional.ofNullable(city).ifPresent(value -> result.put("city", value.toString()));
-        Optional.ofNullable(postalCode).ifPresent(value -> result.put("postalCode", value.toString()));
-        Optional.ofNullable(address).ifPresent(value -> result.put("address",value.toString()));
-        Optional.ofNullable(houseNumber).ifPresent(value -> result.put("houseNumber", value.toString()));
-        Optional.ofNullable(apartmentNumber).ifPresent(value -> result.put("apartmentNumber", value.toString()));
-
+        if (customerId != null) result.put("customerId", customerId.toString());
+        if (name != null) result.put("name", name);
+        if (surname != null) result.put("surname", surname);
+        if (email != null) result.put("email", email);
+        if (phone != null) result.put("phone", phone);
+        if (country != null) result.put("country", country);
+        if (city != null) result.put("city", city);
+        if (postalCode != null) result.put("postalCode", postalCode);
+        if (address != null) result.put("address", address);
+        if (houseNumber != null) result.put("houseNumber", houseNumber);
+        if (apartmentNumber != null) result.put("apartmentNumber", apartmentNumber);
         return result;
     }
-
 }

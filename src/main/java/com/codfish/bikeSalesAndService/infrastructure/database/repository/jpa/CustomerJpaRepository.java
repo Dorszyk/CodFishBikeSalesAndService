@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, Integer> {
     boolean existsByEmail(String email);
     Optional<CustomerEntity> findByEmail(String email);
-    @Query("SELECT c FROM CustomerEntity c WHERE c.invoices IS NOT EMPTY")
+    @Query("SELECT c FROM CustomerEntity c WHERE c.invoices IS NOT EMPTY OR c.bikeServiceRequests IS NOT EMPTY")
     List<CustomerEntity> findAvailable();
 }
 

@@ -10,20 +10,16 @@
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
     <h1 class="centered-title">Salesman-service a bike</h1>
-</div>
     <div class="container">
         <h3><p>The bike was transferred for repair.</p></h3>
     </div>
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/service/new}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            <a th:href="@{/service/new}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
 </div>
 </body>
-<br>
-<br>
-<br>
+<br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>

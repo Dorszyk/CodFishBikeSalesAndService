@@ -1,192 +1,50 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace='~{/fragments/head.html :: template}'></div>
-
-<div th:replace='~{/fragments/header.html :: template}'></div>
+<head th:replace='~{/fragments/head.html :: template}'></head>
 
 <body class="bg-light">
-    <br><br><br>
-    <div class="header">
+<header th:replace='~{/fragments/header.html :: template}'></header>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
         <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-        <h1 class="centered-title">Salesman-service a bike</h1>
+        <h1>Salesman-service a bike</h1>
     </div>
 
-    <div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
-        </div>
-    </div>
-    <br>
-    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
-        <div class="row mt-3">
-            <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between mb-3">
+                <a th:href="@{/service/new-customer}" class="btn btn-info">New Customer Service</a>
+                <a th:href="@{/salesman}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Go back</a>
+            </div>
+
+            <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
                 <h3>Existing customer:</h3>
-                <br>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="existingCustomerEmail">Customer email:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="existingCustomerEmail" th:field="*{existingCustomerEmail}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="existingBikeSerial">Bike Serial:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}">
-                    </div>
-                </div>
-                <br>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerComment">Service comment:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <textarea id="customerComment" th:field="*{customerComment}" rows="10" cols="50"
-                                  required="required"></textarea>
-                    </div>
-                </div>
-                <br>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <input type="submit" value="Request!" class="btn btn-success">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <h3>New customer:</h3>
-                <br>
-                <h5><p>Customer data:</p></h5>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerName">Name:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerName" th:field="*{customerName}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerSurname">Surname:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerSurname" th:field="*{customerSurname}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerEmail">Email:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerEmail" th:field="*{customerEmail}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerPhone">Phone number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerPhone" th:field="*{customerPhone}">
-                    </div>
-                </div>
-                <br>
-                <p>Customer address:</p>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressCountry">Country:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressCountry" th:field="*{customerAddressCountry}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressCity">City:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressCity" th:field="*{customerAddressCity}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressPostalCode">Postal code:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressPostalCode" th:field="*{customerAddressPostalCode}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressStreet">Street:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressStreet" th:field="*{customerAddressStreet}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressHouseNumber">House Number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressHouseNumber"
-                               th:field="*{customerAddressHouseNumber}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="customerAddressApartmentNumber">Apartment Number:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="customerAddressApartmentNumber"
-                               th:field="*{customerAddressApartmentNumber}">
-                    </div>
-                </div>
-            </div>
-        </div>
 
+                <div class="mb-3">
+                    <label for="existingCustomerEmail" class="form-label">Customer email:</label>
+                    <input type="text" id="existingCustomerEmail" th:field="*{existingCustomerEmail}" class="form-control" aria-label="Customer Email">
+                </div>
 
-        <h5><p>Bike data:</p></h5>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeSerial">Bike Serial:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeSerial" th:field="*{bikeSerial}">
-            </div>
+                <div class="mb-3">
+                    <label for="existingBikeSerial" class="form-label">Bike Serial:</label>
+                    <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}" class="form-control" aria-label="Bike Serial">
+                </div>
+
+                <div class="mb-3">
+                    <label for="customerComment" class="form-label">Service comment:</label>
+                    <textarea id="customerComment" th:field="*{customerComment}" rows="4" class="form-control" aria-label="Service Comment" required></textarea>
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Request!" class="btn btn-success">
+                </div>
+            </form>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeBrand">Bike Brand:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeBrand" th:field="*{bikeBrand}">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeModel">Bike Model:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeModel" th:field="*{bikeModel}">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <label for="bikeYear">Bike Year:</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" id="bikeYear" th:field="*{bikeYear}">
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
-<br>
-<br>
-<br>
-<div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<footer th:replace='~{/fragments/footer.html :: template}'></footer>
 </body>
 </html>

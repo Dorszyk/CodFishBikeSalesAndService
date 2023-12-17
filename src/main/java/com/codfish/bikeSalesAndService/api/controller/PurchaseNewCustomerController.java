@@ -24,7 +24,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PurchaseNewCustomerController {
 
-    static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
+    private static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
     private final BikePurchaseService bikePurchaseService;
     private final BikePurchaseMapper bikePurchaseMapper;
     private final BikeMapper bikeMapper;
@@ -57,8 +57,8 @@ public class PurchaseNewCustomerController {
             @Valid @ModelAttribute("bikePurchaseDTO") BikePurchaseDTO bikePurchaseDTO,
             ModelMap model
     ) {
-        BikePurchaseRequest request = bikePurchaseMapper.map(bikePurchaseDTO);
-        Invoice invoice = bikePurchaseService.purchase(request);
+        BikePurchaseRequest newCustomerRequest = bikePurchaseMapper.map(bikePurchaseDTO);
+        Invoice invoice = bikePurchaseService.purchase(newCustomerRequest);
 
         if (existingCustomerEmailExists(bikePurchaseDTO.getExistingCustomerEmail())) {
             model.addAttribute("existingCustomerEmail", bikePurchaseDTO.getExistingCustomerEmail());
