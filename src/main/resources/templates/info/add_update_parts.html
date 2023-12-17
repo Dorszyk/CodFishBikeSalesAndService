@@ -9,13 +9,14 @@
 <br><br><br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman-add & update a parts</h1>
+    <h1 class="centered-title">Salesman-add & update/delete a parts</h1>
 </div>
 <div class="container">
     <div class="row">
         <div class="col-12">
             <div class="button-row">
-                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+                    back</a>
             </div>
             <br>
         </div>
@@ -71,16 +72,25 @@
         <table class="table" id="parts-bikes">
             <thead class="table-dark">
             <tr>
+                <th>Part id:</th>
                 <th>Serial Number:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="part : ${partDTOs}">
-                <td th:text="${part.serialNumber}"></td>
-                <td th:text="${part.description}"></td>
-                <td th:text="${part.price}"></td>
+                <td th:text="${part.partId}">Part id</td>
+                <td th:text="${part.serialNumber}">Serial Number</td>
+                <td th:text="${part.description}">Description</td>
+                <td th:text="${part.price}">Price</td>
+                <td>
+                    <form th:action="@{/delete_part}" method="post">
+                        <input type="hidden" name="serialNumber" th:value="${part.serialNumber}" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

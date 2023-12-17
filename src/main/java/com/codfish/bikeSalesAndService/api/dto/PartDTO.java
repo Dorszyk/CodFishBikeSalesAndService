@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class PartDTO {
 
+    private Integer partId;
     private String serialNumber;
     private String description;
     private BigDecimal price;

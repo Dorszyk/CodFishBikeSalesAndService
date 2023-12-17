@@ -121,6 +121,7 @@
         <table class="table" id="parts-bikes">
             <thead class="table-dark">
             <tr>
+                <th>Part Id:</th>
                 <th>Serial Number:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
@@ -128,6 +129,7 @@
             </thead>
             <tbody>
             <tr th:each="part : ${partDTOs}">
+                <td th:text="${part.partId}"></td>
                 <td th:text="${part.serialNumber}"></td>
                 <td th:text="${part.description}"></td>
                 <td th:text="${part.price}"></td>

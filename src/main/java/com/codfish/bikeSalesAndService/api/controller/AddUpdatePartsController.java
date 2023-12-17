@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -28,6 +25,7 @@ public class AddUpdatePartsController {
     public static final String PARTS_ADD_UPDATE = "/add_update_parts";
     public static final String PARTS_ADD = "/add_part";
     public static final String PARTS_UPDATE = "/update_part";
+    public static final String PARTS_DELETE = "/delete_part";
 
     private final PartCatalogService partCatalogService;
     private final PartMapper partMapper;
@@ -102,5 +100,12 @@ public class AddUpdatePartsController {
 
     }
 
-
+    @PostMapping(value = PARTS_DELETE)
+    public String deletePart(
+            @RequestParam("serialNumber") String serialNumber
+    ) {
+        var part = partJpaRepository.findBySerialNumber(serialNumber);
+        partJpaRepository.delete(part.get());
+        return "info/delete_part";
+    }
 }
