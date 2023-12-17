@@ -121,10 +121,11 @@
         <table class="table" id="parts-bikes">
             <thead class="table-dark">
             <tr>
-                <th>Part Id:</th>
+                <th>Part id:</th>
                 <th>Serial Number:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
@@ -133,6 +134,11 @@
                 <td th:text="${part.serialNumber}"></td>
                 <td th:text="${part.description}"></td>
                 <td th:text="${part.price}"></td>
+                <td>
+                    <form>
+                        <a th:href="@{/add_update_parts}" class="btn btn-info" role="button">Edit</a>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -146,16 +152,24 @@
         <table class="table" id="parts-serial">
             <thead class="table-dark">
             <tr>
+                <th>Service id:</th>
                 <th>Service Code:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="service : ${serviceDTOs}">
+                <td th:text="${service.serviceId}"></td>
                 <td th:text="${service.serviceCode}"></td>
                 <td th:text="${service.description}"></td>
                 <td th:text="${service.price}"></td>
+                <td>
+                    <form>
+                        <a th:href="@{/add_update_services}" class="btn btn-info" role="button">Edit</a>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

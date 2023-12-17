@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-12">
             <div class="button-row">
-                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+                <a th:href="@{/personRepairing}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+                    back</a>
             </div>
             <br>
         </div>
@@ -71,16 +72,25 @@
         <table class="table" id="parts-serial">
             <thead class="table-dark">
             <tr>
+                <th>Service id:</th>
                 <th>Service Code:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="service : ${serviceDTOs}">
+                <td th:text="${service.serviceId}"></td>
                 <td th:text="${service.serviceCode}"></td>
                 <td th:text="${service.description}"></td>
                 <td th:text="${service.price}"></td>
+                <td>
+                    <form th:action="@{/delete_service}" method="post">
+                        <input type="hidden" name="serviceCode" th:value="${service.serviceCode}"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

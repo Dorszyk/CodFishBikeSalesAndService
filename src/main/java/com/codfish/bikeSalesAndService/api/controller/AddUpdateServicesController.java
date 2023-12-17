@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -27,6 +24,7 @@ public class AddUpdateServicesController {
     public static final String SERVICES_ADD_UPDATE = "/add_update_services";
     public static final String SERVICE_ADD = "/add_service";
     public static final String SERVICE_UPDATE = "/update_service";
+    public static final String PARTS_DELETE = "/delete_service";
 
     private final ServiceCatalogService serviceCatalogService;
     private final ServiceMapper serviceMapper;
@@ -88,6 +86,14 @@ public class AddUpdateServicesController {
         return serviceCatalogService.findAll().stream()
                 .map(serviceMapper::map)
                 .toList();
+    }
+    @PostMapping(value = PARTS_DELETE)
+    public String deletePart(
+            @RequestParam("serviceCode") String serviceCode
+    ) {
+        var service = serviceJpaRepository.findByServiceCode(serviceCode);
+        serviceJpaRepository.delete(service.get());
+        return "info/delete_service";
     }
 
 }
