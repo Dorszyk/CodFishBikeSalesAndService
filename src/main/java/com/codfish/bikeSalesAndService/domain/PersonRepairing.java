@@ -12,7 +12,7 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "codeNameSurname")
-@ToString(of = {"personRepairingId", "name", "surname", "codeNameSurname"})
+@ToString(of = {"personRepairingId", "name", "surname", "codeNameSurname","userId"})
 
 public class PersonRepairing {
 
@@ -20,6 +20,6 @@ public class PersonRepairing {
     String name;
     String surname;
     String codeNameSurname;
-
+    Integer userId;
     Set<ServicePerson> servicePerson;
 }

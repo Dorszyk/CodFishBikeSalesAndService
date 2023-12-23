@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PersonRepairingDTO {
 
+    Integer personRepairingId;
     String name;
     String surname;
     String codeNameSurname;
+    Integer userId;
 
 }

@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class BikeToBuyDTO {
 
+    private Integer bikeToBuyId;
     private String category;
     private String subcategory;
     private String serial;

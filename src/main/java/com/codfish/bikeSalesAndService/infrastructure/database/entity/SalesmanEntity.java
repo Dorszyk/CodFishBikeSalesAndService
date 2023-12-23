@@ -26,7 +26,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(of = {"salesmanId","name","surname","codeNameSurname"})
+@ToString(of = {"salesmanId","name","surname","codeNameSurname","userId"})
 @Table(name = "salesman")
 public class SalesmanEntity {
     @Id
@@ -42,6 +42,9 @@ public class SalesmanEntity {
 
     @Column(name = "code_name_surname")
     private String codeNameSurname;
+
+    @Column(name = "userId")
+    private Integer userId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "salesman")
     private Set<InvoiceEntity> invoices;

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br><br><br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="Bike Logo" class="logo">
+    <h1 class="centered-title">Person Repairing Management - Add, Update, Delete</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="button-row">
+                <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go
+                    back</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add a Person Repairing</h4>
+            <form action="#" th:action="@{/add_person_repairing}" th:object="${newPersonRepairingDTO}" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" class="form-control" id="surname" name="surname" required>
+                </div>
+                <div class="form-group">
+                    <label for="codeNameSurname">Code Name Surname</label>
+                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Add Person Repairing</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Update a Person Repairing</h4>
+            <form action="#" th:action="@{/update_person_repairing}" th:object="${updatePersonRepairingDTO}" method="PUT">
+                <div class="form-group">
+                    <label for="codeNameSurname">Code Name Surname to Update</label>
+                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="name">New Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">New Surname</label>
+                    <input type="text" class="form-control" id="surname" name="surname" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">Update Person Repairing</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div>
+        <input type="text" id="searchInputPersonRepairing" class="form-control mb-2"
+               placeholder="Search available persons repairing...">
+        <h3><p>Available Persons Repairing:</p></h3>
+        <table class="table" id="personRepairing-table">
+            <thead class="table-dark">
+            <tr>
+                <th>Repair id:</th>
+                <th>Name:</th>
+                <th>Surname:</th>
+                <th>Code NameSurname:</th>
+                <th>User id:</th>
+                <th>Actions:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person : ${availablePersonRepairingDTOs}">
+                <td th:text="${person.personRepairingId}">ID</td>
+                <td th:text="${person.name}">Name</td>
+                <td th:text="${person.surname}">Surname</td>
+                <td th:text="${person.codeNameSurname}">Code Name Surname</td>
+                <td th:text="${person.userId}">User Id</td>
+                <td>
+                    <form th:action="@{/delete_person_repairing}" method="post">
+                        <input type="hidden" name="codeNameSurname" th:value="${person.codeNameSurname}"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pagination-container-personRepairing"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var items = $("#personRepairing-table tr");
+        var numItems = items.length;
+        var perPage = 10;
+        items.slice(perPage).hide();
+        $('#personRepairing-table').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#searchInputPersonRepairing").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#personRepairing-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+</body>
+<br><br><br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>

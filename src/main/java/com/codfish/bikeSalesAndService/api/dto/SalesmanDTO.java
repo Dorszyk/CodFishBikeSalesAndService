@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SalesmanDTO {
 
+    Integer salesmanId;
     String name;
     String surname;
     String codeNameSurname;
-
+    Integer userId;
 }

@@ -3,6 +3,7 @@ package com.codfish.bikeSalesAndService.business;
 import com.codfish.bikeSalesAndService.business.dao.SalesmanDAO;
 import com.codfish.bikeSalesAndService.domain.Salesman;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.SalesmanJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class SalesmanService {
+
+    private final SalesmanJpaRepository salesmanJpaRepository;
 
 
     private final SalesmanDAO salesmanDAO;
@@ -33,5 +36,9 @@ public class SalesmanService {
             throw new NotFoundException("Could not find salesman by codeNameSurname: [%s".formatted(codeNameSurname));
         }
         return salesman.get();
+    }
+    @Transactional
+    public void deleteSalesmanByCodeNameSurname(String codeNameSurname) {
+        salesmanJpaRepository.deleteSalesmanEntitiesByCodeNameSurname(codeNameSurname);
     }
 }

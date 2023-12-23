@@ -7,6 +7,7 @@ import com.codfish.bikeSalesAndService.api.dto.mapper.SalesmanMapper;
 import com.codfish.bikeSalesAndService.business.BikePurchaseService;
 import com.codfish.bikeSalesAndService.business.BikeServiceRequestService;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.domain.exception.ProcessingException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.BikeToBuyEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.BikeToBuyJpaRepository;
 import jakarta.validation.Valid;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,11 +52,16 @@ public class SalesmanController {
 
         return "info/salesman_portal";
     }
-
     @PostMapping(value = ADD_BIKE)
     public String addBike(
             @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model
     ) {
+
+        Optional<BikeToBuyEntity> existingBike = bikeToBuyJpaRepository.findBySerial(bikeDTO.getSerial());
+        if (existingBike.isPresent()) {
+            throw new ProcessingException(
+                    "Bike with serial: [%s] already exists in the database.".formatted(bikeDTO.getSerial()));
+        }
         BikeToBuyEntity newBike = BikeToBuyEntity.builder()
                 .serial(bikeDTO.getSerial())
                 .category(bikeDTO.getCategory())
@@ -70,9 +78,7 @@ public class SalesmanController {
                 .map(bikeMapper::map)
                 .toList();
         model.addAttribute("availableBikeDTOs", availableBikes);
-
         return "info/add_bike";
-
     }
 
 

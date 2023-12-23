@@ -118,18 +118,20 @@
         <table class="table" id="bikes-table">
             <thead class="table-dark">
             <tr>
-                <th>Category</th>
-                <th>Subcategory</th>
-                <th>Serial</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Color</th>
-                <th>Price</th>
+                <th>Id:</th>
+                <th>Category:</th>
+                <th>Subcategory:</th>
+                <th>Serial:</th>
+                <th>Brand:</th>
+                <th>Model:</th>
+                <th>Year:</th>
+                <th>Color:</th>
+                <th>Price:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="bike : ${availableBikeDTOs}">
+                <td th:text="${bike.bikeToBuyId}"></td>
                 <td th:text="${bike.category}"></td>
                 <td th:text="${bike.subcategory}"></td>
                 <td th:text="${bike.serial}"></td>
@@ -149,16 +151,26 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Code NameSurname</th>
+                <th>Salesman id:</th>
+                <th>Name:</th>
+                <th>Surname:</th>
+                <th>Code NameSurname:</th>
+                <th>User id:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="salesman : ${availableSalesmenDTOs}">
+                <td th:text="${salesman.salesmanId}"></td>
                 <td th:text="${salesman.name}"></td>
                 <td th:text="${salesman.surname}"></td>
                 <td th:text="${salesman.codeNameSurname}"></td>
+                <td th:text="${salesman.userId}"></td>
+                <td>
+                    <form>
+                        <a th:href="@{/add_update_salesman}" class="btn btn-info" role="button">Edit</a>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -169,16 +181,26 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Code NameSurname</th>
+                <th>Person Repairing:</th>
+                <th>Name:</th>
+                <th>Surname:</th>
+                <th>Code NameSurname:</th>
+                <th>User id:</th>
+                <th>Actions:</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="personRepairing : ${availablePersonRepairingDTOs}">
+                <td th:text="${personRepairing.personRepairingId}"></td>
                 <td th:text="${personRepairing.name}"></td>
                 <td th:text="${personRepairing.surname}"></td>
                 <td th:text="${personRepairing.codeNameSurname}"></td>
+                <td th:text="${personRepairing.userId}"></td>
+                <td>
+                    <form>
+                        <a th:href="@{/add_update_person_repairing}" class="btn btn-info" role="button">Edit</a>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

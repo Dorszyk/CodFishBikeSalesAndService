@@ -20,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "personRepairingId")
-@ToString(of = {"personRepairingId", "name", "surname", "codeNameSurname"})
+@ToString(of = {"personRepairingId", "name", "surname", "codeNameSurname","userId"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,6 +40,9 @@ public class PersonRepairingEntity {
 
     @Column(name = "code_name_surname")
     private String codeNameSurname;
+
+    @Column(name = "userId")
+    private Integer userId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "personRepairing")
     private Set<ServicePersonEntity> servicePerson;
