@@ -3,7 +3,10 @@ package com.codfish.bikeSalesAndService.business;
 import com.codfish.bikeSalesAndService.business.dao.SalesmanDAO;
 import com.codfish.bikeSalesAndService.domain.Salesman;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.infrastructure.database.entity.SalesmanEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.SalesmanJpaRepository;
+import com.codfish.bikeSalesAndService.infrastructure.security.UserEntity;
+import com.codfish.bikeSalesAndService.infrastructure.security.UserJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,8 @@ import java.util.Optional;
 public class SalesmanService {
 
     private final SalesmanJpaRepository salesmanJpaRepository;
-
-
     private final SalesmanDAO salesmanDAO;
+    private final UserJpaRepository userJpaRepository;
 
     @Transactional
     public List<Salesman> findAvailable() {
@@ -37,8 +39,22 @@ public class SalesmanService {
         }
         return salesman.get();
     }
+
     @Transactional
     public void deleteSalesmanByCodeNameSurname(String codeNameSurname) {
-        salesmanJpaRepository.deleteSalesmanEntitiesByCodeNameSurname(codeNameSurname);
+
+        SalesmanEntity salesman = salesmanJpaRepository.findByCodeNameSurname(codeNameSurname)
+                .orElseThrow(() -> new NotFoundException("Salesman not found"));
+
+        salesmanJpaRepository.delete(salesman);
+
+
+        UserEntity user = userJpaRepository.findById(salesman.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        user.getRoles().clear();
+        userJpaRepository.save(user);
+
+        userJpaRepository.delete(user);
     }
 }

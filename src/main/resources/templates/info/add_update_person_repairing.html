@@ -40,6 +40,19 @@
                     <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname" required>
                 </div>
                 <br>
+                <div class="form-group">
+                    <label for="userName">Username:</label>
+                    <input type="text" class="form-control" id="userName" name="userName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <br>
                 <button type="submit" class="btn btn-primary">Add Person Repairing</button>
             </form>
         </div>
@@ -60,6 +73,19 @@
                     <input type="text" class="form-control" id="surname" name="surname" required>
                 </div>
                 <br>
+                <div class="form-group">
+                    <label for="userName">NewUsername:</label>
+                    <input type="text" class="form-control" id="userName" name="userName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">NewEmail:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">NewPassword:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <br>
                 <button type="submit" class="btn btn-warning">Update Person Repairing</button>
             </form>
         </div>
@@ -67,9 +93,9 @@
 </div>
 <br>
 <div class="container">
+    <br>
     <div>
-        <input type="text" id="searchInputPersonRepairing" class="form-control mb-2"
-               placeholder="Search available persons repairing...">
+        <input type="text" id="searchInputPersonRepairing" class="form-control mb-3" placeholder="Search available persons repairing...">
         <h3><p>Available Persons Repairing:</p></h3>
         <table class="table" id="personRepairing-table">
             <thead class="table-dark">
@@ -100,6 +126,29 @@
         </table>
         <div id="pagination-container-personRepairing"></div>
     </div>
+</div>
+<div class="container">
+    <h3>Available Users</h3>
+    <table class="table" id="user-table">
+        <thead class="table-dark">
+        <tr>
+            <th>userId</th>
+            <th>userName:</th>
+            <th>email:</th>
+            <th>password:</th>
+            <th>active:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${availableUserDTOs}">
+            <td th:text="${user.userId}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.active}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script>
     $(document).ready(function () {

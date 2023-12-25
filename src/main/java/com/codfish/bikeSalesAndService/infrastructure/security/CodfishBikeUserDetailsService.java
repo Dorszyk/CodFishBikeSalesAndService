@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class CodfishBikeUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserJpaRepository userJpaRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUserName(userName);
+        UserEntity user = userJpaRepository.findByUserName(userName);
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }

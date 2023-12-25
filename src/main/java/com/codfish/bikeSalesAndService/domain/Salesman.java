@@ -1,11 +1,6 @@
 package com.codfish.bikeSalesAndService.domain;
 
-import jakarta.persistence.Column;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
-import lombok.With;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,7 +8,7 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "codeNameSurname")
-@ToString(of = {"salesmanId", "name", "surname", "codeNameSurname","userId"})
+@ToString(of = {"salesmanId", "name", "surname", "codeNameSurname", "userId", "userName", "email"})
 public class Salesman {
 
     Integer salesmanId;
@@ -21,5 +16,9 @@ public class Salesman {
     String surname;
     String codeNameSurname;
     Integer userId;
+    String userName;
+    String email;
+    String password;
+    String roles;
     Set<Invoice> invoices;
 }

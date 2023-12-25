@@ -1,5 +1,6 @@
 package com.codfish.bikeSalesAndService.api.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,15 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SalesmanDTO {
+public class UserDTO {
 
-    Integer salesmanId;
-    String name;
-    String surname;
-    String codeNameSurname;
-    Integer userId;
-    String userName;
-    String email;
-    String password;
-    String roles;
+    private int userId;
+    private String userName;
+    private String email;
+    private String password;
+    private Boolean active;
 }

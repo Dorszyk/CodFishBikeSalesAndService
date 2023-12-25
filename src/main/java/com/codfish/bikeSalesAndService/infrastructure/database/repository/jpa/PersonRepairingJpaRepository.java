@@ -10,10 +10,4 @@ import java.util.Optional;
 public interface PersonRepairingJpaRepository extends JpaRepository<PersonRepairingEntity, Integer> {
     Optional<PersonRepairingEntity> findByCodeNameSurname(String codeNameSurname);
 
-    @Transactional
-    void deletePersonRepairingEntitiesByCodeNameSurname(String codeNameSurname);
-
-    @Query("SELECT MAX (p.userId) FROM PersonRepairingEntity p")
-    Optional<Integer> findMaxUserId();
-
 }

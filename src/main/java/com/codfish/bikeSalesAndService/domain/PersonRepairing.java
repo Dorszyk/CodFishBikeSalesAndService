@@ -21,5 +21,9 @@ public class PersonRepairing {
     String surname;
     String codeNameSurname;
     Integer userId;
+    String userName;
+    String email;
+    String password;
+    String roles;
     Set<ServicePerson> servicePerson;
 }

@@ -17,5 +17,8 @@ public class PersonRepairingDTO {
     String surname;
     String codeNameSurname;
     Integer userId;
-
+    String userName;
+    String email;
+    String password;
+    String roles;
 }
