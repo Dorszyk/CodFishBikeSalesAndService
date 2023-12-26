@@ -8,12 +8,12 @@
 <br><br><br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman-bike history</h1>
+    <h1 class="centered-title">Salesman - History of bicycle services</h1>
 </div>
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
     <h2>Bike history:</h2>
@@ -23,88 +23,92 @@
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <label for="bikesSerial">Bike Serial:</label>
-                        <select id="bikesSerial" th:name="bikeSerial">
+                        <select id="bikesSerial" th:name="bikeSerial" class="form-control">
                             <option th:each="bikeSerial : ${allBikeSerials}"
                                     th:value="${bikeSerial}"
                                     th:text="${bikeSerial}"></option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" value="   Find   " class="btn btn-success">
+                        <input type="submit" value="Find" class="btn btn-success">
                     </div>
                 </div>
             </div>
         </div>
     </form>
     <div class="row mt-3">
-        <div th:if="${bikeHistoryDTO.bikeServiceRequests.size() > 0}">
-            <p>Bike history for serial: <b><span
-                    th:if="${bikeHistoryDTO.bikeSerial}"
-                    th:text="${bikeHistoryDTO.bikeSerial}">BIKE_SERIAL</span></b></p>
-            <table class="table">
-                <thead class="table-dark">
-                <tr>
-                    <th>Service Number: </th>
-                    <th>Received Date: </th>
-                    <th>Completed Date: </th>
-                    <th>Customer Comment: </th>
-                    <th>Services: </th>
-                    <th>Parts: </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}">
-                    <td th:text="${serviceRequest.bikeServiceRequestNumber}"></td>
-                    <td th:text="${serviceRequest.receivedDateTime}"></td>
-                    <td th:text="${serviceRequest.completedDateTime}"></td>
-                    <td th:text="${serviceRequest.customerComment}"></td>
-                    <td>
-                        <p>Services</p>
-                        <table class="table">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>Service Code: </th>
-                                <th>Description: </th>
-                                <th>Price PLN: </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="service : ${serviceRequest.services}">
-                                <td th:text="${service.serviceCode}"></td>
-                                <td th:text="${service.description}"></td>
-                                <td th:text="${service.price}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <p>Parts</p>
-                        <table class="table">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>Serial Number: </th>
-                                <th>Description: </th>
-                                <th>Price PLN: </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="part : ${serviceRequest.parts}">
-                                <td th:text="${part.serialNumber}"></td>
-                                <td th:text="${part.description}"></td>
-                                <td th:text="${part.price}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Service Number:</th>
+                <th>Received Date:</th>
+                <th>Completed Date:</th>
+                <th>Customer Comment:</th>
+                <th>Services:</th>
+                <th>Parts:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}"
+                th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}">
+                <td th:text="${serviceRequest.bikeServiceRequestNumber}"></td>
+                <td th:text="${serviceRequest.receivedDateTime}"></td>
+                <td th:text="${serviceRequest.completedDateTime}"></td>
+                <td th:text="${serviceRequest.customerComment}"></td>
+                <td>
+                    <table class="table">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Service Code:</th>
+                            <th>Description:</th>
+                            <th>Price PLN:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="service : ${serviceRequest.services}">
+                            <td th:text="${service.serviceCode}"></td>
+                            <td th:text="${service.description}"></td>
+                            <td th:text="${service.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div th:if="${serviceRequest.services == null || serviceRequest.services.size() == 0}">
+                        No services recorded
+                    </div>
+                </td>
+                <td>
+
+                    <table class="table">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Serial Number:</th>
+                            <th>Description:</th>
+                            <th>Price PLN:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="part: ${serviceRequest.parts}">
+                            <td th:text="${part.serialNumber}"></td>
+                            <td th:text="${part.description}"></td>
+                            <td th:text="${part.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:if="${serviceRequest.parts == null || serviceRequest.parts.size() == 0}">
+                        No parts recorded
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${bikeHistoryDTO == null || bikeHistoryDTO.bikeServiceRequests.size() == 0}">
+                <td colspan="6">Select a bike serial to view history</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
-<br>
-<br>
-<br>
+<br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>
+

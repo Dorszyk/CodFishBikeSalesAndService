@@ -11,7 +11,6 @@ import com.codfish.bikeSalesAndService.business.PartCatalogService;
 import com.codfish.bikeSalesAndService.business.ServiceCatalogService;
 import com.codfish.bikeSalesAndService.domain.BikeServiceProcessingRequest;
 import com.codfish.bikeSalesAndService.domain.Part;
-import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.PartJpaRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -53,8 +52,6 @@ public class PersonRepairingController {
         var availablePersonRepairing = getAvailablePersonRepairing();
         var availablePersonRepairingCodeNameSurnames = availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
         var parts = findParts();
-        var description = findParts();
-        var partSerialDescription = preparePartSerialDescription(description);
         var services = findServices();
         var partSerialNumbers = preparePartSerialNumbers(parts);
         var serviceCodes = services.stream().map(ServiceDTO::getServiceCode).toList();
@@ -65,7 +62,6 @@ public class PersonRepairingController {
                 "availablePersonRepairingDTOs", availablePersonRepairing,
                 "availablePersonRepairingCodeNameSurnames", availablePersonRepairingCodeNameSurnames,
                 "partDTOs", parts,
-                "descriptionDTOs", partSerialDescription,
                 "partSerialNumbers", partSerialNumbers,
                 "serviceDTOs", services,
                 "serviceCodes", serviceCodes,
@@ -119,16 +115,6 @@ public class PersonRepairingController {
                 .toList());
         partSerialNumbers.add(Part.NONE);
         return partSerialNumbers;
-
-    }
-
-    private List<String> preparePartSerialDescription(List<PartDTO> parts) {
-
-        List<String> partPartSerialDescription = new ArrayList<>(parts.stream()
-                .map(PartDTO::getDescription)
-                .toList());
-        partPartSerialDescription.add(Part.NONE);
-        return partPartSerialDescription;
 
     }
 }

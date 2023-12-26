@@ -8,9 +8,10 @@
 <body class="bg-light">
 <br>
 <br>
+<br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman-bicycle sale</h1>
+    <h1 class="centered-title">Salesman - Bicycle Sale</h1>
 </div>
 
 <div class="container">
@@ -22,7 +23,7 @@
                     a bike</a>
                 <a th:href="@{/bike/history}" class="btn btn-success" role="button"><i class="fas fa-history"></i> Bike
                     history</a>
-                <a th:href="@{/}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+                <a th:href="@{/}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go back</a>
             </div>
             <br>
         </div>
@@ -126,12 +127,12 @@
                 <th>Model:</th>
                 <th>Year:</th>
                 <th>Color:</th>
-                <th>Price:</th>
+                <th>Price PLN:</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bike : ${availableBikeDTOs}">
-                <td th:text="${bike.bikeToBuyId}"></td>
+            <tr th:each="bike, stat : ${availableBikeDTOs}">
+                <td th:text="${stat.count}"></td>
                 <td th:text="${bike.category}"></td>
                 <td th:text="${bike.subcategory}"></td>
                 <td th:text="${bike.serial}"></td>

@@ -17,7 +17,7 @@ public class BikeHistory {
 
     @Value
     @Builder
-    @ToString(of = {"bikeServiceRequestNumber", "receivedDateTime", "completedDateTime", "customerComment"})
+    @ToString(of = {"bikeServiceRequestNumber", "receivedDateTime", "completedDateTime", "customerComment","services","parts"})
     public static class BikeServiceRequest {
 
         String bikeServiceRequestNumber;

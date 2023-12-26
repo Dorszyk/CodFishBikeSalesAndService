@@ -8,9 +8,10 @@
 <body class="bg-light">
 <br>
 <br>
+<br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman-retail sales new customer</h1>
+    <h1 class="centered-title">Salesman - Retail Sale New Customer</h1>
 </div>
 
 <div class="container">
@@ -18,7 +19,7 @@
         <form action="#" th:action="@{/purchase-new-customer}" method="POST" th:object="${bikePurchaseDTO}">
             <div class="col-12">
                 <div class="button-row">
-                    <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+                    <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go
                         back</a>
                 </div>
             </div>
@@ -109,7 +110,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="submit" value="Purchase" class="btn btn-success">
+                        <input type="submit" value="Order" class="btn btn-success">
                     </div>
                 </div>
             </div>
@@ -122,18 +123,20 @@
             <table class="table" id="bikes-table">
                 <thead class="table-dark">
                 <tr>
-                    <th>Category</th>
-                    <th>Subcategory</th>
-                    <th>Serial</th>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Color</th>
-                    <th>Price</th>
+                    <th>Id:</th>
+                    <th>Category:</th>
+                    <th>Subcategory:</th>
+                    <th>Serial:</th>
+                    <th>Brand:</th>
+                    <th>Model:</th>
+                    <th>Year:</th>
+                    <th>Color:</th>
+                    <th>Price PLN:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="bike : ${availableBikeDTOs}">
+                <tr th:each="bike, stat : ${availableBikeDTOs}">
+                    <td th:text="${stat.count}"></td>
                     <td th:text="${bike.category}"></td>
                     <td th:text="${bike.subcategory}"></td>
                     <td th:text="${bike.serial}"></td>

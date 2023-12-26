@@ -11,8 +11,8 @@ import lombok.With;
 @With
 @Value
 @Builder
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(of = "servicePartId")
+@ToString(of = {"servicePartId", "quantity"})
 public class ServicePart {
 
      Integer servicePartId;

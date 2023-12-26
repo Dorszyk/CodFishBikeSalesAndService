@@ -6,39 +6,38 @@
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br>
-<br>
+<br><br><br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman-customers database </h1>
+    <h1 class="centered-title">Salesman - Customer Database</h1>
 </div>
 
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+            <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go back</a>
         </div>
     </div>
 </div>
 
 <div class="container-fluid">
     <div class="container">
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer...">
         <form action="#" th:action="@{/customers-purchases}" method="POST" th:object="${CustomerDTO}">
             <table class="table" id="customer-table">
                 <thead class="table-dark">
                 <tr>
-                    <th class="col-0">ID</th>
-                    <th class="col-2">Name:</th>
-                    <th class="col-2">Surname</th>
-                    <th class="col-3">Email</th>
-                    <th class="col-3">Phone number</th>
-                    <th class="col-1">Country</th>
-                    <th class="col-1">City</th>
-                    <th class="col-2">Postal code</th>
-                    <th class="col-2">Street</th>
-                    <th class="col-0">House number</th>
-                    <th class="col-0">Apartment number</th>
+                    <th class="col-0">Id:</th>
+                    <th class="col-0">Name:</th>
+                    <th class="col-0">Surname:</th>
+                    <th class="col-2">Email:</th>
+                    <th class="col-3">Phone number:</th>
+                    <th class="col-2">Country:</th>
+                    <th class="col-2">City:</th>
+                    <th class="col-2">Postal code:</th>
+                    <th class="col-2">Street:</th>
+                    <th class="col-2">House number:</th>
+                    <th class="col-2">Apartment number:</th>
                 </tr>
                 </thead>
                 <tbody>
