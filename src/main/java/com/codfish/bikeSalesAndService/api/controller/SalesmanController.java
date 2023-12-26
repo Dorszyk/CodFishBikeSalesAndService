@@ -106,4 +106,21 @@ public class SalesmanController {
 
         return "info/update_bike";
     }
+    @PostMapping(value = DELETE_BIKE)
+    public String deleteBike(@PathVariable("serial") String serial, Model model) {
+        Optional<BikeToBuyEntity> bikeToDelete = bikeToBuyJpaRepository.findBySerial(serial);
+        if (bikeToDelete.isPresent()) {
+            bikeToBuyJpaRepository.delete(bikeToDelete.get());
+        } else {
+            throw new NotFoundException("Bike with serial: [%s] not found in the database.".formatted(serial));
+        }
+
+        var availableBikes = bikePurchaseService.availableBikes().stream()
+                .map(bikeMapper::map)
+                .toList();
+        model.addAttribute("availableBikeDTOs", availableBikes);
+
+        return "info/delete_bike_done";
+    }
+
 }
