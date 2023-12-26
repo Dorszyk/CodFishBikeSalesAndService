@@ -24,7 +24,22 @@ public class FragmentsController {
         return "info/bike_service_request";
     }
     @GetMapping("/info/bike_history")
-    public  String getFragmentsBikeHistory(){
+    public  String getFragmentsHistory(){
         return "info/bike_history";
+    }
+
+    @GetMapping("/info/add_update_salesman")
+    public  String getFragmentsManagementUserSalesman (){
+        return "info/add_update_salesman";
+    }
+
+    @GetMapping("/info/add_update_person_repairing")
+    public  String getFragmentsManagementUserPersonRepairing(){
+        return "info/add_update_person_repairing";
+    }
+
+    @GetMapping("/info/customers-purchases")
+    public  String getFragmentsCustomers(){
+        return "info/customers_purchases";
     }
 }

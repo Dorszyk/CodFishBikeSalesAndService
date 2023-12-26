@@ -41,10 +41,19 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/error", "/images/oh_no.png").permitAll()
-                .requestMatchers("/personRepairing/**").hasAnyAuthority("PERSON_REPAIRING")
-                .requestMatchers("/salesman/**", "/purchase/**", "/service/**").hasAnyAuthority("SALESMAN")
-                .requestMatchers("/", "/bike/**", "/images/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
+                .requestMatchers("/login", "/error/**", "/images/**").permitAll()
+
+                .requestMatchers("/personRepairing/**","/add_update_parts/**","/add_part/**","/update_part/**","/delete_part/**",
+                        "/add_update_services/**","/add_service/**","/update_service/**","/delete_service**",
+                        "/add_update_person_repairing/**","/add_person_repairing/**","/update_person_repairing/**","/delete_person_repairing/**")
+                .hasAnyAuthority("PERSON_REPAIRING")
+
+                .requestMatchers("/salesman/**", "/purchase/**","/purchase-new-customer/**", "/add_bike/**","/update_bike/**",
+                        "/deleteBike/{serial}/**","/add_update_salesman/**",
+                        "/add_salesman/**","/update_salesman/**","/delete_salesman/**")
+                .hasAnyAuthority("SALESMAN")
+
+                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
                 .and()
                 .formLogin()
                 .permitAll()
