@@ -26,11 +26,11 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>Notification Number: </th>
-                <th>Received Date: </th>
-                <th>Completed Date: </th>
-                <th>Service Comment: </th>
-                <th>Serial: </th>
+                <th>Notification Number:</th>
+                <th>Received Date:</th>
+                <th>Completed Date:</th>
+                <th>Service Comment:</th>
+                <th>Serial:</th>
             </tr>
             </thead>
             <tbody>
@@ -63,51 +63,102 @@
                                 th:value="${availableBikeSerial}"
                                 th:text="${availableBikeSerial}"></option>
                     </select>
+                    <br>
                 </div>
-                <div class="col-md-6">
-                    <label for="partSerialNumber">Part number: </label>
-                    <select id="partSerialNumber" th:field="*{partSerialNumber}" class="form-control">
-                        <option th:each="partSerialNumber : ${partSerialNumbers}"
-                                th:value="${partSerialNumber}"
-                                th:text="${partSerialNumber}"></option>
-                    </select>
+                    <h3 class="centered">Required parts for bike repair & service scope:</h3>
+                    <div class="col-md-6">
+                        <label for="partSerialNumber1">Part 1: </label>
+                        <select id="partSerialNumber1" th:field="*{partSerialNumber}" class="form-control">
+                            <option th:each="partSerialNumber : ${partSerialNumbers}"
+                                    th:value="${partSerialNumber}"
+                                    th:text="${partSerialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partQuantity1">Quantity: </label>
+                        <input type="text" id="partQuantity1" th:field="*{partQuantity}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partSerialNumber2">Part 2: </label>
+                        <select id="partSerialNumber2" th:field="*{partSerialNumber}" class="form-control">
+                            <option th:each="partSerialNumber : ${partSerialNumbers}"
+                                    th:value="${partSerialNumber}"
+                                    th:text="${partSerialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partQuantity2">Quantity: </label>
+                        <input type="text" id="partQuantity2" th:field="*{partQuantity}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partSerialNumber3">Part 3: </label>
+                        <select id="partSerialNumber3" th:field="*{partSerialNumber}" class="form-control">
+                            <option th:each="partSerialNumber : ${partSerialNumbers}"
+                                    th:value="${partSerialNumber}"
+                                    th:text="${partSerialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partQuantity3">Quantity: </label>
+                        <input type="text" id="partQuantity3" th:field="*{partQuantity}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partSerialNumber4">Part 4: </label>
+                        <select id="partSerialNumber4" th:field="*{partSerialNumber}" class="form-control">
+                            <option th:each="partSerialNumber : ${partSerialNumbers}"
+                                    th:value="${partSerialNumber}"
+                                    th:text="${partSerialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partQuantity4">Quantity: </label>
+                        <input type="text" id="partQuantity4" th:field="*{partQuantity}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partSerialNumber5">Part 5: </label>
+                        <select id="partSerialNumber5" th:field="*{partSerialNumber}" class="form-control">
+                            <option th:each="partSerialNumber : ${partSerialNumbers}"
+                                    th:value="${partSerialNumber}"
+                                    th:text="${partSerialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="partQuantity5">Quantity: </label>
+                        <input type="text" id="partQuantity5" th:field="*{partQuantity}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="serviceCode1">Service code : </label>
+                        <select id="serviceCode1" th:field="*{serviceCode}" class="form-control">
+                            <option th:each="serviceCode : ${serviceCodes}" th:value="${serviceCode}"
+                                    th:text="${serviceCode}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="hours">Repair time in hours: </label>
+                        <input type="text" id="hours" th:field="*{hours}" class="form-control"/>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="partQuantity">Part quantity: </label>
-                    <input type="text" id="partQuantity" th:field="*{partQuantity}" class="form-control"/>
-                </div>
-                <div class="col-md-6">
-                    <label for="serviceCode">Service code: </label>
-                    <select id="serviceCode" th:field="*{serviceCode}" class="form-control">
-                        <option th:each="serviceCode : ${serviceCodes}" th:value="${serviceCode}"
-                                th:text="${serviceCode}"></option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="hours">Repair time in hours: </label>
-                    <input type="text" id="hours" th:field="*{hours}" class="form-control"/>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <h3><p>Person repairing comment: </p></h3>
-                <div class="col-md-6">
-                    <textarea id="personRepairingComment" th:field="*{personRepairingComment}" rows="3" cols="165" class="form-control"
+                <br>
+                <div class="row">
+                    <h3><p>Person repairing comment: </p></h3>
+                    <div class="col-md-6">
+                    <textarea id="personRepairingComment" th:field="*{personRepairingComment}" rows="3" cols="165"
+                              class="form-control"
                               required="required">
                     </textarea>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3> <p>Repair confirmation: </p></h3>
-                    <label for="doneYes">YES</label>
-                    <input type="radio" id="doneYes" value="true" th:field="*{done}">
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3><p>Repair confirmation: </p></h3>
+                        <label for="doneYes">YES</label>
+                        <input type="radio" id="doneYes" value="true" th:field="*{done}">
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <input type="submit" value="CONFIRM" class="btn btn-success">
-            </div>
+                <div class="col-md-4">
+                    <input type="submit" value="CONFIRM" class="btn btn-success">
+                </div>
         </form>
     </div>
 </div>
@@ -119,8 +170,8 @@
         <table class="table" id="parts-bikes">
             <thead class="table-dark">
             <tr>
-                <th>Part id:</th>
-                <th>Serial Number:</th>
+                <th>Number:</th>
+                <th>Serial:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
                 <th>Actions:</th>
@@ -150,7 +201,7 @@
         <table class="table" id="parts-serial">
             <thead class="table-dark">
             <tr>
-                <th>Service id:</th>
+                <th>Number:</th>
                 <th>Service Code:</th>
                 <th>Description:</th>
                 <th>Price PLN:</th>
@@ -158,8 +209,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="service : ${serviceDTOs}">
-                <td th:text="${service.serviceId}"></td>
+            <tr th:each="service,stat : ${serviceDTOs}">
+                <td th:text="${stat.count}"></td>
                 <td th:text="${service.serviceCode}"></td>
                 <td th:text="${service.description}"></td>
                 <td th:text="${service.price}"></td>
@@ -234,3 +285,4 @@
 </div>
 </body>
 </html>
+

@@ -36,38 +36,46 @@
             <form action="#" th:action="@{/add_bike}" th:object="${availableBikeDTOs}" method="POST">
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <input type="text" class="form-control" id="category" name="category" required>
+                    <input type="text" class="form-control" id="category" name="category"
+                           th:value="${bikeToBuyDTO.category}" required>
                 </div>
                 <div class="form-group">
                     <label for="subcategory">Subcategory</label>
-                    <input type="text" class="form-control" id="subcategory" name="subcategory" required>
+                    <input type="text" class="form-control" id="subcategory" name="subcategory"
+                           th:value="${bikeToBuyDTO.subcategory}" required>
                 </div>
                 <div class="form-group">
                     <label for="serial">Serial</label>
-                    <input type="text" class="form-control" id="serial" name="serial" required>
+                    <input type="text" class="form-control" id="serial" name="serial" th:value="${bikeToBuyDTO.serial}"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="brand">Brand</label>
-                    <input type="text" class="form-control" id="brand" name="brand" required>
+                    <input type="text" class="form-control" id="brand" name="brand" th:value="${bikeToBuyDTO.brand}"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="model">Model</label>
-                    <input type="text" class="form-control" id="model" name="model" required>
+                    <input type="text" class="form-control" id="model" name="model" th:value="${bikeToBuyDTO.model}"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="year">Year</label>
-                    <input type="number" class="form-control" id="year" name="year" required>
+                    <input type="number" class="form-control" id="year" name="year" th:value="${bikeToBuyDTO.year}"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="color">Color</label>
-                    <input type="text" class="form-control" id="color" name="color" required>
+                    <input type="text" class="form-control" id="color" name="color" th:value="${bikeToBuyDTO.color}"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" name="price" required>
+                    <input type="number" class="form-control" id="price" name="price" th:value="${bikeToBuyDTO.price}"
+                           required>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary">Add Bike</button>
+                <button type=" submit" class="btn btn-primary">Add Bike</button>
             </form>
         </div>
         <div class="col-md-6">

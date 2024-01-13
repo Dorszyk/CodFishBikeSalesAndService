@@ -4,6 +4,8 @@ import com.codfish.bikeSalesAndService.domain.BikeServiceRequest;
 import com.codfish.bikeSalesAndService.domain.ServicePart;
 import com.codfish.bikeSalesAndService.domain.ServicePerson;
 
+import java.util.List;
+
 public interface ServiceRequestProcessingDAO {
 
     void process (BikeServiceRequest serviceRequest,
@@ -11,5 +13,5 @@ public interface ServiceRequestProcessingDAO {
 
     void process (BikeServiceRequest serviceRequest,
                   ServicePerson servicePerson,
-                  ServicePart servicePart);
+                  List<ServicePart> servicePart);
 }

@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -35,7 +37,11 @@ public class SalesmanController {
     private final BikeToBuyJpaRepository bikeToBuyJpaRepository;
 
     @GetMapping(value = SALESMAN)
-    public String homePage(Model model) {
+    public ModelAndView homePage() {
+        Map<String, Object> model = prepareSalesmanPortalData();
+        return new ModelAndView("info/salesman_portal", model);
+    }
+    private Map<String, Object> prepareSalesmanPortalData() {
         var availableBikes = bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
                 .toList();
@@ -45,12 +51,12 @@ public class SalesmanController {
         var availablePersonRepairing = bikeServiceRequestService.availablePersonRepairing().stream()
                 .map(personRepairingMapper::map)
                 .toList();
-
-        model.addAttribute("availableBikeDTOs", availableBikes);
-        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
-        model.addAttribute("availablePersonRepairingDTOs", availablePersonRepairing);
-
-        return "info/salesman_portal";
+        return Map.of(
+                "availableBikeDTOs", availableBikes,
+                "availableSalesmenDTOs", availableSalesmen,
+                "availablePersonRepairingDTOs", availablePersonRepairing,
+                "bikeToBuyDTO", BikeToBuyDTO.buildDefault()
+        );
     }
     @PostMapping(value = ADD_BIKE)
     public String addBike(

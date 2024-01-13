@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
+import java.util.List;
 import java.util.Objects;
 
 @With
@@ -13,7 +14,7 @@ public class BikeServiceProcessingRequest {
 
     String personRepairingCodeNameSurname;
     String bikeSerial;
-    String partSerialNumber;
+    List<String> partSerialNumber;
     String description;
     Integer partQuantity;
     String serviceCode;

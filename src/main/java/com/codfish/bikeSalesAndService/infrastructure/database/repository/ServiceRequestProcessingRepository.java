@@ -4,6 +4,7 @@ import com.codfish.bikeSalesAndService.business.dao.ServiceRequestProcessingDAO;
 import com.codfish.bikeSalesAndService.domain.BikeServiceRequest;
 import com.codfish.bikeSalesAndService.domain.ServicePart;
 import com.codfish.bikeSalesAndService.domain.ServicePerson;
+import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.BikeServiceRequestEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.PartEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.ServicePartEntity;
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Repository
@@ -53,13 +55,16 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
     public void process(
             BikeServiceRequest serviceRequest,
             ServicePerson servicePerson,
-            ServicePart servicePart
+            List<ServicePart> serviceParts
     ) {
-        PartEntity partEntity = partJpaRepository.findById(servicePart.getPart().getPartId()).orElseThrow();
-        ServicePartEntity servicePartEntity = servicePartEntityMapper.mapToEntity(servicePart);
-        servicePartEntity.setPart(partEntity);
-        servicePartJpaRepository.saveAndFlush(servicePartEntity);
-        process(serviceRequest,servicePerson);
 
+        for (ServicePart servicePart : serviceParts) {
+            PartEntity partEntity = partJpaRepository.findBySerialNumber(servicePart.getPart().getSerialNumber())
+                    .orElseThrow(() -> new NotFoundException("Could not find: [%s]" + servicePart.getPart().getSerialNumber()));
+            ServicePartEntity servicePartEntity = servicePartEntityMapper.mapToEntity(servicePart);
+            servicePartEntity.setPart(partEntity);
+            servicePartJpaRepository.save(servicePartEntity);
+        }
+        process(serviceRequest, servicePerson);
     }
 }

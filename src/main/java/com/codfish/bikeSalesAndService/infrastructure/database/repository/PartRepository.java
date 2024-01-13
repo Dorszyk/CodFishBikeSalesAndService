@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -26,5 +27,11 @@ public class PartRepository implements PartDAO {
     public Optional<Part> finBySerialNumber(String serialNumber) {
         return partJpaRepository.findBySerialNumber(serialNumber)
                 .map(mapper::mapFromEntity);
+    }
+    @Override
+    public List<Part> findAllBySerialNumbers(List<String> serialNumbers) {
+        return partJpaRepository.findAllBySerialNumberIn(serialNumbers).stream()
+                .map(mapper::mapFromEntity)
+                .collect(Collectors.toList());
     }
 }

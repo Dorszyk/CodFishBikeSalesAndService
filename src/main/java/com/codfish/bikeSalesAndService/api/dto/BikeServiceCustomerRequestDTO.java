@@ -150,10 +150,52 @@ public class BikeServiceCustomerRequestDTO {
     private static String generateRandomAddressApartmentNumber() {
         return String.valueOf(new Random().nextInt(50) + 1);
     }
+    private static String generateRandomCustomerComment() {
+        String[] issues = {
+                "Przegląd podstawowy po zakupie nowego roweru",
+                "Centrowanie koła",
+                "Wymiana płynu hamulcowego",
+                "Regulacja przerzutki",
+                "Sprawdzenie stanu łańcucha",
+                "Naprawa uszkodzonej dętki",
+                "Kontrola ciśnienia w oponach",
+                "Wymiana zużytych klocków hamulcowych",
+                "Regulacja hamulców",
+                "Konserwacja amortyzatorów",
+                "Kalibracja systemu elektrycznego w rowerze elektrycznym",
+                "Wymiana i regulacja siodełka",
+                "Naprawa lub wymiana przerwanej linki hamulcowej",
+                "Regulacja kierownicy i systemu sterowania",
+                "Naprawa lub wymiana uszkodzonych pedałów",
+                "Wymiana łożysk w piastach kół",
+                "Naprawa uszkodzeń ramy roweru",
+                "Wymiana starych lub uszkodzonych opon",
+                "Regulacja i konserwacja zawieszenia przedniego i tylnego",
+                "Czyszczenie i konserwacja napędu roweru"
+        };
+        String[] additionalComments = {
+                "Słychać dziwne dźwięki podczas jazdy",
+                "Rower był niedawno używany w trudnych warunkach",
+                "Mam problemy z przerzutkami przy wyższych prędkościach",
+                "Hamulce piszczą przy mocnym hamowaniu",
+                "Rower nie był serwisowany od dłuższego czasu",
+                "Potrzebuję szybkiej naprawy przed nadchodzącym wyścigiem",
+                "Zauważyłem wycieki oleju z amortyzatora",
+                "Rower kupiony z drugiej ręki, chciałbym przegląd ogólny",
+                "Chciałbym przygotować rower na sezon",
+                "Potrzebuję porady w zakresie konserwacji roweru"
+        };
+
+        Random random = new Random();
+        String issue = issues[random.nextInt(issues.length)];
+        String additionalComment = additionalComments[random.nextInt(additionalComments.length)];
+
+        return issue + ". " + additionalComment;
+    }
 
     public static BikeServiceCustomerRequestDTO buildDefault() {
         return BikeServiceCustomerRequestDTO.builder()
-                .existingCustomerEmail("joanna.malinowska@gmail.com")
+                .existingCustomerEmail("")
                 .existingBikeSerial("")
                 .customerName(generateRandomName())
                 .customerSurname(generateRandomSurname())
@@ -165,7 +207,7 @@ public class BikeServiceCustomerRequestDTO {
                 .customerAddressStreet(generateRandomAddressStreet())
                 .customerAddressHouseNumber(generateRandomAddressHouseNumber())
                 .customerAddressApartmentNumber(generateRandomAddressApartmentNumber())
-                .customerComment("Przegląd podstawowy po zakupie nowego roweru i przejachaniu 100km\nCentrowanie koła\nWymiana płynu hamulcowego\nRegulacja przerzutki")
+                .customerComment(generateRandomCustomerComment())
                 .bikeSerial(generateRandomBikeSerial())
                 .bikeBrand(generateRandomBikeBrand())
                 .bikeModel(generateRandomBikeModel())

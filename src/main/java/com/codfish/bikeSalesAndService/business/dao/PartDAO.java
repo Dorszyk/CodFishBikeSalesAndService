@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface PartDAO {
     Optional<Part> finBySerialNumber(String serialNumber);
+    List<Part> findAllBySerialNumbers(List<String> serialNumbers);
     List<Part> findAll();
-
-
 }

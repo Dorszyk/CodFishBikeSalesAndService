@@ -92,12 +92,12 @@ public class AddUpdatePartsController {
 
     private List<String> preparePartSerialNumbers(List<PartDTO> parts) {
 
-        List<String> partSerialNumbers = new ArrayList<>(parts.stream()
+        List<String> partSerialNumbers = new ArrayList<>();
+        partSerialNumbers.add(Part.NONE);
+        partSerialNumbers.addAll(parts.stream()
                 .map(PartDTO::getSerialNumber)
                 .toList());
-        partSerialNumbers.add(Part.NONE);
         return partSerialNumbers;
-
     }
 
     @PostMapping(value = PARTS_DELETE)

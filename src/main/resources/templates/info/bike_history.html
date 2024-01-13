@@ -43,7 +43,7 @@
                 <th>Service Number:</th>
                 <th>Received Date:</th>
                 <th>Completed Date:</th>
-                <th>Customer Comment:</th>
+                <th>Comment:</th>
                 <th>Services:</th>
                 <th>Parts:</th>
             </tr>
@@ -59,13 +59,15 @@
                     <table class="table">
                         <thead class="table-dark">
                         <tr>
+                            <th>Id:</th>
                             <th>Service Code:</th>
                             <th>Description:</th>
                             <th>Price PLN:</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="service : ${serviceRequest.services}">
+                        <tr th:each="service, stat : ${serviceRequest.services}">
+                            <td th:text="${stat.count}"></td>
                             <td th:text="${service.serviceCode}"></td>
                             <td th:text="${service.description}"></td>
                             <td th:text="${service.price}"></td>
@@ -82,13 +84,15 @@
                     <table class="table">
                         <thead class="table-dark">
                         <tr>
+                            <th>Id:</th>
                             <th>Serial Number:</th>
                             <th>Description:</th>
                             <th>Price PLN:</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="part: ${serviceRequest.parts}">
+                        <tr th:each="part, stat: ${serviceRequest.parts}">
+                            <td th:text="${stat.count}"></td>
                             <td th:text="${part.serialNumber}"></td>
                             <td th:text="${part.description}"></td>
                             <td th:text="${part.price}"></td>

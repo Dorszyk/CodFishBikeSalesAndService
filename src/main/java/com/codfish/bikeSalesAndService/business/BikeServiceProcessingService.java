@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -27,20 +29,22 @@ public class BikeServiceProcessingService {
 
         Service service = serviceCatalogService.findService(request.getServiceCode());
 
+        List<Part> parts = partCatalogService.findAllByParts(request.getPartSerialNumber());
+
         ServicePerson servicePerson = buildServicePerson(request, personRepairing, serviceRequest, service);
 
-        if (request.getDone()!= null && request.getDone().booleanValue()) {
+        if (request.getDone() != null && request.getDone()) {
             serviceRequest = serviceRequest.withCompletedDateTime(OffsetDateTime.now());
         }
-
-        if (request.partNotIncluded()) {
+        if (request.partNotIncluded() || parts.isEmpty()) {
             serviceRequestProcessingDAO.process(serviceRequest, servicePerson);
         } else {
-            Part part = partCatalogService.findPart(request.getPartSerialNumber());
-            ServicePart servicePart = buildServicePart(request, serviceRequest, part);
-            serviceRequestProcessingDAO.process(serviceRequest, servicePerson, servicePart);
+            final BikeServiceRequest finalServiceRequest = serviceRequest;
+            List<ServicePart> serviceParts = parts.stream()
+                    .map(part -> buildServicePart(request, finalServiceRequest, part))
+                    .collect(Collectors.toList());
+            serviceRequestProcessingDAO.process(serviceRequest, servicePerson, serviceParts);
         }
-
     }
 
     private ServicePerson buildServicePerson(
