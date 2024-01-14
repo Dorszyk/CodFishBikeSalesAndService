@@ -37,6 +37,9 @@
         </div>
     </form>
     <div class="row mt-3">
+        <p>Bike history for serial: <b><span
+                th:if="${bikeHistoryDTO.bikeSerial}"
+                th:text="${bikeHistoryDTO.bikeSerial}">BIKE SERIAL:</span></b></p>
         <table class="table">
             <thead class="table-dark">
             <tr>

@@ -1,5 +1,6 @@
 package com.codfish.bikeSalesAndService.infrastructure.database.repository.mapper;
 
+import com.codfish.bikeSalesAndService.api.dto.InvoiceDTO;
 import com.codfish.bikeSalesAndService.domain.Invoice;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.InvoiceEntity;
 import org.mapstruct.Mapper;
@@ -9,4 +10,5 @@ import org.mapstruct.ReportingPolicy;
 public interface InvoiceEntityMapper {
 
     InvoiceEntity mapToEntity(Invoice invoice);
+    InvoiceDTO mapToDto(InvoiceEntity entity);
 }

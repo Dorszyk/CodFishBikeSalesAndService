@@ -41,15 +41,15 @@ public class InvoiceEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bike_to_buy_id")
     private BikeToBuyEntity bike;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salesman_id")
     private SalesmanEntity salesman;
 }

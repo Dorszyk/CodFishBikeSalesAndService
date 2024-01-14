@@ -1,27 +1,13 @@
 package com.codfish.bikeSalesAndService.infrastructure.database.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = "bikeToBuyId")
-@ToString(of = {"bikeToBuyId", "serial", "brand", "model", "year"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,4 +45,8 @@ public class BikeToBuyEntity {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "bike")
     private InvoiceEntity invoice;
+    @Override
+    public String toString() {
+        return serial;
+    }
 }

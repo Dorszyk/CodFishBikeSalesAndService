@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class BikePurchaseService {
     private final SalesmanService salesmanService;
     private final CustomerService customerService;
     private final CustomerDAO customerDAO;
+
     private final ConcurrentHashMap<String, Integer> dailySequenceNumbers = new ConcurrentHashMap<>();
 
     public List<BikeToBuy> availableBikes() {
@@ -91,16 +93,25 @@ public class BikePurchaseService {
     }
 
     private Invoice buildInvoice(BikeToBuy bike, Salesman salesman) {
+        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime oneHourBack = now.minusHours(1);
+        String formattedDateTime = oneHourBack.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        OffsetDateTime dateTimeWithOffset = OffsetDateTime.parse(formattedDateTime + "Z",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssX"));
+
         return Invoice.builder()
-                .invoiceNumber(generateInvoiceNumber(OffsetDateTime.now()))
-                .dateTime(OffsetDateTime.now())
+                .invoiceNumber(generateInvoiceNumber(oneHourBack))
+                .dateTime(dateTimeWithOffset)
                 .bike(bike)
                 .salesman(salesman)
                 .build();
     }
 
     public String generateInvoiceNumber(OffsetDateTime when) {
-        String dateKey = when.toLocalDate().toString().replace("-", "");
+        String dateKey = when.toLocalDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String timeKey = when.toLocalTime().format(DateTimeFormatter.ofPattern("HHmmss"));
+
         Integer sequenceNumber = dailySequenceNumbers.compute(dateKey, (key, currentValue) -> {
             if (currentValue == null) {
                 return 1;
@@ -109,6 +120,7 @@ public class BikePurchaseService {
             }
         });
 
-        return String.format("%s%03d", dateKey, sequenceNumber);
+        return String.format("FV-%s/%s/%02d", dateKey, timeKey,sequenceNumber);
     }
+
 }

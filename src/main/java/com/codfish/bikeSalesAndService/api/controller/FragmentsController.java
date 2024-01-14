@@ -9,7 +9,7 @@ public class FragmentsController {
 
     @GetMapping("/home/home")
     public  String getFragmentsHome(){
-        return "home";
+        return "home/home";
     }
     @GetMapping("/info/salesman_portal")
     public  String getFragmentsSalesman(){
@@ -41,5 +41,9 @@ public class FragmentsController {
     @GetMapping("/info/customers-purchases")
     public  String getFragmentsCustomers(){
         return "info/customers_purchases";
+    }
+    @GetMapping("/info/invoice-purchases")
+    public  String getFragmentsInvoices(){
+        return "info/invoice_purchases";
     }
 }

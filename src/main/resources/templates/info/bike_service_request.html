@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="col-md-8 mx-auto"> <!-- Center form in the page -->
+    <div class="col-md-8 mx-auto">
         <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
             <h3>Existing customer:</h3>
             <div class="mb-3">
@@ -45,12 +45,65 @@
                 <input type="submit" value="Request" class="btn btn-success">
             </div>
         </form>
+        <br>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer or bike...">
+        <form action="#" th:action="@{/invoices-purchases}" method="POST" th:object="${InvoiceDTO}">
+            <table class="table" id="service-table">
+                <thead class="table-dark">
+                <tr>
+                    <th class="col-2">Bike:</th>
+                    <th class="col-0">Customer:</th>
+                    <th class="col-2">Salesman:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="invoice : ${availableInvoicesDTOs}">
+                    <td th:text="${invoice.bike}"></td>
+                    <td th:text="${invoice.customer}"></td>
+                    <td th:text="${invoice.salesman}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination-container"></div>
+        </form>
     </div>
 </div>
 </div>
 
 <footer th:replace='~{/fragments/footer.html :: template}'>
 </footer>
+<script>
+    $(document).ready(function () {
+        var items = $("#service-table tr");
+        var numItems = items.length;
+        var perPage = 10;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container').twbsPagination({
+            totalPages: Math.ceil(numItems / perPage),
+            visiblePages: 5,
+            onPageClick: function (event, page) {
+                var start = perPage * (page - 1);
+                var end = start + perPage;
+
+                items.hide().slice(start, end).show();
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#service-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>
 

@@ -1,21 +1,8 @@
 package com.codfish.bikeSalesAndService.infrastructure.database.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
@@ -26,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(of = {"salesmanId","name","surname","codeNameSurname","userId"})
 @Table(name = "salesman")
 public class SalesmanEntity {
     @Id
@@ -48,4 +34,9 @@ public class SalesmanEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "salesman")
     private Set<InvoiceEntity> invoices;
+
+    @Override
+    public String toString() {
+        return codeNameSurname;
+    }
 }

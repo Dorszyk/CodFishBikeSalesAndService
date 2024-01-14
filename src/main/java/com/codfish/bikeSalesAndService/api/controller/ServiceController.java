@@ -2,8 +2,10 @@ package com.codfish.bikeSalesAndService.api.controller;
 
 import com.codfish.bikeSalesAndService.api.dto.BikeServiceCustomerRequestDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikeServiceRequestMapper;
+import com.codfish.bikeSalesAndService.api.dto.mapper.InvoiceMapper;
 import com.codfish.bikeSalesAndService.business.BikeServiceRequestService;
 import com.codfish.bikeSalesAndService.domain.BikeServiceRequest;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.InvoiceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,21 +26,32 @@ public class ServiceController {
     private final BikeServiceRequestService bikeServiceRequestService;
 
     private final BikeServiceRequestMapper bikeServiceRequestMapper;
+    private final InvoiceMapper invoiceMapper;
+    private final InvoiceRepository invoiceRepository;
 
     @GetMapping(value = SERVICE_NEW)
     public ModelAndView bikeServicePage() {
-        Map<String, ?> model = Map.of(
+        Map<String, ?> model = prepareBikePurchaseData();
+        return new ModelAndView("info/bike_service_request", model);
+
+    }
+
+    private Map<String,?> prepareBikePurchaseData(){
+        var availableInvoices = invoiceRepository.findAll().stream()
+                .map(invoiceMapper::map)
+                .toList();
+        return Map.of(
+                "availableInvoicesDTOs", availableInvoices,
                 "bikeServiceRequestDTO", BikeServiceCustomerRequestDTO.buildDefault()
         );
-        return new ModelAndView("info/bike_service_request",model);
     }
 
     @PostMapping(value = SERVICE_REQUEST)
     public String makeServiceRequest(
             @ModelAttribute("bikeServiceRequestDTO") BikeServiceCustomerRequestDTO bikeServiceCustomerRequestDTO,
             BindingResult result
-    ){
-        if(result.hasErrors()){
+    ) {
+        if (result.hasErrors()) {
             return "info/error";
         }
         BikeServiceRequest serviceRequest = bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
@@ -47,3 +60,4 @@ public class ServiceController {
         return "info/bike_service_request_done";
     }
 }
+
