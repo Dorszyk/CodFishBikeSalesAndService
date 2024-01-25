@@ -107,7 +107,7 @@
             <table class="table" id="customer-table1">
                 <thead class="table-dark">
                 <tr>
-                    <th class="col-0">ID</th>
+                    <th class="col-0">Number:</th>
                     <th class="col-0">Name:</th>
                     <th class="col-0">Surname:</th>
                     <th class="col-2">Email:</th>
@@ -121,8 +121,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="customer : ${availableCustomerDTOs}">
-                    <td th:text="${customer.customerId}"></td>
+                <tr th:each="customer,stat : ${availableCustomerDTOs}">
+                    <td th:text="${stat.count}"></td>
                     <td th:text="${customer.name}"></td>
                     <td th:text="${customer.surname}"></td>
                     <td th:text="${customer.email}"></td>

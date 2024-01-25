@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 
@@ -27,19 +28,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(controllers = PurchaseController.class)
+@TestPropertySource(locations = "classpath:application-test.yml")
+@WebMvcTest(controllers = PurchaseNewCustomerController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PurchaseControllerTest {
+public class PurchaseNewCustomerControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    @SuppressWarnings("unused")
     private BikePurchaseService bikePurchaseService;
+
     @MockBean
     @SuppressWarnings("unused")
     private BikePurchaseMapper bikePurchaseMapper;
+
     @MockBean
     @SuppressWarnings("unused")
     private BikeMapper bikeMapper;
@@ -54,12 +58,12 @@ public class PurchaseControllerTest {
         Mockito.when(bikePurchaseService.purchase(Mockito.any())).thenReturn(expectedInvoice);
 
         // when, then
-        mockMvc.perform(post(PurchaseController.PURCHASE).params(parameters))
+        mockMvc.perform(post(PurchaseNewCustomerController.PURCHASE_NEW_CUSTOMER).params(parameters))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("invoiceNumber"))
             .andExpect(model().attributeExists("customerName"))
             .andExpect(model().attributeExists("customerSurname"))
-            .andExpect(view().name("bike_purchase_done"));
+            .andExpect(view().name("info/bike_purchase_new_customer_done"));
     }
 
     @Test
@@ -72,7 +76,7 @@ public class PurchaseControllerTest {
         parametersMap.forEach(parameters::add);
 
         // when, then
-        mockMvc.perform(post(PurchaseController.PURCHASE).params(parameters))
+        mockMvc.perform(post(PurchaseNewCustomerController.PURCHASE_NEW_CUSTOMER).params(parameters))
             .andExpect(status().isBadRequest())
             .andExpect(model().attributeExists("errorMessage"))
             .andExpect(model().attribute("errorMessage", Matchers.containsString(badEmail)))
@@ -93,14 +97,14 @@ public class PurchaseControllerTest {
             Invoice expectedInvoice = Invoice.builder().invoiceNumber("test").build();
             Mockito.when(bikePurchaseService.purchase(Mockito.any())).thenReturn(expectedInvoice);
 
-            mockMvc.perform(post(PurchaseController.PURCHASE).params(parameters))
+            mockMvc.perform(post(PurchaseNewCustomerController.PURCHASE_NEW_CUSTOMER).params(parameters))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("invoiceNumber"))
                 .andExpect(model().attributeExists("customerName"))
                 .andExpect(model().attributeExists("customerSurname"))
-                .andExpect(view().name("bike_purchase_done"));
+                .andExpect(view().name("info/bike_purchase_new_customer_done"));
         } else {
-            mockMvc.perform(post(PurchaseController.PURCHASE).params(parameters))
+            mockMvc.perform(post(PurchaseNewCustomerController.PURCHASE_NEW_CUSTOMER).params(parameters))
                 .andExpect(status().isBadRequest())
                 .andExpect(model().attributeExists("errorMessage"))
                 .andExpect(model().attribute("errorMessage", Matchers.containsString(phone)))

@@ -15,49 +15,116 @@
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go back</a>
+            <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go
+                back</a>
         </div>
     </div>
 </div>
-
-<div class="container-fluid">
-    <div class="container">
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer...">
-        <form action="#" th:action="@{/customers-purchases}" method="POST" th:object="${CustomerDTO}">
-            <table class="table" id="customer-table">
-                <thead class="table-dark">
-                <tr>
-                    <th class="col-0">Id:</th>
-                    <th class="col-0">Name:</th>
-                    <th class="col-0">Surname:</th>
-                    <th class="col-2">Email:</th>
-                    <th class="col-3">Phone number:</th>
-                    <th class="col-2">Country:</th>
-                    <th class="col-2">City:</th>
-                    <th class="col-2">Postal code:</th>
-                    <th class="col-2">Street:</th>
-                    <th class="col-2">House number:</th>
-                    <th class="col-2">Apartment number:</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="customer : ${availableCustomerDTOs}">
-                    <td th:text="${customer.customerId}"></td>
-                    <td th:text="${customer.name}"></td>
-                    <td th:text="${customer.surname}"></td>
-                    <td th:text="${customer.email}"></td>
-                    <td th:text="${customer.phone}"></td>
-                    <td th:text="${customer.country}"></td>
-                    <td th:text="${customer.city}"></td>
-                    <td th:text="${customer.postalCode}"></td>
-                    <td th:text="${customer.address}"></td>
-                    <td th:text="${customer.houseNumber}"></td>
-                    <td th:text="${customer.apartmentNumber}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="pagination-container"></div>
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>Add a customer</h4>
+            <form action="#" th:action="@{/add_customer}" th:object="${availableCustomerDTOs}" method="POST">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${customerDTOs.name}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname:</label>
+                    <input type="text" class="form-control" id="surname" name="surname"
+                           th:value="${customerDTOs.surname}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${customerDTOs.email}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" th:value="${customerDTOs.phone}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" class="form-control" id="country" name="country"
+                           th:value="${customerDTOs.country}" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city" name="city" th:value="${customerDTOs.city}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code:</label>
+                    <input type="text" class="form-control" id="postalCode" name="postalCode"
+                           th:value="${customerDTOs.postalCode}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Street Address:</label>
+                    <input type="text" class="form-control" id="address" name="address"
+                           th:value="${customerDTOs.address}" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseNumber">House Number:</label>
+                    <input type="text" class="form-control" id="houseNumber" name="houseNumber"
+                           th:value="${customerDTOs.houseNumber}" required>
+                </div>
+                <div class="form-group">
+                    <label for="apartmentNumber">Apartment Number:</label>
+                    <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber"
+                           th:value="${customerDTOs.apartmentNumber}" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Add Customer</button>
+            </form>
+        </div>
+        <div class="col-xl-*">
+            <div class="container">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer...">
+                <form action="#" th:action="@{/customers-purchases}" method="POST" th:object="${CustomerDTO}">
+                    <table class="table" id="customer-table">
+                        <thead class="table-dark">
+                        <tr>
+                            <th class="col-0">Number:</th>
+                            <th class="col-0">Name:</th>
+                            <th class="col-0">Surname:</th>
+                            <th class="col-2">Email:</th>
+                            <th class="col-3">Phone number:</th>
+                            <th class="col-2">Country:</th>
+                            <th class="col-0">City:</th>
+                            <th class="col-4">Postal code:</th>
+                            <th class="col-2">Street:</th>
+                            <th class="col-2">House number:</th>
+                            <th class="col-2">Apartment number:</th>
+                            <th class="col-2">Actions:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="customer,stat : ${availableCustomerDTOs}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${customer.name}"></td>
+                            <td th:text="${customer.surname}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td th:text="${customer.phone}"></td>
+                            <td th:text="${customer.country}"></td>
+                            <td th:text="${customer.city}"></td>
+                            <td th:text="${customer.postalCode}"></td>
+                            <td th:text="${customer.address}"></td>
+                            <td th:text="${customer.houseNumber}"></td>
+                            <td th:text="${customer.apartmentNumber}"></td>
+                            <td>
+                                <form th:action="@{/deleteCustomer/{email}(email=${customer.email})}" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="pagination-container"></div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

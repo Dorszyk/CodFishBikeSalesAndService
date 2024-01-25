@@ -23,8 +23,7 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 public class PurchaseNewCustomerController {
-
-    private static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
+    static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
     private final BikePurchaseService bikePurchaseService;
     private final BikePurchaseMapper bikePurchaseMapper;
     private final BikeMapper bikeMapper;

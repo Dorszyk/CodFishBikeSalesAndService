@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "userId")
 @Entity
-@Table(name = "car_dealership_user_role")
+@Table(name = "codfish_bike_user_role")
 @IdClass(UserRoleId.class)
 public class UserRoleEntity {
     @Id

@@ -51,13 +51,15 @@
             <table class="table" id="service-table">
                 <thead class="table-dark">
                 <tr>
+                    <th class="col-2">Number:</th>
                     <th class="col-2">Bike:</th>
                     <th class="col-0">Customer:</th>
                     <th class="col-2">Salesman:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="invoice : ${availableInvoicesDTOs}">
+                <tr th:each="invoice,stat : ${availableInvoicesDTOs}">
+                    <td th:text="${stat.count}"></td>
                     <td th:text="${invoice.bike}"></td>
                     <td th:text="${invoice.customer}"></td>
                     <td th:text="${invoice.salesman}"></td>

@@ -11,10 +11,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -41,8 +46,7 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/error/**", "/images/**").permitAll()
-
+                .requestMatchers("/login", "/error", "/images/**").permitAll()
                 .requestMatchers("/personRepairing/**","/add_update_parts/**","/add_part/**","/update_part/**","/delete_part/**",
                         "/add_update_services/**","/add_service/**","/update_service/**","/delete_service**",
                         "/add_update_person_repairing/**","/add_person_repairing/**","/update_person_repairing/**","/delete_person_repairing/**")
@@ -53,7 +57,10 @@ public class SecurityConfiguration {
                         "/add_salesman/**","/update_salesman/**","/delete_salesman/**")
                 .hasAnyAuthority("SALESMAN")
 
-                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
+                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**","/invoices-purchases/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
                 .and()
                 .formLogin()
                 .permitAll()

@@ -36,7 +36,7 @@
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br><br>
 <div class="header">
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
     <h1 class="centered-title">Codfish Bike Sales & Service</h1>
@@ -44,12 +44,27 @@
 <div class="container">
     <div class="row mt-5 justify-content-center">
         <div class="col-md-auto">
-            <a th:href="@{/salesman}" class="btn btn-info btn-lg" role="button">Salesman Portal</a>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{/images/salesman_image.jpg}" alt="Salesman Image">
+                <div class="card-body">
+                    <h5 class="card-title">Salesman Portal</h5>
+                    <p class="card-text">Access the Salesman Portal for managing sales and customer interactions.</p>
+                    <a th:href="@{/salesman}" class="btn btn-primary">Go to Salesman Portal</a>
+                </div>
+            </div>
         </div>
         <div class="col-md-auto">
-            <a th:href="@{/personRepairing}" class="btn btn-info btn-lg" role="button">Person Repairing Portal</a>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{/images/repairing_image.jpg}" alt="Repairing Image">
+                <div class="card-body">
+                    <h5 class="card-title">Person Repairing Portal</h5>
+                    <p class="card-text">Enter the Repairing Portal for service orders and repair management.</p>
+                    <a th:href="@{/personRepairing}" class="btn btn-primary">Go to Repairing Portal</a>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
 <div class="footer">
     <p>© copyright by piotr.dorszynski@gmail.com</p>

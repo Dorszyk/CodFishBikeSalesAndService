@@ -26,6 +26,6 @@ public class HomeControllerIT extends AbstractIT {
         String url = String.format("http://localhost:%s%s/personRepairing", port, basePath);
 
         String page = this.testRestTemplate.getForObject(url, String.class);
-        Assertions.assertThat(page).contains("CodFish Bike & Service");
+        Assertions.assertThat(page).contains("CodFish Bike&Service");
     }
 }

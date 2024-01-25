@@ -11,7 +11,7 @@ public class EntityFixtures {
 
     public static BikeToBuyEntity someBike1() {
         return BikeToBuyEntity.builder()
-                .serial("serial")
+                .serial("serial1")
                 .category("category1")
                 .subcategory("subcategory1")
                 .brand("brand1")
@@ -24,7 +24,7 @@ public class EntityFixtures {
 
     public static BikeToBuyEntity someBike2() {
         return BikeToBuyEntity.builder()
-                .serial("seria2l")
+                .serial("seria2")
                 .category("category2")
                 .subcategory("subcategory2")
                 .brand("brand2")
@@ -37,7 +37,7 @@ public class EntityFixtures {
 
     public static BikeToBuyEntity someBike3() {
         return BikeToBuyEntity.builder()
-                .serial("serial2")
+                .serial("serial3")
                 .category("category3")
                 .subcategory("subcategory3")
                 .brand("brand3")

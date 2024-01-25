@@ -39,7 +39,7 @@ public class ServiceNewCustomerController {
             BindingResult result
     ) {
         if (result.hasErrors()) {
-            return "info/error";
+            return "/error";
         }
         BikeServiceRequest serviceRequest = bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
         bikeServiceRequestService.makeServiceRequest(serviceRequest);
