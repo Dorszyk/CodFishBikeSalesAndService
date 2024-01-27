@@ -50,20 +50,24 @@
         <form action="#" th:action="@{/invoices-purchases}" method="POST" th:object="${InvoiceDTO}">
             <table class="table" id="service-table">
                 <thead class="table-dark">
+                <h4> Invoices customers :</h4>
                 <tr>
-                    <th class="col-2">Number:</th>
-                    <th class="col-2">Bike:</th>
-                    <th class="col-0">Customer:</th>
-                    <th class="col-2">Salesman:</th>
+                    <th class="col-0">Number:</th>
+                    <th class="col-0">Bike:</th>
+                    <th class="col-0">Customer's name:</th>
+                    <th class="col-0">Customer's surname:</th>
+                    <th class="col-0">Customer's email:</th>
+                    <th class="col-0">Customer's phone:</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="invoice,stat : ${availableInvoicesDTOs}">
                     <td th:text="${stat.count}"></td>
-                    <td th:text="${invoice.bike}"></td>
-                    <td th:text="${invoice.customer}"></td>
-                    <td th:text="${invoice.salesman}"></td>
-
+                    <td th:text="${invoice.bike.serial}"></td>
+                    <td th:text="${invoice.customer.name}"></td>
+                    <td th:text="${invoice.customer.surname}"></td>
+                    <td th:text="${invoice.customer.email}"></td>
+                    <td th:text="${invoice.customer.phone}"></td>
                 </tr>
                 </tbody>
             </table>

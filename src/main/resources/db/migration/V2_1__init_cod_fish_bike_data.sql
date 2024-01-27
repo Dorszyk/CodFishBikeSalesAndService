@@ -35,7 +35,11 @@ values ('Rower E-Bike', 'MTB', 'CUBE633101', 'Cube', 'REACTION HYBRID PERFORMANC
        ('Rower E-Bike', 'Junior', 'KB_76218', 'Kellys', 'eMARC SH 24" 418Wh', '2023', 'Yellow', '8499.00');
 
 insert into SERVICE (service_code, description, price)
-values ('CENT-KOL-001', 'Centrowanie koła', '50.00'),
+values ('USŁUGA-SERWISOWA-1', 'Usługa serwisowa 1', '150.00'),
+       ('USŁUGA-SERWISOWA-2', 'Usługa serwisowa 2', '250.00'),
+       ('USŁUGA-SERWISOWA-3', 'Usługa serwisowa 3', '350.00'),
+       ('USŁUGA-SERWISOWA-4', 'Usługa serwisowa 4', '450.00'),
+       ('CENT-KOL-001', 'Centrowanie koła', '50.00'),
        ('REG-LUZ-002', 'Regulacja przerzutki', '30.00'),
        ('WYM-OKL-003', 'Wymiana pary okładzin hamulcowych', '20.00'),
        ('WYM-OPO-004', 'Wymiana opony', '30'),

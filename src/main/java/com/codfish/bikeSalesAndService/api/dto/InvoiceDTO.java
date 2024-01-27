@@ -20,8 +20,8 @@ public class InvoiceDTO {
     private Integer invoiceId;
     private String invoiceNumber;
     private OffsetDateTime dateTime;
-    private BikeToBuyEntity bike;
-    private CustomerEntity customer;
+    private BikeToBuyDTO bike;
+    private CustomerDTO customer;
     private SalesmanEntity salesman;
 
 }

@@ -47,6 +47,7 @@
                 <th>Received Date:</th>
                 <th>Completed Date:</th>
                 <th>Comment:</th>
+                <th>Comment:</th>
                 <th>Services:</th>
                 <th>Parts:</th>
             </tr>
@@ -76,6 +77,14 @@
                             <td th:text="${service.price}"></td>
                         </tr>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="3">Total Price:</th>
+                            <th>
+                            <span th:text="${serviceRequest.getTotalServicePrice()}"></span> zł
+                            </th>
+                        </tr>
+                        </tfoot>
                     </table>
 
                     <div th:if="${serviceRequest.services == null || serviceRequest.services.size() == 0}">
@@ -83,7 +92,6 @@
                     </div>
                 </td>
                 <td>
-
                     <table class="table">
                         <thead class="table-dark">
                         <tr>
@@ -101,10 +109,27 @@
                             <td th:text="${part.price}"></td>
                         </tr>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="3">Total Price:</th>
+                            <th>
+                                <span th:text="${serviceRequest.getTotalPartsPrice()}"></span> zł
+                            </th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <div th:if="${serviceRequest.parts == null || serviceRequest.parts.size() == 0}">
                         No parts recorded
                     </div>
+                </td>
+            </tr>
+            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}"
+                th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}">
+            </tr>
+            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}"
+                th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}">
+                <td colspan="3" style="font-weight: bold; font-size: medium;">Total Price (Services + Parts):
+                    <span th:text="${serviceRequest.getTotalPrice()}"></span> zł
                 </td>
             </tr>
             <tr th:if="${bikeHistoryDTO == null || bikeHistoryDTO.bikeServiceRequests.size() == 0}">

@@ -18,5 +18,9 @@ public interface CustomerMapper {
     @Mapping(source = "address.address", target = "address")
     @Mapping(source = "address.houseNumber", target = "houseNumber")
     @Mapping(source = "address.apartmentNumber", target = "apartmentNumber")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "surname", target = "surname")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "phone", target = "phone")
     CustomerDTO map(final Customer customer);
 }

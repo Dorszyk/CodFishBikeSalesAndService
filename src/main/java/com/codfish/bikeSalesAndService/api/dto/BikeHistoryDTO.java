@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -37,5 +39,24 @@ public class BikeHistoryDTO {
         private String customerComment;
         private List<ServiceDTO> services;
         private List<PartDTO> parts;
+
+        public BigDecimal getTotalPartsPrice() {
+            return parts.stream()
+                    .map(PartDTO::getPrice)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+        public BigDecimal getTotalServicePrice() {
+            return services.stream()
+                    .map(ServiceDTO::getPrice)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+
+        public BigDecimal getTotalPrice() {
+            BigDecimal totalPartsPrice = getTotalPartsPrice();
+            BigDecimal totalServicePrice = getTotalServicePrice();
+            return totalPartsPrice.add(totalServicePrice);
+        }
     }
 }

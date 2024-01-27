@@ -31,8 +31,11 @@
                     <th class="col-0">Invoice Number:</th>
                     <th class="col-0">Date time:</th>
                     <th class="col-0">Serial Bike:</th>
-                    <th class="col-0">Customer:</th>
+                    <th class="col-0">Customer's name:</th>
+                    <th class="col-0">Customer's surname:</th>
+                    <th class="col-0">Customer's email:</th>
                     <th class="col-0">Salesman:</th>
+                    <th class="col-0">Total price PLN:</th>
 
                 </tr>
                 </thead>
@@ -42,9 +45,12 @@
                     <td th:text="${invoice.invoiceId}"></td>
                     <td th:text="${invoice.invoiceNumber}"></td>
                     <td th:text="${invoice.dateTime}"></td>
-                    <td th:text="${invoice.bike}"></td>
-                    <td th:text="${invoice.customer}"></td>
+                    <td th:text="${invoice.bike.serial}"></td>
+                    <td th:text="${invoice.customer.name}"></td>
+                    <td th:text="${invoice.customer.surname}"></td>
+                    <td th:text="${invoice.customer.email}"></td>
                     <td th:text="${invoice.salesman}"></td>
+                    <td th:text="${invoice.bike.price}"></td>
 
                 </tr>
                 </tbody>
