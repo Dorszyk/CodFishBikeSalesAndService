@@ -8,11 +8,11 @@ import com.codfish.bikeSalesAndService.domain.BikeToService;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -26,8 +26,10 @@ public class BikeService {
     @Transactional
     public List<BikeToBuy> findAvailableBike() {
         List<BikeToBuy> availableBike = bikeToBuyDAO.findAvailable();
-        log.info("Available bike: [{}]", availableBike.size());
-        return availableBike;
+        List<BikeToBuy> sortAvailableBike = new ArrayList<>(availableBike);
+        sortAvailableBike.sort(Comparator.comparing(BikeToBuy::getBrand));
+        log.info("Available bike: [{}]", sortAvailableBike.size());
+        return sortAvailableBike;
     }
 
     @Transactional
