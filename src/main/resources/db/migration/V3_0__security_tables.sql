@@ -22,10 +22,10 @@ CREATE TABLE codfish_bike_user_role
     PRIMARY KEY (user_id, role_id),
     CONSTRAINT fk_codfish_bike_user_role_user
         FOREIGN KEY (user_id)
-            REFERENCES codfish_bike_user(user_id),
+            REFERENCES codfish_bike_user (user_id),
     CONSTRAINT fk_codfish_bike_user_role_role
         FOREIGN KEY (role_id)
-            REFERENCES codfish_bike_role(role_id)
+            REFERENCES codfish_bike_role (role_id)
 
 )
 

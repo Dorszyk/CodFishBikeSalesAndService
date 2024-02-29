@@ -1,11 +1,11 @@
 CREATE TABLE service_person
 (
-    service_person_id       SERIAL      NOT NULL,
-    hours                   INT         NOT NULL,
+    service_person_id       SERIAL       NOT NULL,
+    hours                   INT          NOT NULL,
     comment                 VARCHAR(256) NOT NULL,
-    bike_service_request_id INT         NOT NULL,
-    person_repairing_id     INT         NOT NULL,
-    service_id              INT         NOT NULL,
+    bike_service_request_id INT          NOT NULL,
+    person_repairing_id     INT          NOT NULL,
+    service_id              INT          NOT NULL,
     PRIMARY KEY (service_person_id),
     CONSTRAINT fk_service_person_bike_service_request
         FOREIGN KEY (bike_service_request_id)

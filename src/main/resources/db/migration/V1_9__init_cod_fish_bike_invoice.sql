@@ -3,7 +3,7 @@ CREATE TABLE invoice
     invoice_id     SERIAL                   NOT NULL,
     invoice_number VARCHAR(64)              NOT NULL,
     date_time      TIMESTAMP WITH TIME ZONE NOT NULL,
-    bike_to_buy_id  INT                      NOT NULL,
+    bike_to_buy_id INT                      NOT NULL,
     customer_id    INT                      NOT NULL,
     salesman_id    INT                      NOT NULL,
     PRIMARY KEY (invoice_id),

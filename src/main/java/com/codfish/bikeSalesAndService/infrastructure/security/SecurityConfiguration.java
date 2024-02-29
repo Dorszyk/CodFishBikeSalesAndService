@@ -57,7 +57,7 @@ public class SecurityConfiguration{
                         "/add_salesman/**","/update_salesman/**","/delete_salesman/**")
                 .hasAnyAuthority("SALESMAN")
 
-                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**","/invoices-purchases/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
+                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**","/invoices-purchases/**","/add_customer/**","/deleteCustomer/**").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler())
@@ -70,7 +70,6 @@ public class SecurityConfiguration{
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();
-
         return http.build();
     }
 
