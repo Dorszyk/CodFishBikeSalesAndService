@@ -86,7 +86,7 @@
                 <td th:text="${part.description}">Description</td>
                 <td th:text="${part.price}">Price</td>
                 <td>
-                    <form th:action="@{/delete_part}" method="post">
+                    <form th:action="@{/delete_part}" th:method="DELETE">
                         <input type="hidden" name="serialNumber" th:value="${part.serialNumber}" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>

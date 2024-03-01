@@ -114,7 +114,8 @@
                             <td th:text="${customer.houseNumber}"></td>
                             <td th:text="${customer.apartmentNumber}"></td>
                             <td>
-                                <form th:action="@{/deleteCustomer/{email}(email=${customer.email})}" method="POST">
+                                <form th:action="@{/delete_customer}" th:method="DELETE">
+                                    <input type="hidden" name="email" th:value="${customer.email}"/>
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>

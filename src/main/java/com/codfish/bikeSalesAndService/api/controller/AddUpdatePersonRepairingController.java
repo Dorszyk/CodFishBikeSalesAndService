@@ -137,7 +137,7 @@ public class AddUpdatePersonRepairingController {
         return "info/update_person_repairing_done";
     }
 
-    @PostMapping(value = DELETE_PERSON_REPAIRING)
+    @DeleteMapping(value = DELETE_PERSON_REPAIRING)
     public String deletePersonRepairing(
             @RequestParam("codeNameSurname") String codeNameSurname, Model model
     ) {

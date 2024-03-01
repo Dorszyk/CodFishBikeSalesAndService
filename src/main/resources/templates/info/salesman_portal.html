@@ -151,7 +151,8 @@
                 <td th:text="${bike.color}"></td>
                 <td th:text="${bike.price}"></td>
                 <td>
-                    <form th:action="@{/deleteBike/{serial}(serial=${bike.serial})}" method="POST">
+                    <form th:action="@{/delete_bike}" th:method="DELETE">
+                        <input type="hidden" name="serial" th:value="${bike.serial}"/>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>

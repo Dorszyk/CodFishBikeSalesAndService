@@ -2,6 +2,7 @@ package com.codfish.bikeSalesAndService.api.controller;
 
 import com.codfish.bikeSalesAndService.api.dto.CustomerDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.CustomerMapper;
+import com.codfish.bikeSalesAndService.business.CustomerService;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.domain.exception.ProcessingException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.AddressEntity;
@@ -11,10 +12,7 @@ import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.Cu
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -25,11 +23,12 @@ import java.util.Optional;
 public class CustomerController {
     private final String PURCHASE_CUSTOMER = "/customers-purchases";
     private final String ADD_CUSTOMER = "/add_customer";
-    private static final String DELETE_CUSTOMER = "/deleteCustomer/{email}";
+    private static final String DELETE_CUSTOMER = "/delete_customer";
 
     private final CustomerMapper customerMapper;
     private final CustomerRepository customerRepository;
     private final CustomerJpaRepository customerJpaRepository;
+    private final CustomerService customerService;
 
     @GetMapping(value = PURCHASE_CUSTOMER)
     public ModelAndView bikeCustomerPage() {
@@ -83,14 +82,11 @@ public class CustomerController {
 
     }
 
-    @PostMapping(value = DELETE_CUSTOMER)
-    public String deleteCustomer(@PathVariable("email") String customerEmail, Model model) {
-        Optional<CustomerEntity> customerToDelete = customerJpaRepository.findByEmail(customerEmail);
-        if (customerToDelete.isPresent()) {
-            customerJpaRepository.delete(customerToDelete.get());
-        } else {
-            throw new NotFoundException("Customer with email: [%s] not found in the database".formatted(customerEmail));
-        }
+    @DeleteMapping(value = DELETE_CUSTOMER)
+    public String deleteCustomer(
+            @RequestParam("email") String customerEmail, Model model
+    ) {
+        customerService.deleteCustomer(customerEmail);
         var availableCustomers = customerRepository.findAvailable().stream()
                 .map(customerMapper::map)
                 .toList();

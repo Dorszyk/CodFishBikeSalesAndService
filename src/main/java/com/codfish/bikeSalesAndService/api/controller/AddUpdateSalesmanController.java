@@ -138,7 +138,7 @@ public class AddUpdateSalesmanController {
         return "info/update_salesman_done";
     }
 
-    @PostMapping(value = DELETE_SALESMAN)
+    @DeleteMapping(value = DELETE_SALESMAN)
     public String deleteSalesman(
             @RequestParam("codeNameSurname") String codeNameSurname, Model model
     ) {

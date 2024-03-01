@@ -11,4 +11,7 @@ public interface BikeToBuyEntityMapper {
 
     @Mapping(target = "invoice", ignore = true)
     BikeToBuy mapFormEntity(BikeToBuyEntity entity);
+
+    @Mapping(target = "invoice", ignore = true)
+    BikeToBuyEntity mapToEntity(BikeToBuy bike);
 }

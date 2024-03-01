@@ -2,6 +2,7 @@ package com.codfish.bikeSalesAndService.infrastructure.database.repository;
 
 import com.codfish.bikeSalesAndService.business.dao.BikeToBuyDAO;
 import com.codfish.bikeSalesAndService.domain.BikeToBuy;
+import com.codfish.bikeSalesAndService.infrastructure.database.entity.BikeToBuyEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.BikeToBuyJpaRepository;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.mapper.BikeToBuyEntityMapper;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,11 @@ public class BikeToBuyRepository implements BikeToBuyDAO {
     public Optional<BikeToBuy> findBikeToBuyBySerial(String bikeSerial) {
         return bikeToBuyJpaRepository.findBySerial(bikeSerial)
                 .map(bikeToBuyEntityMapper::mapFormEntity);
+    }
+
+    @Override
+    public void deleteBike(BikeToBuy bike) {
+        BikeToBuyEntity toDelete = bikeToBuyEntityMapper.mapToEntity(bike);
+        bikeToBuyJpaRepository.delete(toDelete);
     }
 }

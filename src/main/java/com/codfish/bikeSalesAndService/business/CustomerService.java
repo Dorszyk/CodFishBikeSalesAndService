@@ -38,4 +38,14 @@ public class CustomerService {
     public Customer saveCustomer(Customer customer) {
         return customerDAO.saveCustomer(customer);
     }
+
+    @Transactional
+    public void deleteCustomer(String customerEmail) {
+        Optional<Customer> customer = customerDAO.findByEmail(customerEmail);
+        if (customer.isPresent()) {
+            customerDAO.deleteCustomer(customer.get());
+        } else {
+            throw new NotFoundException("Customer with email: " + customerEmail + " not found.");
+        }
+    }
 }

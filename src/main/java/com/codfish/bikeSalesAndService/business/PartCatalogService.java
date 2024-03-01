@@ -47,7 +47,7 @@ public class PartCatalogService {
 
     public List<Part> findAll() {
         List<Part> parts = partDAO.findAll();
-        log.info("Available parts: [{}]", parts);
+        log.info("Available parts: [{}]", parts.size());
         return parts;
     }
 }

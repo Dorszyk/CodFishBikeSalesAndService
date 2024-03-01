@@ -86,7 +86,7 @@
                 <td th:text="${service.description}"></td>
                 <td th:text="${service.price}"></td>
                 <td>
-                    <form th:action="@{/delete_service}" method="post">
+                    <form th:action="@{/delete_service}" th:method="DELETE">
                         <input type="hidden" name="serviceCode" th:value="${service.serviceCode}"/>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>

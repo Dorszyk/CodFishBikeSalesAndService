@@ -100,7 +100,7 @@ public class AddUpdatePartsController {
         return partSerialNumbers;
     }
 
-    @PostMapping(value = PARTS_DELETE)
+    @DeleteMapping(value = PARTS_DELETE)
     public String deletePart(
             @RequestParam("serialNumber") String serialNumber
     ) {

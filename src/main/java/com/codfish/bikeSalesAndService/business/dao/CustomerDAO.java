@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface CustomerDAO {
 
     Optional<Customer> findByEmail(String email);
+
     List<Customer> findAvailable();
 
     void issuerInvoice(Customer customer);
@@ -15,6 +16,8 @@ public interface CustomerDAO {
     void saveServiceRequest(Customer customer);
 
     Customer saveCustomer(Customer customer);
+
+    void deleteCustomer(Customer customer);
 
     boolean existsByEmail(String customerEmail);
 }

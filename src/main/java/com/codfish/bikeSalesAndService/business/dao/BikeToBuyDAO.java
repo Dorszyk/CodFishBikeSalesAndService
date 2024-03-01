@@ -10,4 +10,6 @@ public interface BikeToBuyDAO {
     Optional<BikeToBuy> findBikeToBuyBySerial(String bikeSerial);
 
     List<BikeToBuy> findAvailable();
+
+    void deleteBike(BikeToBuy bike);
 }

@@ -24,7 +24,7 @@ public class AddUpdateServicesController {
     public static final String SERVICES_ADD_UPDATE = "/add_update_services";
     public static final String SERVICE_ADD = "/add_service";
     public static final String SERVICE_UPDATE = "/update_service";
-    public static final String PARTS_DELETE = "/delete_service";
+    public static final String SERVICE_DELETE = "/delete_service";
 
     private final ServiceCatalogService serviceCatalogService;
     private final ServiceMapper serviceMapper;
@@ -87,7 +87,7 @@ public class AddUpdateServicesController {
                 .map(serviceMapper::map)
                 .toList();
     }
-    @PostMapping(value = PARTS_DELETE)
+    @DeleteMapping(value = SERVICE_DELETE)
     public String deletePart(
             @RequestParam("serviceCode") String serviceCode
     ) {

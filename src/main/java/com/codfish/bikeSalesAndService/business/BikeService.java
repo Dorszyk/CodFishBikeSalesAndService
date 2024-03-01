@@ -8,11 +8,13 @@ import com.codfish.bikeSalesAndService.domain.BikeToService;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -72,4 +74,9 @@ public class BikeService {
         return bikeToServiceDAO.findBikeHistoryBySerial(serial);
     }
 
+    @Transactional
+    public void deleteBike(String serial) {
+        bikeToBuyDAO.findBikeToBuyBySerial(serial)
+                .ifPresent(bikeToBuyDAO::deleteBike);
+    }
 }

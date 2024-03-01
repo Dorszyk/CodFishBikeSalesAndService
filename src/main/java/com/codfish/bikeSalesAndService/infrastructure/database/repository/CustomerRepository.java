@@ -79,4 +79,10 @@ public class CustomerRepository implements CustomerDAO {
     public boolean existsByEmail(String email) {
         return customerJpaRepository.existsByEmail(email);
     }
+
+    @Override
+    public void deleteCustomer(Customer customer) {
+        CustomerEntity toDelete = customerEntityMapper.mapToEntity(customer);
+        customerJpaRepository.delete(toDelete);
+    }
 }

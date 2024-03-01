@@ -5,6 +5,7 @@ import com.codfish.bikeSalesAndService.api.dto.mapper.BikeMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.PersonRepairingMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.SalesmanMapper;
 import com.codfish.bikeSalesAndService.business.BikePurchaseService;
+import com.codfish.bikeSalesAndService.business.BikeService;
 import com.codfish.bikeSalesAndService.business.BikeServiceRequestService;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.domain.exception.ProcessingException;
@@ -27,10 +28,11 @@ public class SalesmanController {
     private static final String SALESMAN = "/salesman";
     private static final String ADD_BIKE = "/add_bike";
     private static final String UPDATE_BIKE = "/update_bike";
-    private static final String DELETE_BIKE = "/deleteBike/{serial}";
+    private static final String DELETE_BIKE = "/delete_bike";
 
     private final BikePurchaseService bikePurchaseService;
     private final BikeServiceRequestService bikeServiceRequestService;
+    private final BikeService bikeService;
     private final BikeMapper bikeMapper;
     private final SalesmanMapper salesmanMapper;
     private final PersonRepairingMapper personRepairingMapper;
@@ -41,6 +43,7 @@ public class SalesmanController {
         Map<String, Object> model = prepareSalesmanPortalData();
         return new ModelAndView("info/salesman_portal", model);
     }
+
     private Map<String, Object> prepareSalesmanPortalData() {
         var availableBikes = bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
@@ -58,6 +61,7 @@ public class SalesmanController {
                 "bikeToBuyDTO", BikeToBuyDTO.buildDefault()
         );
     }
+
     @PostMapping(value = ADD_BIKE)
     public String addBike(
             @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model
@@ -112,21 +116,16 @@ public class SalesmanController {
 
         return "info/update_bike";
     }
-    @PostMapping(value = DELETE_BIKE)
-    public String deleteBike(@PathVariable("serial") String serial, Model model) {
-        Optional<BikeToBuyEntity> bikeToDelete = bikeToBuyJpaRepository.findBySerial(serial);
-        if (bikeToDelete.isPresent()) {
-            bikeToBuyJpaRepository.delete(bikeToDelete.get());
-        } else {
-            throw new NotFoundException("Bike with serial: [%s] not found in the database.".formatted(serial));
-        }
 
+    @DeleteMapping(value = DELETE_BIKE)
+    public String deleteBike(
+            @RequestParam("serial") String serial, Model model
+    ) {
+        bikeService.deleteBike(serial);
         var availableBikes = bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
                 .toList();
         model.addAttribute("availableBikeDTOs", availableBikes);
-
         return "info/delete_bike_done";
     }
-
 }

@@ -116,7 +116,7 @@
                 <td th:text="${salesman.codeNameSurname}"></td>
                 <td th:text="${salesman.userId}"></td>
                 <td>
-                    <form th:action="@{/delete_salesman}" method="post">
+                    <form th:action="@{/delete_salesman}" th:method="DELETE">
                         <input type="hidden" name="codeNameSurname" th:value="${salesman.codeNameSurname}"/>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
