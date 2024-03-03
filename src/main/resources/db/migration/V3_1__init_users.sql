@@ -22,13 +22,13 @@ UPDATE salesman SET user_id = 1 WHERE code_name_surname ='SAL99436PK';
 UPDATE salesman SET user_id = 2 WHERE code_name_surname ='SAL99437MS';
 UPDATE salesman SET user_id = 3 WHERE code_name_surname ='SAL99438TO';
 UPDATE salesman SET user_id = 4 WHERE code_name_surname ='SAL99439RP';
-UPDATE salesman SET user_id = 9 WHERE code_name_surname ='SAL99440User_1';
+UPDATE salesman SET user_id = 9 WHERE code_name_surname ='SAL99440US';
 
 UPDATE person_repairing  SET user_id = 5 WHERE code_name_surname = 'REP17123AR';
 UPDATE person_repairing  SET user_id = 6 WHERE code_name_surname = 'REP17124JK';
 UPDATE person_repairing  SET user_id = 7 WHERE code_name_surname = 'REP17125SE';
 UPDATE person_repairing  SET user_id = 8 WHERE code_name_surname = 'REP17126SP';
-UPDATE person_repairing  SET user_id = 10 WHERE code_name_surname = 'REP17220User_2';
+UPDATE person_repairing  SET user_id = 10 WHERE code_name_surname = 'REP17220US';
 
 insert into codfish_bike_role(role_id, role) VALUES (1,'SALESMAN'), (2, 'PERSON_REPAIRING');
 

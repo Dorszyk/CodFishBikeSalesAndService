@@ -3,6 +3,7 @@ package com.codfish.bikeSalesAndService.business;
 import com.codfish.bikeSalesAndService.business.dao.CustomerDAO;
 import com.codfish.bikeSalesAndService.domain.Customer;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +12,16 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+
 public class CustomerService {
 
     private final CustomerDAO customerDAO;
+    private final CustomerRepository customerRepository;
+
+    public Optional<Customer> findByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
 
     @Transactional
     public void issueInvoice(Customer customer) {

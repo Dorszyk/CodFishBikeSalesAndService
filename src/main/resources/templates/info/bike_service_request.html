@@ -24,17 +24,19 @@
     </div>
 
     <div class="col-md-8 mx-auto">
-        <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
+        <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
             <h3>Existing customer:</h3>
             <div class="mb-3">
                 <label for="existingCustomerEmail" class="form-label">Customer email:</label>
                 <input type="text" id="existingCustomerEmail" th:field="*{existingCustomerEmail}"
-                       class="form-control" aria-label="Customer Email">
+                       class="form-control" aria-label="Customer Email"
+                       placeholder="Wprowadź adres e-mail istniejącego klienta..." required>
             </div>
             <div class="mb-3">
                 <label for="existingBikeSerial" class="form-label">Bike Serial:</label>
                 <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}" class="form-control"
-                       aria-label="Bike Serial">
+                       aria-label="Bike Serial" placeholder="Wprowadź bike-serial roweru zakupionego przez klienta..."
+                       required>
             </div>
             <div class="mb-3">
                 <label for="customerComment" class="form-label">Service comment:</label>
@@ -46,14 +48,14 @@
             </div>
         </form>
         <br>
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer or bike...">
-        <form action="#" th:action="@{/invoices-purchases}" method="POST" th:object="${InvoiceDTO}">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta lub rower...">
+        <form action="#" th:action="@{/invoices-purchases}" th:method="POST" th:object="${InvoiceDTO}">
             <table class="table" id="service-table">
                 <thead class="table-dark">
-                <h4> Invoices customers :</h4>
+                <h4>Bikes sold:</h4>
                 <tr>
-                    <th class="col-0">Number:</th>
-                    <th class="col-0">Bike:</th>
+                    <th class="col-0">Id:</th>
+                    <th class="col-0">Bike Serial:</th>
                     <th class="col-0">Customer's name:</th>
                     <th class="col-0">Customer's surname:</th>
                     <th class="col-0">Customer's email:</th>

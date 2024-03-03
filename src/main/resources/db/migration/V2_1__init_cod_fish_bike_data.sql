@@ -3,14 +3,14 @@ values ('Piotr', 'Korba', 'SAL99436PK'),
        ('Marcin', 'Siodełko', 'SAL99437MS'),
        ('Tomasz', 'Opona', 'SAL99438TO'),
        ('Rafał', 'Przerzutka', 'SAL99439RP'),
-       ('User1', 'Salesman', 'SAL99440User_1');
+       ('User1', 'Salesman', 'SAL99440US');
 
 insert into PERSON_REPAIRING (name, surname, code_name_surname)
 values ('Adam', 'Regeneracja', 'REP17123AR'),
        ('Jakub', 'Kontrola', 'REP17124JK'),
        ('Sebastian', 'Eliminacja', 'REP17125SE'),
        ('Szymon', 'Poprawa', 'REP17126SP'),
-       ('User2', 'PersonRepairing', 'REP17220User_2');
+       ('User2', 'PersonRepairing', 'REP17220US');
 
 insert into BIKE_TO_BUY (category, subcategory, serial, brand, model, production_year, color, price)
 values ('Rower E-Bike', 'MTB', 'CUBE633101', 'Cube', 'REACTION HYBRID PERFORMANCE 500', '2023', 'Black', '13699.00'),

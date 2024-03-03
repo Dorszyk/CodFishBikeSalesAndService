@@ -64,7 +64,7 @@ public class SalesmanController {
 
     @PostMapping(value = ADD_BIKE)
     public String addBike(
-            @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model
+            @Valid @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model
     ) {
 
         Optional<BikeToBuyEntity> existingBike = bikeToBuyJpaRepository.findBySerial(bikeDTO.getSerial());
@@ -91,8 +91,7 @@ public class SalesmanController {
         return "info/add_bike";
     }
 
-
-    @RequestMapping(value = UPDATE_BIKE)
+    @PutMapping(value = UPDATE_BIKE)
     public String updateBike(
             @Valid @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO,
             Model model

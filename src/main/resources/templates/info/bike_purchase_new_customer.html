@@ -16,10 +16,11 @@
 
 <div class="container">
     <div>
-        <form action="#" th:action="@{/purchase-new-customer}" method="POST" th:object="${bikePurchaseDTO}">
+        <form action="#" th:action="@{/purchase-new-customer}" th:method="POST" th:object="${bikePurchaseDTO}">
             <div class="col-12">
                 <div class="button-row">
-                    <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go
+                    <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>
+                        Go
                         back</a>
                 </div>
             </div>
@@ -118,7 +119,7 @@
     </div>
     <div class="container">
         <div>
-            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj rower...">
             <h4><p>Available bikes:</p></h4>
             <table class="table" id="bikes-table">
                 <thead class="table-dark">

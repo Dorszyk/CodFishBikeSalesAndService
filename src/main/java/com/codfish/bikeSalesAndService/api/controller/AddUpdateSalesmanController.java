@@ -59,7 +59,7 @@ public class AddUpdateSalesmanController {
 
     @PostMapping(value = ADD_SALESMAN)
     public String addSalesman(
-            @ModelAttribute("newSalesmanDTO") SalesmanDTO salesmanDTO, Model model
+            @Valid @ModelAttribute("newSalesmanDTO") SalesmanDTO salesmanDTO, Model model
     ) {
 
         Optional<SalesmanEntity> existingSalesman = salesmanJpaRepository.findByCodeNameSurname(salesmanDTO.getCodeNameSurname());
@@ -104,7 +104,7 @@ public class AddUpdateSalesmanController {
         model.addAttribute("availableSalesmenDTOs", availableSalesmen);
     }
 
-    @RequestMapping(value = UPDATE_SALESMAN)
+    @PutMapping(value = UPDATE_SALESMAN)
     public String updateSalesman(
             @Valid @ModelAttribute("salesmanDTO") SalesmanDTO salesmanDTO, Model model
     ) {

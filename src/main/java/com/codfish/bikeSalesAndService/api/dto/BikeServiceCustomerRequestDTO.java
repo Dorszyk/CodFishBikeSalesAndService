@@ -21,14 +21,21 @@ public class BikeServiceCustomerRequestDTO {
     @Email
     private String existingCustomerEmail;
 
+    @Size(min = 3, max = 32)
     private String customerName;
+
+    @Size(min = 3, max = 36)
+    @Pattern(regexp = "[a-zA-ZąęółśżźćńĄĘÓŁŚŻŹĆŃ-]{3,36}")
     private String customerSurname;
+
     @Size
     @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String customerPhone;
+    @Email
     private String customerEmail;
     private String customerAddressCountry;
     private String customerAddressCity;
+    @Pattern(regexp = "^\\d{2}-\\d{3}$")
     private String customerAddressPostalCode;
     private String customerAddressStreet;
     private String customerAddressHouseNumber;
@@ -129,8 +136,10 @@ public class BikeServiceCustomerRequestDTO {
     }
 
     private static String generateRandomAddressPostalCode() {
-
-        return new Random().nextInt(90) + 10 + "-" + new Random().nextInt(900);
+        Random random = new Random();
+        int firstPart = random.nextInt(90) + 10;
+        int secondPart = random.nextInt(900) + 100;
+        return firstPart + "-" + secondPart;
     }
 
     private static String generateRandomAddressStreet() {

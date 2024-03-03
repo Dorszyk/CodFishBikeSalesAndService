@@ -16,12 +16,13 @@
         <div class="button-row">
             <a th:href="@{/purchase-new-customer}" class="btn btn-info" role="button">New customer order</a>
             <a th:href="@{/customers-purchases}" class="btn btn-info" role="button">Customers</a>
-            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go back</a>
+            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go
+                back</a>
         </div>
     </div>
     <br>
     <div>
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for bikes...">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj roweru...">
         <h4><p>Available bikes:</p></h4>
         <table class="table" id="bikes-table">
             <thead class="table-dark">
@@ -55,7 +56,7 @@
     </div>
 </div>
 <div class="container">
-    <form action="#" th:action="@{/purchase}" method="POST" th:object="${bikePurchaseDTO}">
+    <form action="#" th:action="@{/purchase}" th:method="POST" th:object="${bikePurchaseDTO}">
         <div class="row">
             <div class="col-md-6">
                 <h4>Existing customer:</h4>
@@ -64,7 +65,7 @@
                 <div class="col-md-6">
                     <input type="text" id="existingCustomerEmail"
                            th:field="*{existingCustomerEmail}" required class="form-control "
-                           placeholder="Enter the e-mail address of the customer..."/>
+                           placeholder="Wprowadź adres e-mail istniejącego klienta..."/>
                 </div>
             </div>
         </div>
@@ -102,12 +103,12 @@
 </div>
 <div class="container-fluid">
     <div class="container">
-        <input type="text" id="searchInput1" class="form-control mb-3" placeholder="Search customer...">
-        <form action="#" th:action="@{/purchase}" method="POST" th:object="${CustomerDTO}">
+        <input type="text" id="searchInput1" class="form-control mb-3" placeholder="Wyszukaj klienta...">
+        <form action="#" th:action="@{/purchase}" th:method="POST" th:object="${CustomerDTO}">
             <table class="table" id="customer-table1">
                 <thead class="table-dark">
                 <tr>
-                    <th class="col-0">Number:</th>
+                    <th class="col-0">Id:</th>
                     <th class="col-0">Name:</th>
                     <th class="col-0">Surname:</th>
                     <th class="col-2">Email:</th>

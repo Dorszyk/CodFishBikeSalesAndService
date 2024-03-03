@@ -26,31 +26,38 @@
     <div class="row">
         <div class="col-md-6">
             <h4>Add a Person Repairing</h4>
-            <form action="#" th:action="@{/add_person_repairing}" th:object="${newPersonRepairingDTO}" method="POST">
+            <form action="#" th:action="@{/add_person_repairing}" th:object="${newPersonRepairingDTO}" th:method="POST">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="Imię: Minimalna liczba znaków 3" required>
                 </div>
                 <div class="form-group">
                     <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" name="surname" required>
+                    <input type="text" class="form-control" id="surname" name="surname"
+                           placeholder="Nazwisko: Minimalna liczba znaków 3" required>
                 </div>
                 <div class="form-group">
                     <label for="codeNameSurname">Code Name Surname</label>
-                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname" required>
+                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname"
+                           placeholder="Wprowadź zgodnie z następującym wzorem REP17221A-Z(2)" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="userName">Username:</label>
-                    <input type="text" class="form-control" id="userName" name="userName" required>
+                    <input type="text" class="form-control" id="userName" name="userName"
+                           placeholder="User name: imie_nazwisko" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="email: imie.nazwisko@codfishbike.com" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Minimum 8 znaków, jedną cyfra, mała i duża litera oraz znak specjalny."
+                           required>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Add Person Repairing</button>
@@ -58,32 +65,39 @@
         </div>
         <div class="col-md-6">
             <h4>Update a Person Repairing</h4>
-            <form action="#" th:action="@{/update_person_repairing}" th:object="${updatePersonRepairingDTO}" method="PUT">
+            <form action="#" th:action="@{/update_person_repairing}" th:object="${updatePersonRepairingDTO}"
+                  th:method="PUT">
                 <div class="form-group">
                     <label for="codeNameSurname">Code Name Surname to Update</label>
                     <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname"
-                           required>
+                           placeholder="Aktualizacja osoby naprawiającej na podstawie pola Code NameSurname" required>
                 </div>
                 <div class="form-group">
                     <label for="name">New Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="Imię: Minimalna liczba znaków 3" required>
                 </div>
                 <div class="form-group">
                     <label for="surname">New Surname</label>
-                    <input type="text" class="form-control" id="surname" name="surname" required>
+                    <input type="text" class="form-control" id="surname" name="surname"
+                           placeholder="Nazwisko: Minimalna liczba znaków 3" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="userName">NewUsername:</label>
-                    <input type="text" class="form-control" id="userName" name="userName" required>
+                    <input type="text" class="form-control" id="userName" name="userName"
+                           placeholder="User name: imie_nazwisko" required>
                 </div>
                 <div class="form-group">
                     <label for="email">NewEmail:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="email: imie.nazwisko@codfishbike.com" required>
                 </div>
                 <div class="form-group">
                     <label for="password">NewPassword:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Minimum 8 znaków, jedną cyfra, mała i duża litera oraz znak specjalny."
+                           required>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-warning">Update Person Repairing</button>
@@ -95,12 +109,12 @@
 <div class="container">
     <br>
     <div>
-        <input type="text" id="searchInputPersonRepairing" class="form-control mb-3" placeholder="Search available persons repairing...">
+        <input type="text" id="searchInputPersonRepairing" class="form-control mb-3"
+               placeholder="Wyszukaj dostępne osoby naprawiające ...">
         <h3><p>Available Persons Repairing:</p></h3>
         <table class="table" id="personRepairing-table">
             <thead class="table-dark">
             <tr>
-                <th>Repair id:</th>
                 <th>Name:</th>
                 <th>Surname:</th>
                 <th>Code NameSurname:</th>
@@ -110,7 +124,6 @@
             </thead>
             <tbody>
             <tr th:each="person : ${availablePersonRepairingDTOs}">
-                <td th:text="${person.personRepairingId}">ID</td>
                 <td th:text="${person.name}">Name</td>
                 <td th:text="${person.surname}">Surname</td>
                 <td th:text="${person.codeNameSurname}">Code Name Surname</td>

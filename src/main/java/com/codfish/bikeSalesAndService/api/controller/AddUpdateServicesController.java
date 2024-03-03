@@ -21,10 +21,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class AddUpdateServicesController {
 
-    public static final String SERVICES_ADD_UPDATE = "/add_update_services";
-    public static final String SERVICE_ADD = "/add_service";
-    public static final String SERVICE_UPDATE = "/update_service";
-    public static final String SERVICE_DELETE = "/delete_service";
+    private static final String SERVICES_ADD_UPDATE = "/add_update_services";
+    private static final String SERVICE_ADD = "/add_service";
+    private static final String SERVICE_UPDATE = "/update_service";
+    private static final String SERVICE_DELETE = "/delete_service";
 
     private final ServiceCatalogService serviceCatalogService;
     private final ServiceMapper serviceMapper;
@@ -63,7 +63,7 @@ public class AddUpdateServicesController {
         return "info/add_service";
     }
 
-    @RequestMapping(value = SERVICE_UPDATE)
+    @PutMapping(value = SERVICE_UPDATE)
     public String updatePart(
             @Valid @ModelAttribute("serviceDTOs") ServiceDTO serviceDTO,
             Model model

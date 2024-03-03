@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
@@ -11,30 +10,39 @@
     <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
     <h1 class="centered-title">Salesman-sold a bike</h1>
 </div>
-    <div class="container">
-        <h4>The bike was sold</h4>
-        <hr>
-        <p>Applies to the customer :
-            <b>
-                <span th:if="${customerName}" th:text="${customerName}">NAME</span>
-                <span th:if="${customerSurname}" th:text="${customerSurname}">SURNAME</span>
-                <span th:if="${existingCustomerEmail}" th:text="${existingCustomerEmail}">EXISTING_CUSTOMER_EMAIL</span>
-            </b>
-             Invoice number :
-            <b>
-                <span th:if="${invoiceNumber}" th:text="${invoiceNumber}">INVOICE_NUMBER</span>
-            </b>
-        </p>
-    </div>
+<div class="container">
+    <h4>The bike was sold:</h4>
+    <p>
+        Bike serial number: <b><span th:text="${bikeSerial}">BIKE</span></b>
+    </p>
+    <hr>
+    <p>Applies to the customer:
+        <b>
+            <span th:if="${existingCustomerEmail != null}"
+                  th:text="${existingCustomerEmail}">EXISTING_CUSTOMER_EMAIL</span>
+            <span th:if="${existingCustomerEmail == null}" th:text="${customerName + ' ' + customerSurname}">NEW_CUSTOMER_NAME</span>
+        </b><br>
+        Phone: <b><span th:text="${customerPhone}">PHONE</span></b><br>
+        Address: <b>
+            <span th:text="${customerAddressCity}">CITY</span>,
+            <span th:text="${customerAddressPostalCode}">POSTAL CODE</span><br>
+            <span th:text="${customerAddressStreet}">STREET</span>
+            <span th:text="${customerAddressHouseNumber}">HOUSE NUMBER</span>,
+            <span th:text="${customerAddressApartmentNumber}">APARTMENT NUMBER</span>
+        </b><br>
+        Invoice number: <b><span th:text="${invoiceNumber}">INVOICE NUMBER</span></b>
+    </p>
+</div>
 
-    <div class="container">
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
-            </div>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
+</div>
 </body>
 <br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>
++-

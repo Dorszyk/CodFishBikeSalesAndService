@@ -1,6 +1,8 @@
 package com.codfish.bikeSalesAndService.api.dto;
 
 
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,12 +19,23 @@ import java.util.Random;
 
 public class CustomerDTO {
     private Integer customerId;
+
+    @Size(min = 3, max = 32)
     private String name;
+
+
+    @Size(min = 3, max = 36)
+    @Pattern(regexp = "[a-zA-ZąęółśżźćńĄĘÓŁŚŻŹĆŃ-]{3,36}")
     private String surname;
+
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
     private String email;
+    @Size
+    @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String phone;
     private String country;
     private String city;
+    @Pattern(regexp = "^\\d{2}-\\d{3}$")
     private String postalCode;
     private String address;
     private String houseNumber;
@@ -43,6 +56,7 @@ public class CustomerDTO {
         if (apartmentNumber != null) result.put("apartmentNumber", apartmentNumber);
         return result;
     }
+
     private static String generateRandomName() {
         String[] name = {
                 "Lena", "Grzegorz", "Izabela", "Szymon", "Oliwia",
@@ -114,8 +128,10 @@ public class CustomerDTO {
     }
 
     private static String generateRandomAddressPostalCode() {
-
-        return new Random().nextInt(90) + 10 + "-" + new Random().nextInt(900);
+        Random random = new Random();
+        int firstPart = random.nextInt(90) + 10;
+        int secondPart = random.nextInt(900) + 100;
+        return firstPart + "-" + secondPart;
     }
 
     private static String generateRandomAddressStreet() {

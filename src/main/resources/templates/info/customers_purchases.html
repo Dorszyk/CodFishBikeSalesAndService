@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-lg-6">
             <h4>Add a customer</h4>
-            <form action="#" th:action="@{/add_customer}" th:object="${availableCustomerDTOs}" method="POST">
+            <form action="#" th:action="@{/add_customer}" th:object="${availableCustomerDTOs}" th:method="POST">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" th:value="${customerDTOs.name}"
@@ -81,12 +81,12 @@
         </div>
         <div class="col-xl-*">
             <div class="container">
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search customer...">
-                <form action="#" th:action="@{/customers-purchases}" method="POST" th:object="${CustomerDTO}">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta ...">
+                <form action="#" th:action="@{/customers-purchases}" th:method="POST" th:object="${CustomerDTO}">
                     <table class="table" id="customer-table">
                         <thead class="table-dark">
                         <tr>
-                            <th class="col-0">Number:</th>
+                            <th class="col-0">Id:</th>
                             <th class="col-0">Name:</th>
                             <th class="col-0">Surname:</th>
                             <th class="col-2">Email:</th>

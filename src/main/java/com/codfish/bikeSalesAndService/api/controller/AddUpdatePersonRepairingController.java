@@ -60,7 +60,7 @@ public class AddUpdatePersonRepairingController {
 
     @PostMapping(value = ADD_PERSON_REPAIRING)
     public String addPersonRepairing(
-            @ModelAttribute("newPersonRepairingDTO") PersonRepairingDTO personRepairingDTO, Model model
+            @Valid @ModelAttribute("newPersonRepairingDTO") PersonRepairingDTO personRepairingDTO, Model model
     ) {
         Optional<PersonRepairingEntity> existingPersonRepairing = personRepairingJpaRepository.findByCodeNameSurname(personRepairingDTO.getCodeNameSurname());
         if (existingPersonRepairing.isPresent()) {
@@ -103,7 +103,7 @@ public class AddUpdatePersonRepairingController {
         model.addAttribute("availablePersonRepairingDTOs", availablePersonRepairing);
     }
 
-    @RequestMapping(value = UPDATE_PERSON_REPAIRING)
+    @PutMapping(value = UPDATE_PERSON_REPAIRING)
     public String updatePersonRepairing(
             @Valid @ModelAttribute("updatePersonRepairingDTO") PersonRepairingDTO personRepairingDTO, Model model
     ) {

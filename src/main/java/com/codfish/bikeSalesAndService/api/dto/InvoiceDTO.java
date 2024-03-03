@@ -1,7 +1,5 @@
 package com.codfish.bikeSalesAndService.api.dto;
 
-import com.codfish.bikeSalesAndService.infrastructure.database.entity.BikeToBuyEntity;
-import com.codfish.bikeSalesAndService.infrastructure.database.entity.CustomerEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.SalesmanEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -22,10 +22,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class AddUpdatePartsController {
 
-    public static final String PARTS_ADD_UPDATE = "/add_update_parts";
-    public static final String PARTS_ADD = "/add_part";
-    public static final String PARTS_UPDATE = "/update_part";
-    public static final String PARTS_DELETE = "/delete_part";
+    private static final String PARTS_ADD_UPDATE = "/add_update_parts";
+    private static final String PARTS_ADD = "/add_part";
+    private static final String PARTS_UPDATE = "/update_part";
+    private static final String PARTS_DELETE = "/delete_part";
 
     private final PartCatalogService partCatalogService;
     private final PartMapper partMapper;
@@ -65,7 +65,7 @@ public class AddUpdatePartsController {
         return "info/add_part";
     }
 
-    @RequestMapping(value = PARTS_UPDATE)
+    @PutMapping(value = PARTS_UPDATE)
     public String updatePart(
             @Valid @ModelAttribute("partDTOs") PartDTO partDTO,
             Model model

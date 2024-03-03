@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-12">
             <div class="button-row">
-                <a th:href="@{/personRepairing}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go
+                <a th:href="@{/personRepairing}" class="btn btn-secondary" role="button"><i
+                        class="fas fa-arrow-left"></i> Go
                     back</a>
             </div>
             <br>
@@ -26,7 +27,7 @@
     <div class="row">
         <div class="col-md-6">
             <h4>Add a parts</h4>
-            <form action="#" th:action="@{/add_part}" th:object="${partDTOs}" method="POST">
+            <form action="#" th:action="@{/add_part}" th:object="${partDTOs}" th:method="POST">
                 <div class="form-group">
                     <label for="serialNumber">Serial Number</label>
                     <input type="text" class="form-control" id="serialNumber" name="serialNumber" required>
@@ -45,7 +46,7 @@
         </div>
         <div class="col-md-6">
             <h4>Update a parts</h4>
-            <form action="#" th:action="@{/update_part}" th:object="${partDTOs}" method="PUT">
+            <form action="#" th:action="@{/update_part}" th:object="${partDTOs}" th:method="PUT">
                 <div class="form-group">
                     <label for="serialNumber">Serial Number to Update </label>
                     <input type="text" class="form-control" id="serialNumber" name="serialNumber" required>
@@ -67,7 +68,7 @@
 <br>
 <div class="container">
     <div>
-        <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search available parts...">
+        <input type="text" id="searchInput" class="form-control mb-2" placeholder="Wyszukaj dostępne części...">
         <h3><p>Available parts:</p></h3>
         <table class="table" id="parts-bikes">
             <thead class="table-dark">
@@ -87,7 +88,7 @@
                 <td th:text="${part.price}">Price</td>
                 <td>
                     <form th:action="@{/delete_part}" th:method="DELETE">
-                        <input type="hidden" name="serialNumber" th:value="${part.serialNumber}" />
+                        <input type="hidden" name="serialNumber" th:value="${part.serialNumber}"/>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>

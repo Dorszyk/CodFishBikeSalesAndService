@@ -22,7 +22,7 @@
 </div>
 
 <div class="container">
-    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" method="POST">
+    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
         <div class="row">
             <div class="col-md-6">
                 <h3>New Customer:</h3>
@@ -30,51 +30,51 @@
                     <div class="form-group mb-3">
                         <label for="customerName">Name:</label>
                         <input type="text" id="customerName" th:field="*{customerName}" class="form-control"
-                               aria-label="Customer Name">
+                               aria-label="Customer Name" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerSurname">Surname:</label>
                         <input type="text" id="customerSurname" th:field="*{customerSurname}"
-                               class="form-control" aria-label="Customer Surname">
+                               class="form-control" aria-label="Customer Surname" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerEmail">Email:</label>
                         <input type="email" id="customerEmail" th:field="*{customerEmail}"
-                               class="form-control" aria-label="Customer Email">
+                               class="form-control" aria-label="Customer Email" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerPhone">Phone number:</label>
                         <input type="tel" id="customerPhone" th:field="*{customerPhone}"
-                               class="form-control" aria-label="Customer Phone">
+                               class="form-control" aria-label="Customer Phone" required>
                     </div>
                 </section>
                 <section class="address-info">
                     <div class="form-group mb-3">
                         <label for="customerAddressCountry">Country:</label>
                         <input type="text" id="customerAddressCountry" th:field="*{customerAddressCountry}"
-                               class="form-control" aria-label="Customer Country">
+                               class="form-control" aria-label="Customer Country" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerAddressCity">City:</label>
                         <input type="text" id="customerAddressCity" th:field="*{customerAddressCity}"
-                               class="form-control" aria-label="Customer City">
+                               class="form-control" aria-label="Customer City" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerAddressPostalCode">Postal code:</label>
                         <input type="text" id="customerAddressPostalCode"
                                th:field="*{customerAddressPostalCode}" class="form-control"
-                               aria-label="Customer Postal Code">
+                               aria-label="Customer Postal Code" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerAddressStreet">Street:</label>
                         <input type="text" id="customerAddressStreet" th:field="*{customerAddressStreet}"
-                               class="form-control" aria-label="Customer Street">
+                               class="form-control" aria-label="Customer Street" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerAddressHouseNumber">House Number:</label>
                         <input type="text" id="customerAddressHouseNumber"
                                th:field="*{customerAddressHouseNumber}" class="form-control"
-                               aria-label="Customer House Number">
+                               aria-label="Customer House Number" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="customerAddressApartmentNumber">Apartment Number:</label>
@@ -89,22 +89,22 @@
                 <div class="form-group mb-3">
                     <label for="bikeSerial">Bike Serial:</label>
                     <input type="text" id="bikeSerial" th:field="*{bikeSerial}" class="form-control"
-                           aria-label="Bike Serial">
+                           aria-label="Bike Serial" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="bikeBrand">Bike Brand:</label>
                     <input type="text" id="bikeBrand" th:field="*{bikeBrand}" class="form-control"
-                           aria-label="Bike Brand">
+                           aria-label="Bike Brand" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="bikeModel">Bike Model:</label>
                     <input type="text" id="bikeModel" th:field="*{bikeModel}" class="form-control"
-                           aria-label="Bike Model">
+                           aria-label="Bike Model" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="bikeYear">Bike Year:</label>
                     <input type="text" id="bikeYear" th:field="*{bikeYear}" class="form-control"
-                           aria-label="Bike Year">
+                           aria-label="Bike Year" required>
                 </div>
                 <div class="form-group mt-3">
                     <label for="customerComment" class="form-label">Service Comment:</label>
@@ -120,5 +120,4 @@
 </div>
 <footer th:replace="~{/fragments/footer.html :: template}"></footer>
 </body>
-
 </html>

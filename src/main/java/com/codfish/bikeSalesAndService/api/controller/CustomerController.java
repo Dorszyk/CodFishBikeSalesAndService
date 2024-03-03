@@ -3,12 +3,12 @@ package com.codfish.bikeSalesAndService.api.controller;
 import com.codfish.bikeSalesAndService.api.dto.CustomerDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.CustomerMapper;
 import com.codfish.bikeSalesAndService.business.CustomerService;
-import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.domain.exception.ProcessingException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.AddressEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.CustomerEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.CustomerRepository;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.CustomerJpaRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +49,7 @@ public class CustomerController {
 
     @PostMapping(value = ADD_CUSTOMER)
     public String addCustomer(
-            @ModelAttribute("availableCustomerDTOs") CustomerDTO customerDTO, Model model
+            @Valid @ModelAttribute("availableCustomerDTOs") CustomerDTO customerDTO, Model model
     ) {
         Optional<CustomerEntity> existingCustomer = customerJpaRepository.findByEmail(customerDTO.getEmail());
         if (existingCustomer.isPresent()) {

@@ -1,6 +1,5 @@
 package com.codfish.bikeSalesAndService.api.controller;
 
-import com.codfish.bikeSalesAndService.api.dto.InvoiceDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.InvoiceMapper;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InvoiceController {
 
-    public final String INVOICES_PURCHASES = "/invoices-purchases";
+    private final String INVOICES_PURCHASES = "/invoices-purchases";
     private final InvoiceMapper invoiceMapper;
     private final InvoiceRepository invoiceRepository;
 

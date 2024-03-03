@@ -6,10 +6,13 @@ import com.codfish.bikeSalesAndService.api.dto.mapper.BikeMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikePurchaseMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.CustomerMapper;
 import com.codfish.bikeSalesAndService.business.BikePurchaseService;
+import com.codfish.bikeSalesAndService.business.CustomerService;
 import com.codfish.bikeSalesAndService.domain.BikePurchaseRequest;
+import com.codfish.bikeSalesAndService.domain.Customer;
 import com.codfish.bikeSalesAndService.domain.Invoice;
 import com.codfish.bikeSalesAndService.domain.Salesman;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.CustomerRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,23 +24,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class PurchaseController {
-
-    static final String PURCHASE = "/purchase";
+    static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
+    private final String PURCHASE = "/purchase";
     private final BikePurchaseService bikePurchaseService;
     private final BikePurchaseMapper bikePurchaseMapper;
     private final BikeMapper bikeMapper;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final CustomerService customerService;
 
     @GetMapping(value = PURCHASE)
     public ModelAndView bikePurchasePage() {
         Map<String, ?> model = prepareBikePurchaseData();
         return new ModelAndView("/info/bike_purchase", model);
     }
+
+    @GetMapping(value = PURCHASE_NEW_CUSTOMER)
+    public ModelAndView bikePurchaseNewCustomerPage() {
+        Map<String, ?> model = prepareBikePurchaseData();
+        return new ModelAndView("/info/bike_purchase_new_customer", model);
+    }
+
     private Map<String, ?> prepareBikePurchaseData() {
         var availableBike = bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
@@ -59,26 +71,51 @@ public class PurchaseController {
                 "bikePurchaseDTO", BikePurchaseDTO.buildDefaultData()
         );
     }
-    @PostMapping(value = PURCHASE)
+
+    @PostMapping(value = {PURCHASE, PURCHASE_NEW_CUSTOMER})
     public String makePurchase(
             @Valid @ModelAttribute("bikePurchaseDTO") BikePurchaseDTO bikePurchaseDTO,
-            ModelMap model
+            ModelMap model,
+            HttpServletRequest request
     ) {
-        BikePurchaseRequest request = bikePurchaseMapper.map(bikePurchaseDTO);
-        Invoice invoice = bikePurchaseService.purchase(request);
+        BikePurchaseRequest purchaseRequest = bikePurchaseMapper.map(bikePurchaseDTO);
+        Invoice invoice = bikePurchaseService.purchase(purchaseRequest);
+
+        Optional<Customer> existingCustomerEmailExists = customerService.findByEmail(bikePurchaseDTO.getExistingCustomerEmail());
 
         if (existingCustomerEmailExists(bikePurchaseDTO.getExistingCustomerEmail())) {
-            model.addAttribute("existingCustomerEmail", bikePurchaseDTO.getExistingCustomerEmail());
+
+            Customer customer = existingCustomerEmailExists.get();
+            model.addAttribute("customerName", customer.getName());
+            model.addAttribute("customerSurname", customer.getSurname());
+            model.addAttribute("customerPhone", customer.getPhone());
+            model.addAttribute("customerAddressCity", customer.getAddress().getCity());
+            model.addAttribute("customerAddressPostalCode", customer.getAddress().getPostalCode());
+            model.addAttribute("customerAddressStreet", customer.getAddress().getAddress());
+            model.addAttribute("customerAddressHouseNumber", customer.getAddress().getHouseNumber());
+            model.addAttribute("customerAddressApartmentNumber", customer.getAddress().getApartmentNumber());
         } else {
+
             model.addAttribute("customerName", bikePurchaseDTO.getCustomerName());
             model.addAttribute("customerSurname", bikePurchaseDTO.getCustomerSurname());
+            model.addAttribute("customerPhone", bikePurchaseDTO.getCustomerPhone());
+            model.addAttribute("customerAddressCity", bikePurchaseDTO.getCustomerAddressCity());
+            model.addAttribute("customerAddressPostalCode", bikePurchaseDTO.getCustomerAddressPostalCode());
+            model.addAttribute("customerAddressStreet", bikePurchaseDTO.getCustomerAddressStreet());
+            model.addAttribute("customerAddressHouseNumber", bikePurchaseDTO.getCustomerAddressHouseNumber());
+            model.addAttribute("customerAddressApartmentNumber", bikePurchaseDTO.getCustomerAddressApartmentNumber());
         }
+
+        model.addAttribute("bikeSerial", bikePurchaseDTO.getBikeSerial());
+        model.addAttribute("existingCustomerEmail", bikePurchaseDTO.getExistingCustomerEmail());
         model.addAttribute("invoiceNumber", invoice.getInvoiceNumber());
 
-        return "info/bike_purchase_done";
+        String requestUri = request.getRequestURI();
+        return requestUri.contains("/purchaseNewCustomer") ?
+                "info/bike_purchase_new_customer_done" :
+                "info/bike_purchase_done";
     }
-
-    private boolean existingCustomerEmailExists(String email) {
+    private boolean existingCustomerEmailExists (String email){
         return Objects.nonNull(email) && !email.isBlank();
     }
 }

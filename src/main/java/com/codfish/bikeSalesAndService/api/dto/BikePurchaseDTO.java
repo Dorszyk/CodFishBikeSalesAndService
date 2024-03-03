@@ -17,6 +17,7 @@ import java.util.Random;
 public class BikePurchaseDTO {
 
     @Email
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
     private String existingCustomerEmail;
 
     private String customerName;
@@ -26,9 +27,12 @@ public class BikePurchaseDTO {
     @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String customerPhone;
     @Email
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
     private String customerEmail;
     private String customerAddressCountry;
     private String customerAddressCity;
+
+    @Pattern(regexp = "^\\d{2}-\\d{3}$")
     private String customerAddressPostalCode;
     private String customerAddressStreet;
     private String customerAddressHouseNumber;
@@ -36,6 +40,7 @@ public class BikePurchaseDTO {
 
     private String bikeSerial;
     private String salesmanCodeNameSurname;
+
     private static String generateRandomName() {
         String[] name = {
                 "Anna", "Krzysztof", "Maria", "Paweł", "Agnieszka",
@@ -167,5 +172,4 @@ public class BikePurchaseDTO {
 
         return result;
     }
-
 }
