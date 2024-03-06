@@ -46,4 +46,8 @@ public class FragmentsController {
     public  String getFragmentsInvoices(){
         return "info/invoice_purchases";
     }
+    @GetMapping("/info/user_info")
+    public  String getFragmentsUserInfo(){
+        return "/info/user_info";
+    }
 }

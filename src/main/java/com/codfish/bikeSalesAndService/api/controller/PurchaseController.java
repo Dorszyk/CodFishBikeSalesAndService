@@ -29,8 +29,8 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class PurchaseController {
-    static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
-    private final String PURCHASE = "/purchase";
+    private static final String PURCHASE_NEW_CUSTOMER = "/purchase-new-customer";
+    static final String PURCHASE = "/purchase";
     private final BikePurchaseService bikePurchaseService;
     private final BikePurchaseMapper bikePurchaseMapper;
     private final BikeMapper bikeMapper;

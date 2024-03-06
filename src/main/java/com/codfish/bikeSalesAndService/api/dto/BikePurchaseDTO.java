@@ -110,8 +110,10 @@ public class BikePurchaseDTO {
     }
 
     private static String generateRandomAddressPostalCode() {
-
-        return new Random().nextInt(90) + 10 + "-" + new Random().nextInt(900);
+        Random random = new Random();
+        int firstPart = random.nextInt(90) + 10;
+        int secondPart = random.nextInt(900) + 100;
+        return firstPart + "-" + secondPart;
     }
 
     private static String generateRandomAddressStreet() {

@@ -51,6 +51,9 @@ dependencyManagement {
 		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
 	}
 }
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs << "-Xlint:-deprecation"
+}
 
 test {
 	useJUnitPlatform()

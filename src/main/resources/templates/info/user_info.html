@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace='~{/fragments/head.html :: template}'></div>
+
+<div th:replace='~{/fragments/header.html :: template}'></div>
+
+<body class="bg-light">
+<br><br><br>
+<div class="header">
+    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
+    <h1 class="centered-title">User information</h1>
+</div>
+</div>
+<div class="centered">
+    <p>You are logged in as: <span th:text="${username}">USER_NAME</span></p>
+    <p>Role: <span th:each="authority : ${authorities}" th:text="${authority.authority} + ' '"></span></p>
+    <p>Active account: <span th:text="${enabled} ? 'Yes' : 'No'"></span></p>
+    <p>Account not expired: <span th:text="${accountNonExpired} ? 'Yes' : 'No'"></span></p>
+    <p>Account not blocked: <span th:text="${accountNonLocked} ? 'Yes' : 'No'"></span></p>
+    <p>Credentials not expired:<span th:text="${credentialsNonExpired} ? 'Yes' : 'No'"></span></p>
+</div>
+<br><br>
+<div class="container">
+    <div class="col-12">
+        <div class="button-row">
+            <a th:href="@{/}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+        </div>
+    </div>
+</div>
+</body>
+<br><br><br>
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+</html>

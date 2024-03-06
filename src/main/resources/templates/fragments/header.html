@@ -25,8 +25,16 @@
                 <li class="nav-item"><a class="nav-link" href="/codfish-bike/add_update_person_repairing">Person Repairing-Management</a></li>
                 <li class="nav-item"><a class="nav-link" href="/codfish-bike/customers-purchases">Customers</a></li>
                 <li class="nav-item"><a class="nav-link" href="/codfish-bike/invoices-purchases">Invoices</a></li>
+                <li class="nav-item"><a class="nav-link" href="/codfish-bike/user/info">User</a></li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" th:text="${username}" style="color: #259125; font-size: 1.05em;">User Name</a>
+                </li>
             </ul>
         </div>
+        <form action="#" th:action="@{/logout}" method="post" class="form-inline my-2 my-lg-0">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
+        </form>
     </div>
 </header>
 </body>
