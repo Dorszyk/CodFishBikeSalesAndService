@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <property name="LOG_FILE_ROLLING" value="${user.dir}/my-logs/newest.log"/>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <charset>UTF-8</charset>
-            <pattern>[%t] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d [%thread] %level %mdc %logger{35} -%kvp -%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_ROLLING}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/my-logs/archived/rolled.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <toalSizeCap>1GB</toalSizeCap>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d [%thread] %level %mdc %logger{35} -%kvp -%msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
+        <appender-ref ref="FILE-ROLLING"/>
         <appender-ref ref="CONSOLE"/>
     </root>
 
