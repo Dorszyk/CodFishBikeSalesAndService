@@ -1,0 +1,2322 @@
+@startuml
+!theme vibrant
+skinparam classAttributeIconSize 0
+
+
+class BikeSalesAndServiceApplication {
+	{method}  {static} +main ( paramString;1 : [Ljava.lang.String; ) : void
+}
+
+
+class api.controller.AddUpdatePartsController {
+	{method} +addPart ( paramPartDTO1 : api.dto.PartDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +deletePart ( paramString1 : String ) : String
+	{method} -findParts () : java.util.List
+	{method} +personRepairingCheckPage () : org.springframework.web.servlet.ModelAndView
+	{method} -prepareNecessaryData () : java.util.Map
+	{method} -preparePartSerialNumbers ( paramList1 : java.util.List ) : java.util.List
+	{method} +updatePart ( paramPartDTO1 : api.dto.PartDTO , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.AddUpdatePersonRepairingController {
+	{method} +addPersonRepairing ( paramPersonRepairingDTO1 : api.dto.PersonRepairingDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +deletePersonRepairing ( paramString1 : String , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +personRepairingAddUpdatePage ( paramModel1 : org.springframework.ui.Model ) : String
+	{method} -updateModelWithAvailablePersonRepairing ( paramModel1 : org.springframework.ui.Model ) : void
+	{method} +updatePersonRepairing ( paramPersonRepairingDTO1 : api.dto.PersonRepairingDTO , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.AddUpdateSalesmanController {
+	{method} +addSalesman ( paramSalesmanDTO1 : api.dto.SalesmanDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +deleteSalesman ( paramString1 : String , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +salesmanAddUpdatePage ( paramModel1 : org.springframework.ui.Model ) : String
+	{method} -updateModelWithAvailableSalesmen ( paramModel1 : org.springframework.ui.Model ) : void
+	{method} +updateSalesman ( paramSalesmanDTO1 : api.dto.SalesmanDTO , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.AddUpdateServicesController {
+	{method} +addPart ( paramServiceDTO1 : api.dto.ServiceDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +deletePart ( paramString1 : String ) : String
+	{method} -findServices () : java.util.List
+	{method} -prepareNecessaryData () : java.util.Map
+	{method} +serviceAddUpdateServicePage () : org.springframework.web.servlet.ModelAndView
+	{method} +updatePart ( paramServiceDTO1 : api.dto.ServiceDTO , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.BikeHistoryController {
+	{method} +bikeHistory ( paramString1 : String , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.CustomerController {
+	{method} +addCustomer ( paramCustomerDTO1 : api.dto.CustomerDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +bikeCustomerPage () : org.springframework.web.servlet.ModelAndView
+	{method} +deleteCustomer ( paramString1 : String , paramModel2 : org.springframework.ui.Model ) : String
+	{method} -prepareBikeCustomerData () : java.util.Map
+}
+
+
+class api.controller.FragmentsController {
+	{method} +getFragmentsBuyABike () : String
+	{method} +getFragmentsCustomers () : String
+	{method} +getFragmentsHistory () : String
+	{method} +getFragmentsHome () : String
+	{method} +getFragmentsInvoices () : String
+	{method} +getFragmentsManagementUserPersonRepairing () : String
+	{method} +getFragmentsManagementUserSalesman () : String
+	{method} +getFragmentsSalesman () : String
+	{method} +getFragmentsServiceABike () : String
+	{method} +getFragmentsUserInfo () : String
+}
+
+
+class api.controller.GlobalExceptionHandler {
+	{method} +handleException ( paramException1 : Exception ) : org.springframework.web.servlet.ModelAndView
+	{method} +handleForbiddenException ( paramForbiddenException1 : domain.exception.ForbiddenException ) : org.springframework.web.servlet.ModelAndView
+	{method} +handleNoResourceFound ( paramNotFoundException1 : domain.exception.NotFoundException ) : org.springframework.web.servlet.ModelAndView
+	{method} +handleProcessingException ( paramProcessingException1 : domain.exception.ProcessingException ) : org.springframework.web.servlet.ModelAndView
+	{method} +handlerBadRequest ( paramBindException1 : org.springframework.validation.BindException ) : org.springframework.web.servlet.ModelAndView
+}
+
+
+class api.controller.HomeController {
+	{method} +homePage () : String
+}
+
+
+class api.controller.InvoiceController {
+	{method} +getAllInvoices () : org.springframework.web.servlet.ModelAndView
+	{method} -preparePurchaseInvoiceCustomerData () : java.util.Map
+}
+
+
+class api.controller.PersonRepairingController {
+	{method} +PersonRepairingWorkUnit ( paramBikeServicePersonProcessingUnitDTO1 : api.dto.BikeServicePersonProcessingUnitDTO , paramModelMap2 : org.springframework.ui.ModelMap ) : String
+	{method} -findParts () : java.util.List
+	{method} -findServices () : java.util.List
+	{method} -getAvailablePersonRepairing () : java.util.List
+	{method} -getAvailableServiceRequests () : java.util.List
+	{method} +personRepairingCheckPage () : org.springframework.web.servlet.ModelAndView
+	{method} -prepareNecessaryData () : java.util.Map
+	{method} -preparePartSerialNumbers ( paramList1 : java.util.List ) : java.util.List
+}
+
+
+class api.controller.PurchaseController {
+	{method} +bikePurchaseNewCustomerPage () : org.springframework.web.servlet.ModelAndView
+	{method} +bikePurchasePage () : org.springframework.web.servlet.ModelAndView
+	{method} -existingCustomerEmailExists ( paramString1 : String ) : boolean
+	{method} +makePurchase ( paramBikePurchaseDTO1 : api.dto.BikePurchaseDTO , paramModelMap2 : org.springframework.ui.ModelMap , paramHttpServletRequest3 : jakarta.servlet.http.HttpServletRequest ) : String
+	{method} -prepareBikePurchaseData () : java.util.Map
+}
+
+
+class api.controller.SalesmanController {
+	{method} +addBike ( paramBikeToBuyDTO1 : api.dto.BikeToBuyDTO , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +deleteBike ( paramString1 : String , paramModel2 : org.springframework.ui.Model ) : String
+	{method} +homePage () : org.springframework.web.servlet.ModelAndView
+	{method} -prepareSalesmanPortalData () : java.util.Map
+	{method} +updateBike ( paramBikeToBuyDTO1 : api.dto.BikeToBuyDTO , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.controller.ServiceController {
+	{method} +bikeServicePage () : org.springframework.web.servlet.ModelAndView
+	{method} +makeServiceRequest ( paramBikeServiceCustomerRequestDTO1 : api.dto.BikeServiceCustomerRequestDTO , paramBindingResult2 : org.springframework.validation.BindingResult ) : org.springframework.web.servlet.ModelAndView
+	{method} -prepareBikePurchaseData () : java.util.Map
+}
+
+
+class api.controller.ServiceNewCustomerController {
+	{method} +bikeServicePage () : org.springframework.web.servlet.ModelAndView
+	{method} +makeServiceRequest ( paramBikeServiceCustomerRequestDTO1 : api.dto.BikeServiceCustomerRequestDTO , paramBindingResult2 : org.springframework.validation.BindingResult ) : String
+}
+
+
+class api.controller.UserController {
+	{method} +userInfo ( paramAuthentication1 : org.springframework.security.core.Authentication , paramModel2 : org.springframework.ui.Model ) : String
+}
+
+
+class api.dto.BikeHistoryDTO {
+	{method}  {static} +buildDefault () : api.dto.BikeHistoryDTO
+	{method}  {static} +builder () : api.dto.BikeHistoryDTO$BikeHistoryDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeHistoryDTO$BikeHistoryDTOBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : api.dto.BikeHistoryDTO$BikeHistoryDTOBuilder
+	{method} +bikeServiceRequests ( paramList1 : java.util.List ) : api.dto.BikeHistoryDTO$BikeHistoryDTOBuilder
+	{method} +build () : api.dto.BikeHistoryDTO
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeHistoryDTO$ServiceRequestDTO {
+	{method}  {static} +builder () : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +getTotalPartsPrice () : java.math.BigDecimal
+	{method} +getTotalPrice () : java.math.BigDecimal
+	{method} +getTotalServicePrice () : java.math.BigDecimal
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder {
+	{method} +bikeServiceRequestNumber ( paramString1 : String ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +build () : api.dto.BikeHistoryDTO$ServiceRequestDTO
+	{method} +completedDateTime ( paramString1 : String ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +customerComment ( paramString1 : String ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +parts ( paramList1 : java.util.List ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +receivedDateTime ( paramString1 : String ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +services ( paramList1 : java.util.List ) : api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.BikePurchaseDTO {
+	{method}  {static} -addFieldToMap ( paramMap1 : java.util.Map , paramString2 : String , paramString3 : String ) : void
+	{method} +asMap () : java.util.Map
+	{method}  {static} +buildDefaultData () : api.dto.BikePurchaseDTO
+	{method}  {static} +builder () : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method}  {static} -generateRandomAddressApartmentNumber () : String
+	{method}  {static} -generateRandomAddressCity () : String
+	{method}  {static} -generateRandomAddressCountry () : String
+	{method}  {static} -generateRandomAddressHouseNumber () : String
+	{method}  {static} -generateRandomAddressPostalCode () : String
+	{method}  {static} -generateRandomAddressStreet () : String
+	{method}  {static} -generateRandomEmail () : String
+	{method}  {static} -generateRandomName () : String
+	{method}  {static} -generateRandomPhone () : String
+	{method}  {static} -generateRandomSurname () : String
+	{method} +hashCode () : int
+	{method}  {static} -removePolishCharacters ( paramString1 : String ) : String
+	{method} +toString () : String
+	{method} +withBikeSerial ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressApartmentNumber ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressCity ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressCountry ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressHouseNumber ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressPostalCode ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerAddressStreet ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerEmail ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerName ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerPhone ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withCustomerSurname ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withExistingCustomerEmail ( paramString1 : String ) : api.dto.BikePurchaseDTO
+	{method} +withSalesmanCodeNameSurname ( paramString1 : String ) : api.dto.BikePurchaseDTO
+}
+
+
+class api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +build () : api.dto.BikePurchaseDTO
+	{method} +customerAddressApartmentNumber ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerAddressCity ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerAddressCountry ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerAddressHouseNumber ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerAddressPostalCode ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerAddressStreet ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerEmail ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerName ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerPhone ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +customerSurname ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +existingCustomerEmail ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +salesmanCodeNameSurname ( paramString1 : String ) : api.dto.BikePurchaseDTO$BikePurchaseDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServiceCustomerRequestDTO {
+	{method}  {static} -addFieldToMap ( paramMap1 : java.util.Map , paramString2 : String , paramString3 : String ) : void
+	{method} +asMap () : java.util.Map
+	{method}  {static} +buildDefault () : api.dto.BikeServiceCustomerRequestDTO
+	{method}  {static} +builder () : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method}  {static} -generateRandomAddressApartmentNumber () : String
+	{method}  {static} -generateRandomAddressCity () : String
+	{method}  {static} -generateRandomAddressCountry () : String
+	{method}  {static} -generateRandomAddressHouseNumber () : String
+	{method}  {static} -generateRandomAddressPostalCode () : String
+	{method}  {static} -generateRandomAddressStreet () : String
+	{method}  {static} -generateRandomBikeBrand () : String
+	{method}  {static} -generateRandomBikeModel () : String
+	{method}  {static} -generateRandomBikeSerial () : String
+	{method}  {static} -generateRandomBikeYear () : Integer
+	{method}  {static} -generateRandomCustomerComment () : String
+	{method}  {static} -generateRandomEmail () : String
+	{method}  {static} -generateRandomName () : String
+	{method}  {static} -generateRandomPhone () : String
+	{method}  {static} -generateRandomSurname () : String
+	{method} +hashCode () : int
+	{method} +isNewBikeCandidate () : boolean
+	{method}  {static} -isNullOrEmpty ( paramString1 : String ) : boolean
+	{method}  {static} -removePolishCharacters ( paramString1 : String ) : String
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder {
+	{method} +bikeBrand ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +bikeModel ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +bikeSerial ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +bikeYear ( paramInteger1 : Integer ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +build () : api.dto.BikeServiceCustomerRequestDTO
+	{method} +customerAddressApartmentNumber ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerAddressCity ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerAddressCountry ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerAddressHouseNumber ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerAddressPostalCode ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerAddressStreet ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerComment ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerEmail ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerName ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerPhone ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +customerSurname ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +existingBikeSerial ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +existingCustomerEmail ( paramString1 : String ) : api.dto.BikeServiceCustomerRequestDTO$BikeServiceCustomerRequestDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServicePersonProcessingUnitDTO {
+	{method}  {static} +buildDefault () : api.dto.BikeServicePersonProcessingUnitDTO
+	{method}  {static} +builder () : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method}  {static} -generateRandomPersonRepairingComment () : String
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +build () : api.dto.BikeServicePersonProcessingUnitDTO
+	{method} +description ( paramString1 : String ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +done ( paramBoolean1 : Boolean ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +hours ( paramInteger1 : Integer ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +partQuantity ( paramInteger1 : Integer ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +partSerialNumber ( paramList1 : java.util.List ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +personRepairingCodeNameSurname ( paramString1 : String ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +personRepairingComment ( paramString1 : String ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +serviceCode ( paramString1 : String ) : api.dto.BikeServicePersonProcessingUnitDTO$BikeServicePersonProcessingUnitDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServiceRequestDTO {
+	{method}  {static} +builder () : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} +bikeServiceRequestNumber ( paramString1 : String ) : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} +build () : api.dto.BikeServiceRequestDTO
+	{method} +completedDateTime ( paramString1 : String ) : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} +customerComment ( paramString1 : String ) : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} +receivedDateTime ( paramString1 : String ) : api.dto.BikeServiceRequestDTO$BikeServiceRequestDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeToBuyDTO {
+	{method}  {static} -addFieldToMap ( paramMap1 : java.util.Map , paramString2 : String , paramString3 : String ) : void
+	{method}  {static} +buildDefault () : api.dto.BikeToBuyDTO
+	{method}  {static} +builder () : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method}  {static} -generateRandomBrand () : String
+	{method}  {static} -generateRandomCategory () : String
+	{method}  {static} -generateRandomColor () : String
+	{method}  {static} -generateRandomModel () : String
+	{method}  {static} -generateRandomPrice () : java.math.BigDecimal
+	{method}  {static} -generateRandomSerial () : String
+	{method}  {static} -generateRandomSubcategory () : String
+	{method}  {static} -generateRandomYear () : Integer
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder {
+	{method} +bikeToBuyId ( paramInteger1 : Integer ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +brand ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +build () : api.dto.BikeToBuyDTO
+	{method} +category ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +color ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +model ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +serial ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +subcategory ( paramString1 : String ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : api.dto.BikeToBuyDTO$BikeToBuyDTOBuilder
+}
+
+
+class api.dto.BikeToServiceDTO {
+	{method}  {static} +builder () : api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder {
+	{method} +brand ( paramString1 : String ) : api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder
+	{method} +build () : api.dto.BikeToServiceDTO
+	{method} +model ( paramString1 : String ) : api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder
+	{method} +serial ( paramString1 : String ) : api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : api.dto.BikeToServiceDTO$BikeToServiceDTOBuilder
+}
+
+
+class api.dto.CustomerDTO {
+	{method} +asMap () : java.util.Map
+	{method}  {static} +buildDefault () : api.dto.CustomerDTO
+	{method}  {static} +builder () : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method}  {static} -generateRandomAddressApartmentNumber () : String
+	{method}  {static} -generateRandomAddressCity () : String
+	{method}  {static} -generateRandomAddressCountry () : String
+	{method}  {static} -generateRandomAddressHouseNumber () : String
+	{method}  {static} -generateRandomAddressPostalCode () : String
+	{method}  {static} -generateRandomAddressStreet () : String
+	{method}  {static} -generateRandomEmail () : String
+	{method}  {static} -generateRandomName () : String
+	{method}  {static} -generateRandomPhone () : String
+	{method}  {static} -generateRandomSurname () : String
+	{method} +hashCode () : int
+	{method}  {static} -removePolishCharacters ( paramString1 : String ) : String
+	{method} +toString () : String
+}
+
+
+class api.dto.CustomerDTO$CustomerDTOBuilder {
+	{method} +address ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +apartmentNumber ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +build () : api.dto.CustomerDTO
+	{method} +city ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +country ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +customerId ( paramInteger1 : Integer ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +email ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +houseNumber ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +name ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +phone ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +postalCode ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +surname ( paramString1 : String ) : api.dto.CustomerDTO$CustomerDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.InvoiceDTO {
+	{method}  {static} +builder () : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.InvoiceDTO$InvoiceDTOBuilder {
+	{method} +bike ( paramBikeToBuyDTO1 : api.dto.BikeToBuyDTO ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +build () : api.dto.InvoiceDTO
+	{method} +customer ( paramCustomerDTO1 : api.dto.CustomerDTO ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +dateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +invoiceId ( paramInteger1 : Integer ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +invoiceNumber ( paramString1 : String ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +salesman ( paramSalesmanEntity1 : infrastructure.database.entity.SalesmanEntity ) : api.dto.InvoiceDTO$InvoiceDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.PartDTO {
+	{method}  {static} +builder () : api.dto.PartDTO$PartDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.PartDTO$PartDTOBuilder {
+	{method} +build () : api.dto.PartDTO
+	{method} +description ( paramString1 : String ) : api.dto.PartDTO$PartDTOBuilder
+	{method} +partId ( paramInteger1 : Integer ) : api.dto.PartDTO$PartDTOBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : api.dto.PartDTO$PartDTOBuilder
+	{method} +serialNumber ( paramString1 : String ) : api.dto.PartDTO$PartDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.PersonRepairingDTO {
+	{method}  {static} +builder () : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder {
+	{method} +build () : api.dto.PersonRepairingDTO
+	{method} +codeNameSurname ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +email ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +name ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +password ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +personRepairingId ( paramInteger1 : Integer ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +roles ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +surname ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+	{method} +userName ( paramString1 : String ) : api.dto.PersonRepairingDTO$PersonRepairingDTOBuilder
+}
+
+
+class api.dto.SalesmanDTO {
+	{method}  {static} +builder () : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.SalesmanDTO$SalesmanDTOBuilder {
+	{method} +build () : api.dto.SalesmanDTO
+	{method} +codeNameSurname ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +email ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +name ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +password ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +roles ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +salesmanId ( paramInteger1 : Integer ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +surname ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+	{method} +userName ( paramString1 : String ) : api.dto.SalesmanDTO$SalesmanDTOBuilder
+}
+
+
+class api.dto.ServiceDTO {
+	{method}  {static} +builder () : api.dto.ServiceDTO$ServiceDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.ServiceDTO$ServiceDTOBuilder {
+	{method} +build () : api.dto.ServiceDTO
+	{method} +description ( paramString1 : String ) : api.dto.ServiceDTO$ServiceDTOBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : api.dto.ServiceDTO$ServiceDTOBuilder
+	{method} +serviceCode ( paramString1 : String ) : api.dto.ServiceDTO$ServiceDTOBuilder
+	{method} +serviceId ( paramInteger1 : Integer ) : api.dto.ServiceDTO$ServiceDTOBuilder
+	{method} +toString () : String
+}
+
+
+class api.dto.UserDTO {
+	{method}  {static} +builder () : api.dto.UserDTO$UserDTOBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class api.dto.UserDTO$UserDTOBuilder {
+	{method} +active ( paramBoolean1 : Boolean ) : api.dto.UserDTO$UserDTOBuilder
+	{method} +build () : api.dto.UserDTO
+	{method} +email ( paramString1 : String ) : api.dto.UserDTO$UserDTOBuilder
+	{method} +password ( paramString1 : String ) : api.dto.UserDTO$UserDTOBuilder
+	{method} +toString () : String
+	{method} +userId ( paramint1 : int ) : api.dto.UserDTO$UserDTOBuilder
+	{method} +userName ( paramString1 : String ) : api.dto.UserDTO$UserDTOBuilder
+}
+
+
+interface api.dto.mapper.BikeMapper {
+	{method}  {abstract} +map ( paramBikeHistory1 : domain.BikeHistory ) : api.dto.BikeHistoryDTO
+	{method}  {abstract} +map ( paramBikeToBuy1 : domain.BikeToBuy ) : api.dto.BikeToBuyDTO
+	{method}  {abstract} +map ( paramBikeToService1 : domain.BikeToService ) : api.dto.BikeToServiceDTO
+	{method}  {abstract} +mapServiceRequest ( paramBikeHistory$BikeServiceRequest1 : domain.BikeHistory$BikeServiceRequest ) : api.dto.BikeHistoryDTO$ServiceRequestDTO
+	{method} +mapServiceRequests ( paramList1 : java.util.List ) : java.util.List
+}
+
+
+class api.dto.mapper.BikeMapperImpl {
+	{method} +map ( paramBikeHistory1 : domain.BikeHistory ) : api.dto.BikeHistoryDTO
+	{method} +map ( paramBikeToBuy1 : domain.BikeToBuy ) : api.dto.BikeToBuyDTO
+	{method} +map ( paramBikeToService1 : domain.BikeToService ) : api.dto.BikeToServiceDTO
+	{method} +mapServiceRequest ( paramBikeHistory$BikeServiceRequest1 : domain.BikeHistory$BikeServiceRequest ) : api.dto.BikeHistoryDTO$ServiceRequestDTO
+	{method} #partListToPartDTOList ( paramList1 : java.util.List ) : java.util.List
+	{method} #partToPartDTO ( paramPart1 : domain.Part ) : api.dto.PartDTO
+	{method} #serviceListToServiceDTOList ( paramList1 : java.util.List ) : java.util.List
+	{method} #serviceToServiceDTO ( paramService1 : domain.Service ) : api.dto.ServiceDTO
+}
+
+
+interface api.dto.mapper.BikePurchaseMapper {
+	{method}  {abstract} +map ( paramBikePurchaseDTO1 : api.dto.BikePurchaseDTO ) : domain.BikePurchaseRequest
+}
+
+
+class api.dto.mapper.BikePurchaseMapperImpl {
+	{method} +map ( paramBikePurchaseDTO1 : api.dto.BikePurchaseDTO ) : domain.BikePurchaseRequest
+}
+
+
+interface api.dto.mapper.BikeServiceRequestMapper {
+	{method} +map ( paramBikeServiceCustomerRequestDTO1 : api.dto.BikeServiceCustomerRequestDTO ) : domain.BikeServiceRequest
+	{method}  {abstract} +map ( paramBikeServicePersonProcessingUnitDTO1 : api.dto.BikeServicePersonProcessingUnitDTO ) : domain.BikeServiceProcessingRequest
+	{method}  {abstract} +map ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : api.dto.BikeServiceRequestDTO
+}
+
+
+class api.dto.mapper.BikeServiceRequestMapperImpl {
+	{method} +map ( paramBikeServicePersonProcessingUnitDTO1 : api.dto.BikeServicePersonProcessingUnitDTO ) : domain.BikeServiceProcessingRequest
+	{method} +map ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : api.dto.BikeServiceRequestDTO
+	{method} -requestBikeSerial ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : String
+}
+
+
+interface api.dto.mapper.BikeToBuyMapper {
+	{method}  {abstract} +map ( paramBikeToBuy1 : domain.BikeToBuy ) : api.dto.BikeToBuyDTO
+}
+
+
+class api.dto.mapper.BikeToBuyMapperImpl {
+	{method} +map ( paramBikeToBuy1 : domain.BikeToBuy ) : api.dto.BikeToBuyDTO
+}
+
+
+interface api.dto.mapper.CustomerMapper {
+	{method}  {abstract} +map ( paramCustomer1 : domain.Customer ) : api.dto.CustomerDTO
+}
+
+
+class api.dto.mapper.CustomerMapperImpl {
+	{method} -customerAddressAddress ( paramCustomer1 : domain.Customer ) : String
+	{method} -customerAddressApartmentNumber ( paramCustomer1 : domain.Customer ) : String
+	{method} -customerAddressCity ( paramCustomer1 : domain.Customer ) : String
+	{method} -customerAddressCountry ( paramCustomer1 : domain.Customer ) : String
+	{method} -customerAddressHouseNumber ( paramCustomer1 : domain.Customer ) : String
+	{method} -customerAddressPostalCode ( paramCustomer1 : domain.Customer ) : String
+	{method} +map ( paramCustomer1 : domain.Customer ) : api.dto.CustomerDTO
+}
+
+
+interface api.dto.mapper.InvoiceMapper {
+	{method}  {abstract} +map ( paramInvoiceDTO1 : api.dto.InvoiceDTO ) : api.dto.InvoiceDTO
+}
+
+
+class api.dto.mapper.InvoiceMapperImpl {
+	{method} +map ( paramInvoiceDTO1 : api.dto.InvoiceDTO ) : api.dto.InvoiceDTO
+}
+
+
+interface api.dto.mapper.OffsetDateTimeMapper {
+	{method} +mapOffsetDateTimeToString ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : String
+}
+
+
+class api.dto.mapper.OffsetDateTimeMapperImpl {
+}
+
+
+interface api.dto.mapper.PartMapper {
+	{method}  {abstract} +map ( paramPart1 : domain.Part ) : api.dto.PartDTO
+}
+
+
+class api.dto.mapper.PartMapperImpl {
+	{method} +map ( paramPart1 : domain.Part ) : api.dto.PartDTO
+}
+
+
+interface api.dto.mapper.PersonRepairingMapper {
+	{method}  {abstract} +map ( paramPersonRepairing1 : domain.PersonRepairing ) : api.dto.PersonRepairingDTO
+}
+
+
+class api.dto.mapper.PersonRepairingMapperImpl {
+	{method} +map ( paramPersonRepairing1 : domain.PersonRepairing ) : api.dto.PersonRepairingDTO
+}
+
+
+interface api.dto.mapper.SalesmanMapper {
+	{method}  {abstract} +map ( paramSalesman1 : domain.Salesman ) : api.dto.SalesmanDTO
+}
+
+
+class api.dto.mapper.SalesmanMapperImpl {
+	{method} +map ( paramSalesman1 : domain.Salesman ) : api.dto.SalesmanDTO
+}
+
+
+interface api.dto.mapper.ServiceMapper {
+	{method}  {abstract} +map ( paramService1 : domain.Service ) : api.dto.ServiceDTO
+}
+
+
+class api.dto.mapper.ServiceMapperImpl {
+	{method} +map ( paramService1 : domain.Service ) : api.dto.ServiceDTO
+}
+
+
+interface api.dto.mapper.UserMapper {
+	{method}  {abstract} +map ( paramUser1 : domain.User ) : api.dto.UserDTO
+}
+
+
+class api.dto.mapper.UserMapperImpl {
+	{method} +map ( paramUser1 : domain.User ) : api.dto.UserDTO
+}
+
+
+class business.BikePurchaseService {
+	{method} +availableBikes () : java.util.List
+	{method} +availableSalesmen () : java.util.List
+	{method} -buildCustomer ( paramBikePurchaseRequest1 : domain.BikePurchaseRequest , paramInvoice2 : domain.Invoice ) : domain.Customer
+	{method} -buildInvoice ( paramBikeToBuy1 : domain.BikeToBuy , paramSalesman2 : domain.Salesman ) : domain.Invoice
+	{method} -existingCustomerEmailExists ( paramString1 : String ) : boolean
+	{method} +generateInvoiceNumber ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : String
+	{method} -processFirstTimeToBuyCustomer ( paramBikePurchaseRequest1 : domain.BikePurchaseRequest ) : domain.Invoice
+	{method} -processNextTimeToBuyCustomer ( paramBikePurchaseRequest1 : domain.BikePurchaseRequest ) : domain.Invoice
+	{method} +purchase ( paramBikePurchaseRequest1 : domain.BikePurchaseRequest ) : domain.Invoice
+}
+
+
+class business.BikeService {
+	{method} +deleteBike ( paramString1 : String ) : void
+	{method} +findAllBikesWithHistory () : java.util.List
+	{method} +findAvailableBike () : java.util.List
+	{method} +findBikeHistoryBySerial ( paramString1 : String ) : domain.BikeHistory
+	{method} +findBikeToBuy ( paramString1 : String ) : domain.BikeToBuy
+	{method} +findBikeToService ( paramString1 : String ) : java.util.Optional
+	{method} +saveBikeToService ( paramBikeToService1 : domain.BikeToService ) : domain.BikeToService
+	{method} +savedBikeToService ( paramBikeToBuy1 : domain.BikeToBuy ) : domain.BikeToService
+}
+
+
+class business.BikeServiceProcessingService {
+	{method} -buildServicePart ( paramBikeServiceProcessingRequest1 : domain.BikeServiceProcessingRequest , paramBikeServiceRequest2 : domain.BikeServiceRequest , paramPart3 : domain.Part ) : domain.ServicePart
+	{method} -buildServicePerson ( paramBikeServiceProcessingRequest1 : domain.BikeServiceProcessingRequest , paramPersonRepairing2 : domain.PersonRepairing , paramBikeServiceRequest3 : domain.BikeServiceRequest , paramService4 : domain.Service ) : domain.ServicePerson
+	{method} +process ( paramBikeServiceProcessingRequest1 : domain.BikeServiceProcessingRequest ) : void
+}
+
+
+class business.BikeServiceRequestService {
+	{method} +availablePersonRepairing () : java.util.List
+	{method} +availableServiceRequest () : java.util.List
+	{method} -buildBikeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest , paramBikeToService2 : domain.BikeToService , paramCustomer3 : domain.Customer ) : domain.BikeServiceRequest
+	{method} +findAnyActiveServiceRequest ( paramString1 : String ) : domain.BikeServiceRequest
+	{method} -findInBikeToBuyAndSaveInBikeToService ( paramBikeToService1 : domain.BikeToService ) : domain.BikeToService
+	{method} -generateBikeServiceRequestNumber ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : String
+	{method} +makeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : void
+	{method} -processServiceRequestForExistingBike ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : void
+	{method} -processServiceRequestForNewBike ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : void
+	{method} -validateSingleActiveRequest ( paramString1 : String ) : void
+}
+
+
+class business.CustomerService {
+	{method} +deleteCustomer ( paramString1 : String ) : void
+	{method} +findByEmail ( paramString1 : String ) : java.util.Optional
+	{method} +findCustomer ( paramString1 : String ) : domain.Customer
+	{method} +issueInvoice ( paramCustomer1 : domain.Customer ) : void
+	{method} +saveCustomer ( paramCustomer1 : domain.Customer ) : domain.Customer
+	{method} +saveServiceRequest ( paramCustomer1 : domain.Customer ) : void
+}
+
+
+class business.InvoiceService {
+	{method} +findAll () : java.util.List
+}
+
+
+class business.PartCatalogService {
+	{method} +findAll () : java.util.List
+	{method} +findAllByParts ( paramList1 : java.util.List ) : java.util.List
+	{method} +findPart ( paramString1 : String ) : domain.Part
+}
+
+
+class business.PersonRepairingService {
+	{method} +deletePersonRepairingByCodeNameSurname ( paramString1 : String ) : void
+	{method} +findAvailable () : java.util.List
+	{method} +findPersonRepairing ( paramString1 : String ) : domain.PersonRepairing
+}
+
+
+class business.SalesmanService {
+	{method} +deleteSalesmanByCodeNameSurname ( paramString1 : String ) : void
+	{method} +findAvailable () : java.util.List
+	{method} +findSalesman ( paramString1 : String ) : domain.Salesman
+}
+
+
+class business.ServiceCatalogService {
+	{method} +findAll () : java.util.List
+	{method} +findService ( paramString1 : String ) : domain.Service
+}
+
+
+class business.UserService {
+	{method} +addSalesman ( paramString1 : String , paramString2 : String , paramString3 : String ) : void
+	{method} +findAllUsers () : java.util.List
+}
+
+
+interface business.dao.BikeServiceRequestDAO {
+	{method}  {abstract} +findActiveServiceRequestByBikeSerial ( paramString1 : String ) : java.util.Set
+	{method}  {abstract} +findAvailable () : java.util.List
+}
+
+
+interface business.dao.BikeToBuyDAO {
+	{method}  {abstract} +deleteBike ( paramBikeToBuy1 : domain.BikeToBuy ) : void
+	{method}  {abstract} +findAvailable () : java.util.List
+	{method}  {abstract} +findBikeToBuyBySerial ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface business.dao.BikeToServiceDAO {
+	{method}  {abstract} +findAll () : java.util.List
+	{method}  {abstract} +findBikeHistoryBySerial ( paramString1 : String ) : domain.BikeHistory
+	{method}  {abstract} +findBikeToServiceBySerial ( paramString1 : String ) : java.util.Optional
+	{method}  {abstract} +saveBikeToService ( paramBikeToService1 : domain.BikeToService ) : domain.BikeToService
+}
+
+
+interface business.dao.CustomerDAO {
+	{method}  {abstract} +deleteCustomer ( paramCustomer1 : domain.Customer ) : void
+	{method}  {abstract} +existsByEmail ( paramString1 : String ) : boolean
+	{method}  {abstract} +findAvailable () : java.util.List
+	{method}  {abstract} +findByEmail ( paramString1 : String ) : java.util.Optional
+	{method}  {abstract} +issuerInvoice ( paramCustomer1 : domain.Customer ) : void
+	{method}  {abstract} +saveCustomer ( paramCustomer1 : domain.Customer ) : domain.Customer
+	{method}  {abstract} +saveServiceRequest ( paramCustomer1 : domain.Customer ) : void
+}
+
+
+interface business.dao.InvoiceDAO {
+	{method}  {abstract} +findAll () : java.util.List
+}
+
+
+interface business.dao.PartDAO {
+	{method}  {abstract} +finBySerialNumber ( paramString1 : String ) : java.util.Optional
+	{method}  {abstract} +findAll () : java.util.List
+	{method}  {abstract} +findAllBySerialNumbers ( paramList1 : java.util.List ) : java.util.List
+}
+
+
+interface business.dao.PersonRepairingDAO {
+	{method}  {abstract} +findAvailable () : java.util.List
+	{method}  {abstract} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface business.dao.SalesmanDAO {
+	{method}  {abstract} +findAvailable () : java.util.List
+	{method}  {abstract} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface business.dao.ServiceDAO {
+	{method}  {abstract} +findAll () : java.util.List
+	{method}  {abstract} +findByServiceCode ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface business.dao.ServiceRequestProcessingDAO {
+	{method}  {abstract} +process ( paramBikeServiceRequest1 : domain.BikeServiceRequest , paramServicePerson2 : domain.ServicePerson ) : void
+	{method}  {abstract} +process ( paramBikeServiceRequest1 : domain.BikeServiceRequest , paramServicePerson2 : domain.ServicePerson , paramList3 : java.util.List ) : void
+}
+
+
+interface business.dao.UserDAO {
+	{method}  {abstract} +findAvailable () : java.util.List
+}
+
+
+class domain.Address {
+	{method}  {static} +builder () : domain.Address$AddressBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withAddress ( paramString1 : String ) : domain.Address
+	{method} +withAddressId ( paramInteger1 : Integer ) : domain.Address
+	{method} +withApartmentNumber ( paramString1 : String ) : domain.Address
+	{method} +withCity ( paramString1 : String ) : domain.Address
+	{method} +withCountry ( paramString1 : String ) : domain.Address
+	{method} +withCustomer ( paramCustomer1 : domain.Customer ) : domain.Address
+	{method} +withHouseNumber ( paramString1 : String ) : domain.Address
+	{method} +withPostalCode ( paramString1 : String ) : domain.Address
+}
+
+
+class domain.Address$AddressBuilder {
+	{method} +address ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +addressId ( paramInteger1 : Integer ) : domain.Address$AddressBuilder
+	{method} +apartmentNumber ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +build () : domain.Address
+	{method} +city ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +country ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +customer ( paramCustomer1 : domain.Customer ) : domain.Address$AddressBuilder
+	{method} +houseNumber ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +postalCode ( paramString1 : String ) : domain.Address$AddressBuilder
+	{method} +toString () : String
+}
+
+
+class domain.BikeHistory {
+	{method}  {static} +builder () : domain.BikeHistory$BikeHistoryBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class domain.BikeHistory$BikeHistoryBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : domain.BikeHistory$BikeHistoryBuilder
+	{method} +bikeServiceRequests ( paramList1 : java.util.List ) : domain.BikeHistory$BikeHistoryBuilder
+	{method} +build () : domain.BikeHistory
+	{method} +toString () : String
+}
+
+
+class domain.BikeHistory$BikeServiceRequest {
+	{method}  {static} +builder () : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder {
+	{method} +bikeServiceRequestNumber ( paramString1 : String ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +build () : domain.BikeHistory$BikeServiceRequest
+	{method} +completedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +customerComment ( paramString1 : String ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +parts ( paramList1 : java.util.List ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +receivedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +services ( paramList1 : java.util.List ) : domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +toString () : String
+}
+
+
+class domain.BikePurchaseRequest {
+	{method}  {static} +builder () : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBikeSerial ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressApartmentNumber ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressCity ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressCountry ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressHouseNumber ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressPostalCode ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerAddressStreet ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerEmail ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerName ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerPhone ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withCustomerSurname ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withExistingCustomerEmail ( paramString1 : String ) : domain.BikePurchaseRequest
+	{method} +withSalesmanCodeNameSurname ( paramString1 : String ) : domain.BikePurchaseRequest
+}
+
+
+class domain.BikePurchaseRequest$BikePurchaseRequestBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +build () : domain.BikePurchaseRequest
+	{method} +customerAddressApartmentNumber ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerAddressCity ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerAddressCountry ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerAddressHouseNumber ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerAddressPostalCode ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerAddressStreet ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerEmail ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerName ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerPhone ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +customerSurname ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +existingCustomerEmail ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +salesmanCodeNameSurname ( paramString1 : String ) : domain.BikePurchaseRequest$BikePurchaseRequestBuilder
+	{method} +toString () : String
+}
+
+
+class domain.BikeServiceProcessingRequest {
+	{method}  {static} +builder () : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +partNotIncluded () : boolean
+	{method} +toString () : String
+	{method} +withBikeSerial ( paramString1 : String ) : domain.BikeServiceProcessingRequest
+	{method} +withComment ( paramString1 : String ) : domain.BikeServiceProcessingRequest
+	{method} +withDescription ( paramString1 : String ) : domain.BikeServiceProcessingRequest
+	{method} +withDone ( paramBoolean1 : Boolean ) : domain.BikeServiceProcessingRequest
+	{method} +withHours ( paramInteger1 : Integer ) : domain.BikeServiceProcessingRequest
+	{method} +withPartQuantity ( paramInteger1 : Integer ) : domain.BikeServiceProcessingRequest
+	{method} +withPartSerialNumber ( paramList1 : java.util.List ) : domain.BikeServiceProcessingRequest
+	{method} +withPersonRepairingCodeNameSurname ( paramString1 : String ) : domain.BikeServiceProcessingRequest
+	{method} +withServiceCode ( paramString1 : String ) : domain.BikeServiceProcessingRequest
+}
+
+
+class domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder {
+	{method} +bikeSerial ( paramString1 : String ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +build () : domain.BikeServiceProcessingRequest
+	{method} +comment ( paramString1 : String ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +description ( paramString1 : String ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +done ( paramBoolean1 : Boolean ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +hours ( paramInteger1 : Integer ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +partQuantity ( paramInteger1 : Integer ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +partSerialNumber ( paramList1 : java.util.List ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +personRepairingCodeNameSurname ( paramString1 : String ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +serviceCode ( paramString1 : String ) : domain.BikeServiceProcessingRequest$BikeServiceProcessingRequestBuilder
+	{method} +toString () : String
+}
+
+
+class domain.BikeServiceRequest {
+	{method}  {static} +builder () : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBike ( paramBikeToService1 : domain.BikeToService ) : domain.BikeServiceRequest
+	{method} +withBikeServiceRequestId ( paramInteger1 : Integer ) : domain.BikeServiceRequest
+	{method} +withBikeServiceRequestNumber ( paramString1 : String ) : domain.BikeServiceRequest
+	{method} +withCompletedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeServiceRequest
+	{method} +withCustomer ( paramCustomer1 : domain.Customer ) : domain.BikeServiceRequest
+	{method} +withCustomerComment ( paramString1 : String ) : domain.BikeServiceRequest
+	{method} +withReceivedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeServiceRequest
+	{method} +withServicePart ( paramSet1 : java.util.Set ) : domain.BikeServiceRequest
+	{method} +withServicePersons ( paramSet1 : java.util.Set ) : domain.BikeServiceRequest
+}
+
+
+class domain.BikeServiceRequest$BikeServiceRequestBuilder {
+	{method} +bike ( paramBikeToService1 : domain.BikeToService ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +bikeServiceRequestId ( paramInteger1 : Integer ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +bikeServiceRequestNumber ( paramString1 : String ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +build () : domain.BikeServiceRequest
+	{method} +completedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +customer ( paramCustomer1 : domain.Customer ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +customerComment ( paramString1 : String ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +receivedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +servicePart ( paramSet1 : java.util.Set ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +servicePersons ( paramSet1 : java.util.Set ) : domain.BikeServiceRequest$BikeServiceRequestBuilder
+	{method} +toString () : String
+}
+
+
+class domain.BikeToBuy {
+	{method}  {static} +builder () : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBikeToBuyId ( paramInteger1 : Integer ) : domain.BikeToBuy
+	{method} +withBrand ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withCategory ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withColor ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withInvoice ( paramInvoice1 : domain.Invoice ) : domain.BikeToBuy
+	{method} +withModel ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withPrice ( paramBigDecimal1 : java.math.BigDecimal ) : domain.BikeToBuy
+	{method} +withSerial ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withSubcategory ( paramString1 : String ) : domain.BikeToBuy
+	{method} +withYear ( paramInteger1 : Integer ) : domain.BikeToBuy
+}
+
+
+class domain.BikeToBuy$BikeToBuyBuilder {
+	{method} +bikeToBuyId ( paramInteger1 : Integer ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +brand ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +build () : domain.BikeToBuy
+	{method} +category ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +color ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +invoice ( paramInvoice1 : domain.Invoice ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +model ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +serial ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +subcategory ( paramString1 : String ) : domain.BikeToBuy$BikeToBuyBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : domain.BikeToBuy$BikeToBuyBuilder
+}
+
+
+class domain.BikeToService {
+	{method}  {static} +builder () : domain.BikeToService$BikeToServiceBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +shouldExistsInBikeToBuy () : boolean
+	{method} +toString () : String
+	{method} +withBikeServiceRequests ( paramSet1 : java.util.Set ) : domain.BikeToService
+	{method} +withBikeToServiceId ( paramInteger1 : Integer ) : domain.BikeToService
+	{method} +withBrand ( paramString1 : String ) : domain.BikeToService
+	{method} +withModel ( paramString1 : String ) : domain.BikeToService
+	{method} +withSerial ( paramString1 : String ) : domain.BikeToService
+	{method} +withYear ( paramInteger1 : Integer ) : domain.BikeToService
+}
+
+
+class domain.BikeToService$BikeToServiceBuilder {
+	{method} +bikeServiceRequests ( paramSet1 : java.util.Set ) : domain.BikeToService$BikeToServiceBuilder
+	{method} +bikeToServiceId ( paramInteger1 : Integer ) : domain.BikeToService$BikeToServiceBuilder
+	{method} +brand ( paramString1 : String ) : domain.BikeToService$BikeToServiceBuilder
+	{method} +build () : domain.BikeToService
+	{method} +model ( paramString1 : String ) : domain.BikeToService$BikeToServiceBuilder
+	{method} +serial ( paramString1 : String ) : domain.BikeToService$BikeToServiceBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : domain.BikeToService$BikeToServiceBuilder
+}
+
+
+class domain.Customer {
+	{method}  {static} +builder () : domain.Customer$CustomerBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +getInvoice () : java.util.Set
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withAddress ( paramAddress1 : domain.Address ) : domain.Customer
+	{method} +withBikeServiceRequests ( paramSet1 : java.util.Set ) : domain.Customer
+	{method} +withCustomerId ( paramInteger1 : Integer ) : domain.Customer
+	{method} +withEmail ( paramString1 : String ) : domain.Customer
+	{method} +withInvoices ( paramSet1 : java.util.Set ) : domain.Customer
+	{method} +withName ( paramString1 : String ) : domain.Customer
+	{method} +withPhone ( paramString1 : String ) : domain.Customer
+	{method} +withSurname ( paramString1 : String ) : domain.Customer
+}
+
+
+class domain.Customer$CustomerBuilder {
+	{method} +address ( paramAddress1 : domain.Address ) : domain.Customer$CustomerBuilder
+	{method} +bikeServiceRequests ( paramSet1 : java.util.Set ) : domain.Customer$CustomerBuilder
+	{method} +build () : domain.Customer
+	{method} +customerId ( paramInteger1 : Integer ) : domain.Customer$CustomerBuilder
+	{method} +email ( paramString1 : String ) : domain.Customer$CustomerBuilder
+	{method} +invoices ( paramSet1 : java.util.Set ) : domain.Customer$CustomerBuilder
+	{method} +name ( paramString1 : String ) : domain.Customer$CustomerBuilder
+	{method} +phone ( paramString1 : String ) : domain.Customer$CustomerBuilder
+	{method} +surname ( paramString1 : String ) : domain.Customer$CustomerBuilder
+	{method} +toString () : String
+}
+
+
+class domain.Invoice {
+	{method}  {static} +builder () : domain.Invoice$InvoiceBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBike ( paramBikeToBuy1 : domain.BikeToBuy ) : domain.Invoice
+	{method} +withCustomer ( paramCustomer1 : domain.Customer ) : domain.Invoice
+	{method} +withDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.Invoice
+	{method} +withInvoiceId ( paramInteger1 : Integer ) : domain.Invoice
+	{method} +withInvoiceNumber ( paramString1 : String ) : domain.Invoice
+	{method} +withSalesman ( paramSalesman1 : domain.Salesman ) : domain.Invoice
+}
+
+
+class domain.Invoice$InvoiceBuilder {
+	{method} +bike ( paramBikeToBuy1 : domain.BikeToBuy ) : domain.Invoice$InvoiceBuilder
+	{method} +build () : domain.Invoice
+	{method} +customer ( paramCustomer1 : domain.Customer ) : domain.Invoice$InvoiceBuilder
+	{method} +dateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : domain.Invoice$InvoiceBuilder
+	{method} +invoiceId ( paramInteger1 : Integer ) : domain.Invoice$InvoiceBuilder
+	{method} +invoiceNumber ( paramString1 : String ) : domain.Invoice$InvoiceBuilder
+	{method} +salesman ( paramSalesman1 : domain.Salesman ) : domain.Invoice$InvoiceBuilder
+	{method} +toString () : String
+}
+
+
+class domain.Part {
+	{method}  {static} +builder () : domain.Part$PartBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withDescription ( paramString1 : String ) : domain.Part
+	{method} +withPartId ( paramInteger1 : Integer ) : domain.Part
+	{method} +withPrice ( paramBigDecimal1 : java.math.BigDecimal ) : domain.Part
+	{method} +withSerialNumber ( paramString1 : String ) : domain.Part
+	{method} +withServicePart ( paramSet1 : java.util.Set ) : domain.Part
+}
+
+
+class domain.Part$PartBuilder {
+	{method} +build () : domain.Part
+	{method} +description ( paramString1 : String ) : domain.Part$PartBuilder
+	{method} +partId ( paramInteger1 : Integer ) : domain.Part$PartBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : domain.Part$PartBuilder
+	{method} +serialNumber ( paramString1 : String ) : domain.Part$PartBuilder
+	{method} +servicePart ( paramSet1 : java.util.Set ) : domain.Part$PartBuilder
+	{method} +toString () : String
+}
+
+
+class domain.PersonRepairing {
+	{method}  {static} +builder () : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withCodeNameSurname ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withEmail ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withName ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withPassword ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withPersonRepairingId ( paramInteger1 : Integer ) : domain.PersonRepairing
+	{method} +withRoles ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withServicePerson ( paramSet1 : java.util.Set ) : domain.PersonRepairing
+	{method} +withSurname ( paramString1 : String ) : domain.PersonRepairing
+	{method} +withUserId ( paramInteger1 : Integer ) : domain.PersonRepairing
+	{method} +withUserName ( paramString1 : String ) : domain.PersonRepairing
+}
+
+
+class domain.PersonRepairing$PersonRepairingBuilder {
+	{method} +build () : domain.PersonRepairing
+	{method} +codeNameSurname ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +email ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +name ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +password ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +personRepairingId ( paramInteger1 : Integer ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +roles ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +servicePerson ( paramSet1 : java.util.Set ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +surname ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : domain.PersonRepairing$PersonRepairingBuilder
+	{method} +userName ( paramString1 : String ) : domain.PersonRepairing$PersonRepairingBuilder
+}
+
+
+class domain.Salesman {
+	{method}  {static} +builder () : domain.Salesman$SalesmanBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withCodeNameSurname ( paramString1 : String ) : domain.Salesman
+	{method} +withEmail ( paramString1 : String ) : domain.Salesman
+	{method} +withInvoices ( paramSet1 : java.util.Set ) : domain.Salesman
+	{method} +withName ( paramString1 : String ) : domain.Salesman
+	{method} +withPassword ( paramString1 : String ) : domain.Salesman
+	{method} +withRoles ( paramString1 : String ) : domain.Salesman
+	{method} +withSalesmanId ( paramInteger1 : Integer ) : domain.Salesman
+	{method} +withSurname ( paramString1 : String ) : domain.Salesman
+	{method} +withUserId ( paramInteger1 : Integer ) : domain.Salesman
+	{method} +withUserName ( paramString1 : String ) : domain.Salesman
+}
+
+
+class domain.Salesman$SalesmanBuilder {
+	{method} +build () : domain.Salesman
+	{method} +codeNameSurname ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +email ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +invoices ( paramSet1 : java.util.Set ) : domain.Salesman$SalesmanBuilder
+	{method} +name ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +password ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +roles ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +salesmanId ( paramInteger1 : Integer ) : domain.Salesman$SalesmanBuilder
+	{method} +surname ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : domain.Salesman$SalesmanBuilder
+	{method} +userName ( paramString1 : String ) : domain.Salesman$SalesmanBuilder
+}
+
+
+class domain.Service {
+	{method}  {static} +builder () : domain.Service$ServiceBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withDescription ( paramString1 : String ) : domain.Service
+	{method} +withPrice ( paramBigDecimal1 : java.math.BigDecimal ) : domain.Service
+	{method} +withServiceCode ( paramString1 : String ) : domain.Service
+	{method} +withServiceId ( paramInteger1 : Integer ) : domain.Service
+	{method} +withServicePersons ( paramSet1 : java.util.Set ) : domain.Service
+}
+
+
+class domain.Service$ServiceBuilder {
+	{method} +build () : domain.Service
+	{method} +description ( paramString1 : String ) : domain.Service$ServiceBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : domain.Service$ServiceBuilder
+	{method} +serviceCode ( paramString1 : String ) : domain.Service$ServiceBuilder
+	{method} +serviceId ( paramInteger1 : Integer ) : domain.Service$ServiceBuilder
+	{method} +servicePersons ( paramSet1 : java.util.Set ) : domain.Service$ServiceBuilder
+	{method} +toString () : String
+}
+
+
+class domain.ServicePart {
+	{method}  {static} +builder () : domain.ServicePart$ServicePartBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBikeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : domain.ServicePart
+	{method} +withPart ( paramPart1 : domain.Part ) : domain.ServicePart
+	{method} +withQuantity ( paramInteger1 : Integer ) : domain.ServicePart
+	{method} +withServicePartId ( paramInteger1 : Integer ) : domain.ServicePart
+}
+
+
+class domain.ServicePart$ServicePartBuilder {
+	{method} +bikeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : domain.ServicePart$ServicePartBuilder
+	{method} +build () : domain.ServicePart
+	{method} +part ( paramPart1 : domain.Part ) : domain.ServicePart$ServicePartBuilder
+	{method} +quantity ( paramInteger1 : Integer ) : domain.ServicePart$ServicePartBuilder
+	{method} +servicePartId ( paramInteger1 : Integer ) : domain.ServicePart$ServicePartBuilder
+	{method} +toString () : String
+}
+
+
+class domain.ServicePerson {
+	{method}  {static} +builder () : domain.ServicePerson$ServicePersonBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withBikeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : domain.ServicePerson
+	{method} +withComment ( paramString1 : String ) : domain.ServicePerson
+	{method} +withHours ( paramInteger1 : Integer ) : domain.ServicePerson
+	{method} +withPersonRepairing ( paramPersonRepairing1 : domain.PersonRepairing ) : domain.ServicePerson
+	{method} +withService ( paramService1 : domain.Service ) : domain.ServicePerson
+	{method} +withServicePersonId ( paramInteger1 : Integer ) : domain.ServicePerson
+}
+
+
+class domain.ServicePerson$ServicePersonBuilder {
+	{method} +bikeServiceRequest ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +build () : domain.ServicePerson
+	{method} +comment ( paramString1 : String ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +hours ( paramInteger1 : Integer ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +personRepairing ( paramPersonRepairing1 : domain.PersonRepairing ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +service ( paramService1 : domain.Service ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +servicePersonId ( paramInteger1 : Integer ) : domain.ServicePerson$ServicePersonBuilder
+	{method} +toString () : String
+}
+
+
+class domain.User {
+	{method}  {static} +builder () : domain.User$UserBuilder
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+	{method} +withActive ( paramBoolean1 : Boolean ) : domain.User
+	{method} +withEmail ( paramString1 : String ) : domain.User
+	{method} +withPassword ( paramString1 : String ) : domain.User
+	{method} +withRoles ( paramSet1 : java.util.Set ) : domain.User
+	{method} +withUserId ( paramint1 : int ) : domain.User
+	{method} +withUserName ( paramString1 : String ) : domain.User
+}
+
+
+class domain.User$UserBuilder {
+	{method} +active ( paramBoolean1 : Boolean ) : domain.User$UserBuilder
+	{method} +build () : domain.User
+	{method} +email ( paramString1 : String ) : domain.User$UserBuilder
+	{method} +password ( paramString1 : String ) : domain.User$UserBuilder
+	{method} +roles ( paramSet1 : java.util.Set ) : domain.User$UserBuilder
+	{method} +toString () : String
+	{method} +userId ( paramint1 : int ) : domain.User$UserBuilder
+	{method} +userName ( paramString1 : String ) : domain.User$UserBuilder
+}
+
+
+class domain.exception.ForbiddenException {
+}
+
+
+class domain.exception.NotFoundException {
+}
+
+
+class domain.exception.ProcessingException {
+}
+
+
+class infrastructure.database.entity.AddressEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.AddressEntity$AddressEntityBuilder {
+	{method} +address ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +addressId ( paramInteger1 : Integer ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +apartmentNumber ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +build () : infrastructure.database.entity.AddressEntity
+	{method} +city ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +country ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +customer ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +houseNumber ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +postalCode ( paramString1 : String ) : infrastructure.database.entity.AddressEntity$AddressEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.BikeServiceRequestEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder {
+	{method} +bike ( paramBikeToServiceEntity1 : infrastructure.database.entity.BikeToServiceEntity ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +bikeServiceRequestId ( paramInteger1 : Integer ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +bikeServiceRequestNumber ( paramString1 : String ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +build () : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} +completedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +customer ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +customerComment ( paramString1 : String ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +receivedDateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +servicePart ( paramSet1 : java.util.Set ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +servicePerson ( paramSet1 : java.util.Set ) : infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.BikeToBuyEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder {
+	{method} +bikeToBuyId ( paramInteger1 : Integer ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +brand ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +build () : infrastructure.database.entity.BikeToBuyEntity
+	{method} +category ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +color ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +invoice ( paramInvoiceEntity1 : infrastructure.database.entity.InvoiceEntity ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +model ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +serial ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +subcategory ( paramString1 : String ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder
+}
+
+
+class infrastructure.database.entity.BikeToServiceEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder {
+	{method} +bikeServiceRequests ( paramSet1 : java.util.Set ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} +bikeToServiceId ( paramInteger1 : Integer ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} +brand ( paramString1 : String ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} +build () : infrastructure.database.entity.BikeToServiceEntity
+	{method} +model ( paramString1 : String ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} +serial ( paramString1 : String ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+	{method} +toString () : String
+	{method} +year ( paramInteger1 : Integer ) : infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder
+}
+
+
+class infrastructure.database.entity.CustomerEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder {
+	{method} +address ( paramAddressEntity1 : infrastructure.database.entity.AddressEntity ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +bikeServiceRequests ( paramSet1 : java.util.Set ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +build () : infrastructure.database.entity.CustomerEntity
+	{method} +customerId ( paramInteger1 : Integer ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +email ( paramString1 : String ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +invoices ( paramSet1 : java.util.Set ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +name ( paramString1 : String ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +phone ( paramString1 : String ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +surname ( paramString1 : String ) : infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.InvoiceEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder {
+	{method} +bike ( paramBikeToBuyEntity1 : infrastructure.database.entity.BikeToBuyEntity ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +build () : infrastructure.database.entity.InvoiceEntity
+	{method} +customer ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +dateTime ( paramOffsetDateTime1 : java.time.OffsetDateTime ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +invoiceId ( paramInteger1 : Integer ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +invoiceNumber ( paramString1 : String ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +salesman ( paramSalesmanEntity1 : infrastructure.database.entity.SalesmanEntity ) : infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.PartEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.PartEntity$PartEntityBuilder {
+	{method} +build () : infrastructure.database.entity.PartEntity
+	{method} +description ( paramString1 : String ) : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} +partId ( paramInteger1 : Integer ) : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} +serialNumber ( paramString1 : String ) : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} +serviceParts ( paramSet1 : java.util.Set ) : infrastructure.database.entity.PartEntity$PartEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.PersonRepairingEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder {
+	{method} +build () : infrastructure.database.entity.PersonRepairingEntity
+	{method} +codeNameSurname ( paramString1 : String ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} +name ( paramString1 : String ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} +personRepairingId ( paramInteger1 : Integer ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} +servicePerson ( paramSet1 : java.util.Set ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} +surname ( paramString1 : String ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder
+}
+
+
+class infrastructure.database.entity.SalesmanEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder {
+	{method} +build () : infrastructure.database.entity.SalesmanEntity
+	{method} +codeNameSurname ( paramString1 : String ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} +invoices ( paramSet1 : java.util.Set ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} +name ( paramString1 : String ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} +salesmanId ( paramInteger1 : Integer ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} +surname ( paramString1 : String ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+	{method} +toString () : String
+	{method} +userId ( paramInteger1 : Integer ) : infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder
+}
+
+
+class infrastructure.database.entity.ServiceEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder {
+	{method} +build () : infrastructure.database.entity.ServiceEntity
+	{method} +description ( paramString1 : String ) : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} +price ( paramBigDecimal1 : java.math.BigDecimal ) : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} +serviceCode ( paramString1 : String ) : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} +serviceId ( paramInteger1 : Integer ) : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} +servicePersons ( paramSet1 : java.util.Set ) : infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.ServicePartEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder {
+	{method} +bikeServiceRequest ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder
+	{method} +build () : infrastructure.database.entity.ServicePartEntity
+	{method} +part ( paramPartEntity1 : infrastructure.database.entity.PartEntity ) : infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder
+	{method} +quantity ( paramInteger1 : Integer ) : infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder
+	{method} +servicePartId ( paramInteger1 : Integer ) : infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.ServicePersonEntity {
+	{method}  {static} +builder () : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder {
+	{method} +bikeServiceRequest ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +build () : infrastructure.database.entity.ServicePersonEntity
+	{method} +comment ( paramString1 : String ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +hours ( paramInteger1 : Integer ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +personRepairing ( paramPersonRepairingEntity1 : infrastructure.database.entity.PersonRepairingEntity ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +service ( paramServiceEntity1 : infrastructure.database.entity.ServiceEntity ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +servicePersonId ( paramInteger1 : Integer ) : infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder
+	{method} +toString () : String
+}
+
+
+class infrastructure.database.repository.BikeServiceRequestRepository {
+	{method} +findActiveServiceRequestByBikeSerial ( paramString1 : String ) : java.util.Set
+	{method} +findAvailable () : java.util.List
+}
+
+
+class infrastructure.database.repository.BikeToBuyRepository {
+	{method} +deleteBike ( paramBikeToBuy1 : domain.BikeToBuy ) : void
+	{method} +findAvailable () : java.util.List
+	{method} +findBikeToBuyBySerial ( paramString1 : String ) : java.util.Optional
+}
+
+
+class infrastructure.database.repository.BikeToServiceRepository {
+	{method} +findAll () : java.util.List
+	{method} +findBikeHistoryBySerial ( paramString1 : String ) : domain.BikeHistory
+	{method} +findBikeToServiceBySerial ( paramString1 : String ) : java.util.Optional
+	{method} +saveBikeToService ( paramBikeToService1 : domain.BikeToService ) : domain.BikeToService
+}
+
+
+class infrastructure.database.repository.CustomerRepository {
+	{method} +deleteCustomer ( paramCustomer1 : domain.Customer ) : void
+	{method} +existsByEmail ( paramString1 : String ) : boolean
+	{method} +findAvailable () : java.util.List
+	{method} +findByEmail ( paramString1 : String ) : java.util.Optional
+	{method} +issuerInvoice ( paramCustomer1 : domain.Customer ) : void
+	{method} +saveCustomer ( paramCustomer1 : domain.Customer ) : domain.Customer
+	{method} +saveServiceRequest ( paramCustomer1 : domain.Customer ) : void
+}
+
+
+class infrastructure.database.repository.InvoiceRepository {
+	{method} +findAll () : java.util.List
+}
+
+
+class infrastructure.database.repository.PartRepository {
+	{method} +finBySerialNumber ( paramString1 : String ) : java.util.Optional
+	{method} +findAll () : java.util.List
+	{method} +findAllBySerialNumbers ( paramList1 : java.util.List ) : java.util.List
+}
+
+
+class infrastructure.database.repository.PersonRepairingRepository {
+	{method} +findAvailable () : java.util.List
+	{method} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+class infrastructure.database.repository.SalesmanRepository {
+	{method} +findAvailable () : java.util.List
+	{method} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+class infrastructure.database.repository.ServiceRepository {
+	{method} +findAll () : java.util.List
+	{method} +findByServiceCode ( paramString1 : String ) : java.util.Optional
+}
+
+
+class infrastructure.database.repository.ServiceRequestProcessingRepository {
+	{method} +process ( paramBikeServiceRequest1 : domain.BikeServiceRequest , paramServicePerson2 : domain.ServicePerson ) : void
+	{method} +process ( paramBikeServiceRequest1 : domain.BikeServiceRequest , paramServicePerson2 : domain.ServicePerson , paramList3 : java.util.List ) : void
+}
+
+
+class infrastructure.database.repository.UserRepository {
+	{method} +findAvailable () : java.util.List
+}
+
+
+interface infrastructure.database.repository.jpa.AddressJpaRepository {
+}
+
+
+interface infrastructure.database.repository.jpa.BikeServiceRequestJpaRepository {
+	{method}  {abstract} +findActiveServiceRequestByBikeSerial ( paramString1 : String ) : java.util.Set
+	{method}  {abstract} +findAllByCompletedDateTimeIsNull () : java.util.Set
+}
+
+
+interface infrastructure.database.repository.jpa.BikeToBuyJpaRepository {
+	{method}  {abstract} +findAvailableBike () : java.util.List
+	{method}  {abstract} +findBySerial ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.BikeToServiceJpaRepository {
+	{method}  {abstract} +findBySerial ( paramString1 : String ) : infrastructure.database.entity.BikeToServiceEntity
+	{method}  {abstract} +findOptionalBySerial ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.CustomerJpaRepository {
+	{method}  {abstract} +existsByEmail ( paramString1 : String ) : boolean
+	{method}  {abstract} +findAvailable () : java.util.List
+	{method}  {abstract} +findByEmail ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.InvoiceJpaRepository {
+}
+
+
+interface infrastructure.database.repository.jpa.PartJpaRepository {
+	{method}  {abstract} +findAllBySerialNumberIn ( paramList1 : java.util.List ) : java.util.List
+	{method}  {abstract} +findBySerialNumber ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.PersonRepairingJpaRepository {
+	{method}  {abstract} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.SalesmanJpaRepository {
+	{method}  {abstract} +findByCodeNameSurname ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.ServiceJpaRepository {
+	{method}  {abstract} +findByServiceCode ( paramString1 : String ) : java.util.Optional
+}
+
+
+interface infrastructure.database.repository.jpa.ServicePartJpaRepository {
+}
+
+
+interface infrastructure.database.repository.jpa.ServicePersonJpaRepository {
+}
+
+
+interface infrastructure.database.repository.mapper.BikeServiceRequestEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : domain.BikeServiceRequest
+	{method} +mapFromEntityWithBike ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : domain.BikeServiceRequest
+	{method}  {abstract} +mapToEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+}
+
+
+class infrastructure.database.repository.mapper.BikeServiceRequestEntityMapperImpl {
+	{method} #bikeServiceRequestSetToBikeServiceRequestEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #bikeToServiceToBikeToServiceEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+	{method} #customerToCustomerEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #invoiceToInvoiceEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} +mapFromEntity ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : domain.BikeServiceRequest
+	{method} +mapToEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} #partToPartEntity ( paramPart1 : domain.Part ) : infrastructure.database.entity.PartEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+	{method} #servicePartSetToServicePartEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #servicePartToServicePartEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+}
+
+
+interface infrastructure.database.repository.mapper.BikeToBuyEntityMapper {
+	{method}  {abstract} +mapFormEntity ( paramBikeToBuyEntity1 : infrastructure.database.entity.BikeToBuyEntity ) : domain.BikeToBuy
+	{method}  {abstract} +mapToEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+}
+
+
+class infrastructure.database.repository.mapper.BikeToBuyEntityMapperImpl {
+	{method} +mapFormEntity ( paramBikeToBuyEntity1 : infrastructure.database.entity.BikeToBuyEntity ) : domain.BikeToBuy
+	{method} +mapToEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+}
+
+
+interface infrastructure.database.repository.mapper.BikeToServiceEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramBikeToServiceEntity1 : infrastructure.database.entity.BikeToServiceEntity ) : domain.BikeToService
+	{method} +mapFromEntity ( paramString1 : String , paramBikeToServiceEntity2 : infrastructure.database.entity.BikeToServiceEntity ) : domain.BikeHistory
+	{method}  {abstract} +mapToEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+}
+
+
+class infrastructure.database.repository.mapper.BikeToServiceEntityMapperImpl {
+	{method} #addressToAddressEntity ( paramAddress1 : domain.Address ) : infrastructure.database.entity.AddressEntity
+	{method} #bikeServiceRequestSetToBikeServiceRequestEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #bikeServiceRequestToBikeServiceRequestEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #customerToCustomerEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #invoiceToInvoiceEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} +mapFromEntity ( paramBikeToServiceEntity1 : infrastructure.database.entity.BikeToServiceEntity ) : domain.BikeToService
+	{method} +mapToEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+	{method} #partToPartEntity ( paramPart1 : domain.Part ) : infrastructure.database.entity.PartEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+	{method} #servicePartSetToServicePartEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #servicePartToServicePartEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+}
+
+
+interface infrastructure.database.repository.mapper.CustomerEntityMapper {
+	{method} +mapBikeServiceRequests ( paramSet1 : java.util.Set ) : java.util.Set
+	{method}  {abstract} +mapFromEntity ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : domain.BikeServiceRequest
+	{method}  {abstract} +mapFromEntity ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : domain.Customer
+	{method}  {abstract} +mapFromEntity ( paramInvoiceEntity1 : infrastructure.database.entity.InvoiceEntity ) : domain.Invoice
+	{method} +mapInvoices ( paramSet1 : java.util.Set ) : java.util.Set
+	{method}  {abstract} +mapToEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+}
+
+
+class infrastructure.database.repository.mapper.CustomerEntityMapperImpl {
+	{method} #addressEntityToAddress ( paramAddressEntity1 : infrastructure.database.entity.AddressEntity ) : domain.Address
+	{method} #addressToAddressEntity ( paramAddress1 : domain.Address ) : infrastructure.database.entity.AddressEntity
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #invoiceToInvoiceEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} +mapFromEntity ( paramBikeServiceRequestEntity1 : infrastructure.database.entity.BikeServiceRequestEntity ) : domain.BikeServiceRequest
+	{method} +mapFromEntity ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : domain.Customer
+	{method} +mapFromEntity ( paramInvoiceEntity1 : infrastructure.database.entity.InvoiceEntity ) : domain.Invoice
+	{method} +mapToEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+}
+
+
+interface infrastructure.database.repository.mapper.InvoiceEntityMapper {
+	{method} +mapAddressToString ( paramAddressEntity1 : infrastructure.database.entity.AddressEntity ) : String
+	{method}  {abstract} +mapToDto ( paramInvoiceEntity1 : infrastructure.database.entity.InvoiceEntity ) : api.dto.InvoiceDTO
+	{method}  {abstract} +mapToEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+}
+
+
+class infrastructure.database.repository.mapper.InvoiceEntityMapperImpl {
+	{method} #addressToAddressEntity ( paramAddress1 : domain.Address ) : infrastructure.database.entity.AddressEntity
+	{method} #bikeServiceRequestSetToBikeServiceRequestEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #bikeServiceRequestToBikeServiceRequestEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} #bikeToBuyEntityToBikeToBuyDTO ( paramBikeToBuyEntity1 : infrastructure.database.entity.BikeToBuyEntity ) : api.dto.BikeToBuyDTO
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #bikeToServiceToBikeToServiceEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+	{method} #customerEntityToCustomerDTO ( paramCustomerEntity1 : infrastructure.database.entity.CustomerEntity ) : api.dto.CustomerDTO
+	{method} #customerToCustomerEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} +mapToDto ( paramInvoiceEntity1 : infrastructure.database.entity.InvoiceEntity ) : api.dto.InvoiceDTO
+	{method} +mapToEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} #partToPartEntity ( paramPart1 : domain.Part ) : infrastructure.database.entity.PartEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+	{method} #servicePartSetToServicePartEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #servicePartToServicePartEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+}
+
+
+interface infrastructure.database.repository.mapper.PartEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramPartEntity1 : infrastructure.database.entity.PartEntity ) : domain.Part
+}
+
+
+class infrastructure.database.repository.mapper.PartEntityMapperImpl {
+	{method} +mapFromEntity ( paramPartEntity1 : infrastructure.database.entity.PartEntity ) : domain.Part
+}
+
+
+interface infrastructure.database.repository.mapper.PersonRepairingEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramPersonRepairingEntity1 : infrastructure.database.entity.PersonRepairingEntity ) : domain.PersonRepairing
+}
+
+
+class infrastructure.database.repository.mapper.PersonRepairingEntityMapperImpl {
+	{method} +mapFromEntity ( paramPersonRepairingEntity1 : infrastructure.database.entity.PersonRepairingEntity ) : domain.PersonRepairing
+}
+
+
+interface infrastructure.database.repository.mapper.SalesmanEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramSalesmanEntity1 : infrastructure.database.entity.SalesmanEntity ) : domain.Salesman
+}
+
+
+class infrastructure.database.repository.mapper.SalesmanEntityMapperImpl {
+	{method} +mapFromEntity ( paramSalesmanEntity1 : infrastructure.database.entity.SalesmanEntity ) : domain.Salesman
+}
+
+
+interface infrastructure.database.repository.mapper.ServiceEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramServiceEntity1 : infrastructure.database.entity.ServiceEntity ) : domain.Service
+}
+
+
+class infrastructure.database.repository.mapper.ServiceEntityMapperImpl {
+	{method} +mapFromEntity ( paramServiceEntity1 : infrastructure.database.entity.ServiceEntity ) : domain.Service
+}
+
+
+interface infrastructure.database.repository.mapper.ServicePartEntityMapper {
+	{method}  {abstract} +mapToEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+}
+
+
+class infrastructure.database.repository.mapper.ServicePartEntityMapperImpl {
+	{method} #addressToAddressEntity ( paramAddress1 : domain.Address ) : infrastructure.database.entity.AddressEntity
+	{method} #bikeServiceRequestSetToBikeServiceRequestEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #bikeServiceRequestToBikeServiceRequestEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #bikeToServiceToBikeToServiceEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+	{method} #customerToCustomerEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #invoiceToInvoiceEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} +mapToEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+	{method} #partToPartEntity ( paramPart1 : domain.Part ) : infrastructure.database.entity.PartEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+	{method} #servicePartSetToServicePartEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+}
+
+
+interface infrastructure.database.repository.mapper.ServicePersonEntityMapper {
+	{method}  {abstract} +mapToEntity ( paramServicePerson1 : domain.ServicePerson ) : infrastructure.database.entity.ServicePersonEntity
+}
+
+
+class infrastructure.database.repository.mapper.ServicePersonEntityMapperImpl {
+	{method} #addressToAddressEntity ( paramAddress1 : domain.Address ) : infrastructure.database.entity.AddressEntity
+	{method} #bikeServiceRequestSetToBikeServiceRequestEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #bikeServiceRequestToBikeServiceRequestEntity ( paramBikeServiceRequest1 : domain.BikeServiceRequest ) : infrastructure.database.entity.BikeServiceRequestEntity
+	{method} #bikeToBuyToBikeToBuyEntity ( paramBikeToBuy1 : domain.BikeToBuy ) : infrastructure.database.entity.BikeToBuyEntity
+	{method} #bikeToServiceToBikeToServiceEntity ( paramBikeToService1 : domain.BikeToService ) : infrastructure.database.entity.BikeToServiceEntity
+	{method} #customerToCustomerEntity ( paramCustomer1 : domain.Customer ) : infrastructure.database.entity.CustomerEntity
+	{method} #invoiceSetToInvoiceEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #invoiceToInvoiceEntity ( paramInvoice1 : domain.Invoice ) : infrastructure.database.entity.InvoiceEntity
+	{method} +mapToEntity ( paramServicePerson1 : domain.ServicePerson ) : infrastructure.database.entity.ServicePersonEntity
+	{method} #partToPartEntity ( paramPart1 : domain.Part ) : infrastructure.database.entity.PartEntity
+	{method} #personRepairingToPersonRepairingEntity ( paramPersonRepairing1 : domain.PersonRepairing ) : infrastructure.database.entity.PersonRepairingEntity
+	{method} #salesmanToSalesmanEntity ( paramSalesman1 : domain.Salesman ) : infrastructure.database.entity.SalesmanEntity
+	{method} #servicePartSetToServicePartEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #servicePartToServicePartEntity ( paramServicePart1 : domain.ServicePart ) : infrastructure.database.entity.ServicePartEntity
+	{method} #servicePersonSetToServicePersonEntitySet ( paramSet1 : java.util.Set ) : java.util.Set
+	{method} #serviceToServiceEntity ( paramService1 : domain.Service ) : infrastructure.database.entity.ServiceEntity
+}
+
+
+interface infrastructure.database.repository.mapper.UserEntityMapper {
+	{method}  {abstract} +mapFromEntity ( paramUserEntity1 : infrastructure.security.UserEntity ) : domain.User
+}
+
+
+class infrastructure.database.repository.mapper.UserEntityMapperImpl {
+	{method} +mapFromEntity ( paramUserEntity1 : infrastructure.security.UserEntity ) : domain.User
+}
+
+
+class infrastructure.security.CodfishBikeUserDetailsService {
+	{method} -buildUserForAuthentication ( paramUserEntity1 : infrastructure.security.UserEntity , paramList2 : java.util.List ) : org.springframework.security.core.userdetails.UserDetails
+	{method} -getUserAuthority ( paramSet1 : java.util.Set ) : java.util.List
+	{method} +loadUserByUsername ( paramString1 : String ) : org.springframework.security.core.userdetails.UserDetails
+}
+
+
+class infrastructure.security.CustomAccessDeniedHandler {
+	{method} +handle ( paramHttpServletRequest1 : jakarta.servlet.http.HttpServletRequest , paramHttpServletResponse2 : jakarta.servlet.http.HttpServletResponse , paramAccessDeniedException3 : org.springframework.security.access.AccessDeniedException ) : void
+}
+
+
+class infrastructure.security.PasswordHashingExample {
+	{method}  {static} +main ( paramString;1 : [Ljava.lang.String; ) : void
+}
+
+
+class infrastructure.security.RoleEntity {
+	{method}  {static} +builder () : infrastructure.security.RoleEntity$RoleEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.security.RoleEntity$RoleEntityBuilder {
+	{method} +build () : infrastructure.security.RoleEntity
+	{method} +role ( paramString1 : String ) : infrastructure.security.RoleEntity$RoleEntityBuilder
+	{method} +roleId ( paramint1 : int ) : infrastructure.security.RoleEntity$RoleEntityBuilder
+	{method} +toString () : String
+}
+
+
+interface infrastructure.security.RoleRepository {
+	{method}  {abstract} +findByRole ( paramString1 : String ) : infrastructure.security.RoleEntity
+}
+
+
+class infrastructure.security.SecurityConfiguration {
+	{method} +accessDeniedHandler () : org.springframework.security.web.access.AccessDeniedHandler
+	{method} +authenticationManager ( paramHttpSecurity1 : org.springframework.security.config.annotation.web.builders.HttpSecurity , paramPasswordEncoder2 : org.springframework.security.crypto.password.PasswordEncoder , paramUserDetailsService3 : org.springframework.security.core.userdetails.UserDetailsService ) : org.springframework.security.authentication.AuthenticationManager
+	{method} +passwordEncoder () : org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+	{method} ~securityDisabled ( paramHttpSecurity1 : org.springframework.security.config.annotation.web.builders.HttpSecurity ) : org.springframework.security.web.SecurityFilterChain
+	{method} ~securityEnabled ( paramHttpSecurity1 : org.springframework.security.config.annotation.web.builders.HttpSecurity ) : org.springframework.security.web.SecurityFilterChain
+}
+
+
+class infrastructure.security.UserEntity {
+	{method}  {static} +builder () : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +toString () : String
+}
+
+
+class infrastructure.security.UserEntity$UserEntityBuilder {
+	{method} +active ( paramBoolean1 : Boolean ) : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} +build () : infrastructure.security.UserEntity
+	{method} +email ( paramString1 : String ) : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} +password ( paramString1 : String ) : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} +roles ( paramSet1 : java.util.Set ) : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} +toString () : String
+	{method} +userId ( paramint1 : int ) : infrastructure.security.UserEntity$UserEntityBuilder
+	{method} +userName ( paramString1 : String ) : infrastructure.security.UserEntity$UserEntityBuilder
+}
+
+
+interface infrastructure.security.UserJpaRepository {
+	{method}  {abstract} +findByUserName ( paramString1 : String ) : infrastructure.security.UserEntity
+	{method}  {abstract} +findMaxUserId () : java.util.Optional
+}
+
+
+class infrastructure.security.UserRoleEntity {
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+}
+
+
+class infrastructure.security.UserRoleId {
+	{method} #canEqual ( paramObject1 : Object ) : boolean
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+}
+
+
+interface infrastructure.security.UserRoleJpaRepository {
+}
+
+
+
+
+api.controller.AddUpdatePartsController *--  api.dto.mapper.PartMapper : partMapper
+api.controller.AddUpdatePartsController *--  business.PartCatalogService : partCatalogService
+api.controller.AddUpdatePartsController *--  infrastructure.database.repository.jpa.PartJpaRepository : partJpaRepository
+api.controller.AddUpdatePersonRepairingController *--  api.dto.mapper.PersonRepairingMapper : personRepairingMapper
+api.controller.AddUpdatePersonRepairingController *--  api.dto.mapper.UserMapper : userMapper
+api.controller.AddUpdatePersonRepairingController *--  business.BikeServiceRequestService : bikeServiceRequestService
+api.controller.AddUpdatePersonRepairingController *--  business.PersonRepairingService : personRepairingService
+api.controller.AddUpdatePersonRepairingController *--  business.UserService : userService
+api.controller.AddUpdatePersonRepairingController *--  infrastructure.database.repository.jpa.PersonRepairingJpaRepository : personRepairingJpaRepository
+api.controller.AddUpdatePersonRepairingController *--  infrastructure.security.RoleRepository : roleRepository
+api.controller.AddUpdatePersonRepairingController *--  infrastructure.security.UserJpaRepository : userJpaRepository
+api.controller.AddUpdateSalesmanController *--  api.dto.mapper.SalesmanMapper : salesmanMapper
+api.controller.AddUpdateSalesmanController *--  api.dto.mapper.UserMapper : userMapper
+api.controller.AddUpdateSalesmanController *--  business.BikePurchaseService : bikePurchaseService
+api.controller.AddUpdateSalesmanController *--  business.SalesmanService : salesmanService
+api.controller.AddUpdateSalesmanController *--  business.UserService : userService
+api.controller.AddUpdateSalesmanController *--  infrastructure.database.repository.jpa.SalesmanJpaRepository : salesmanJpaRepository
+api.controller.AddUpdateSalesmanController *--  infrastructure.security.RoleRepository : roleRepository
+api.controller.AddUpdateSalesmanController *--  infrastructure.security.UserJpaRepository : userJpaRepository
+api.controller.AddUpdateServicesController *--  api.dto.mapper.ServiceMapper : serviceMapper
+api.controller.AddUpdateServicesController *--  business.ServiceCatalogService : serviceCatalogService
+api.controller.AddUpdateServicesController *--  infrastructure.database.repository.jpa.ServiceJpaRepository : serviceJpaRepository
+api.controller.BikeHistoryController *--  api.dto.mapper.BikeMapper : bikeMapper
+api.controller.BikeHistoryController *--  business.BikeService : bikeService
+api.controller.CustomerController *--  api.dto.mapper.CustomerMapper : customerMapper
+api.controller.CustomerController *--  business.CustomerService : customerService
+api.controller.CustomerController *--  infrastructure.database.repository.CustomerRepository : customerRepository
+api.controller.CustomerController *--  infrastructure.database.repository.jpa.CustomerJpaRepository : customerJpaRepository
+api.controller.InvoiceController *--  api.dto.mapper.InvoiceMapper : invoiceMapper
+api.controller.InvoiceController *--  infrastructure.database.repository.InvoiceRepository : invoiceRepository
+api.controller.PersonRepairingController *--  api.dto.mapper.BikeServiceRequestMapper : bikeServiceRequestMapper
+api.controller.PersonRepairingController *--  api.dto.mapper.PartMapper : partMapper
+api.controller.PersonRepairingController *--  api.dto.mapper.PersonRepairingMapper : personRepairingMapper
+api.controller.PersonRepairingController *--  api.dto.mapper.ServiceMapper : serviceMapper
+api.controller.PersonRepairingController *--  business.BikeServiceProcessingService : bikeServiceProcessingService
+api.controller.PersonRepairingController *--  business.BikeServiceRequestService : bikeServiceRequestService
+api.controller.PersonRepairingController *--  business.PartCatalogService : partCatalogService
+api.controller.PersonRepairingController *--  business.ServiceCatalogService : serviceCatalogService
+api.controller.PurchaseController *--  api.dto.mapper.BikeMapper : bikeMapper
+api.controller.PurchaseController *--  api.dto.mapper.BikePurchaseMapper : bikePurchaseMapper
+api.controller.PurchaseController *--  api.dto.mapper.CustomerMapper : customerMapper
+api.controller.PurchaseController *--  business.BikePurchaseService : bikePurchaseService
+api.controller.PurchaseController *--  business.CustomerService : customerService
+api.controller.PurchaseController *--  infrastructure.database.repository.CustomerRepository : customerRepository
+api.controller.SalesmanController *--  api.dto.mapper.BikeMapper : bikeMapper
+api.controller.SalesmanController *--  api.dto.mapper.PersonRepairingMapper : personRepairingMapper
+api.controller.SalesmanController *--  api.dto.mapper.SalesmanMapper : salesmanMapper
+api.controller.SalesmanController *--  business.BikePurchaseService : bikePurchaseService
+api.controller.SalesmanController *--  business.BikeService : bikeService
+api.controller.SalesmanController *--  business.BikeServiceRequestService : bikeServiceRequestService
+api.controller.SalesmanController *--  infrastructure.database.repository.jpa.BikeToBuyJpaRepository : bikeToBuyJpaRepository
+api.controller.ServiceController *--  api.dto.mapper.BikeServiceRequestMapper : bikeServiceRequestMapper
+api.controller.ServiceController *--  api.dto.mapper.InvoiceMapper : invoiceMapper
+api.controller.ServiceController *--  business.BikeServiceRequestService : bikeServiceRequestService
+api.controller.ServiceController *--  infrastructure.database.repository.InvoiceRepository : invoiceRepository
+api.controller.ServiceNewCustomerController *--  api.dto.mapper.BikeServiceRequestMapper : bikeServiceRequestMapper
+api.controller.ServiceNewCustomerController *--  business.BikeServiceRequestService : bikeServiceRequestService
+api.dto.BikeHistoryDTO "1" o-- "0..*"  api.dto.BikeHistoryDTO$ServiceRequestDTO : bikeServiceRequests
+api.dto.BikeHistoryDTO$BikeHistoryDTOBuilder "1" o-- "0..*"  api.dto.BikeHistoryDTO$ServiceRequestDTO : bikeServiceRequests
+api.dto.BikeHistoryDTO$ServiceRequestDTO "1" o-- "0..*"  api.dto.PartDTO : parts
+api.dto.BikeHistoryDTO$ServiceRequestDTO "1" o-- "0..*"  api.dto.ServiceDTO : services
+api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder "1" o-- "0..*"  api.dto.PartDTO : parts
+api.dto.BikeHistoryDTO$ServiceRequestDTO$ServiceRequestDTOBuilder "1" o-- "0..*"  api.dto.ServiceDTO : services
+api.dto.InvoiceDTO -->  api.dto.BikeToBuyDTO : bike
+api.dto.InvoiceDTO -->  api.dto.CustomerDTO : customer
+api.dto.InvoiceDTO -->  infrastructure.database.entity.SalesmanEntity : salesman
+api.dto.InvoiceDTO$InvoiceDTOBuilder -->  api.dto.BikeToBuyDTO : bike
+api.dto.InvoiceDTO$InvoiceDTOBuilder -->  api.dto.CustomerDTO : customer
+api.dto.InvoiceDTO$InvoiceDTOBuilder -->  infrastructure.database.entity.SalesmanEntity : salesman
+api.dto.mapper.BikeMapper ..|>  api.dto.mapper.OffsetDateTimeMapper
+api.dto.mapper.BikeMapperImpl ..|>  api.dto.mapper.BikeMapper
+api.dto.mapper.BikePurchaseMapperImpl ..|>  api.dto.mapper.BikePurchaseMapper
+api.dto.mapper.BikeServiceRequestMapper ..|>  api.dto.mapper.OffsetDateTimeMapper
+api.dto.mapper.BikeServiceRequestMapperImpl ..|>  api.dto.mapper.BikeServiceRequestMapper
+api.dto.mapper.BikeToBuyMapperImpl ..|>  api.dto.mapper.BikeToBuyMapper
+api.dto.mapper.CustomerMapper *--  api.dto.mapper.CustomerMapper : INSTANCE
+api.dto.mapper.CustomerMapperImpl ..|>  api.dto.mapper.CustomerMapper
+api.dto.mapper.InvoiceMapperImpl ..|>  api.dto.mapper.InvoiceMapper
+api.dto.mapper.OffsetDateTimeMapperImpl ..|>  api.dto.mapper.OffsetDateTimeMapper
+api.dto.mapper.PartMapperImpl ..|>  api.dto.mapper.PartMapper
+api.dto.mapper.PersonRepairingMapperImpl ..|>  api.dto.mapper.PersonRepairingMapper
+api.dto.mapper.SalesmanMapperImpl ..|>  api.dto.mapper.SalesmanMapper
+api.dto.mapper.ServiceMapperImpl ..|>  api.dto.mapper.ServiceMapper
+api.dto.mapper.UserMapperImpl ..|>  api.dto.mapper.UserMapper
+business.BikePurchaseService *--  business.BikeService : bikeService
+business.BikePurchaseService *--  business.CustomerService : customerService
+business.BikePurchaseService *--  business.SalesmanService : salesmanService
+business.BikePurchaseService *--  business.dao.CustomerDAO : customerDAO
+business.BikeService *--  business.dao.BikeToBuyDAO : bikeToBuyDAO
+business.BikeService *--  business.dao.BikeToServiceDAO : bikeToServiceDAO
+business.BikeServiceProcessingService *--  business.BikeService : bikeService
+business.BikeServiceProcessingService *--  business.BikeServiceRequestService : bikeServiceRequestService
+business.BikeServiceProcessingService *--  business.PartCatalogService : partCatalogService
+business.BikeServiceProcessingService *--  business.PersonRepairingService : personRepairingService
+business.BikeServiceProcessingService *--  business.ServiceCatalogService : serviceCatalogService
+business.BikeServiceProcessingService *--  business.dao.ServiceRequestProcessingDAO : serviceRequestProcessingDAO
+business.BikeServiceRequestService *--  business.BikeService : bikeService
+business.BikeServiceRequestService *--  business.CustomerService : customerService
+business.BikeServiceRequestService *--  business.PersonRepairingService : personRepairingService
+business.BikeServiceRequestService *--  business.dao.BikeServiceRequestDAO : bikeServiceRequestDAO
+business.CustomerService *--  business.dao.CustomerDAO : customerDAO
+business.CustomerService *--  infrastructure.database.repository.CustomerRepository : customerRepository
+business.InvoiceService *--  infrastructure.database.repository.jpa.InvoiceJpaRepository : invoiceJpaRepository
+business.PartCatalogService *--  business.dao.PartDAO : partDAO
+business.PersonRepairingService *--  business.dao.PersonRepairingDAO : personRepairingDAO
+business.PersonRepairingService *--  infrastructure.database.repository.jpa.PersonRepairingJpaRepository : personRepairingJpaRepository
+business.PersonRepairingService *--  infrastructure.security.UserJpaRepository : userJpaRepository
+business.SalesmanService *--  business.dao.SalesmanDAO : salesmanDAO
+business.SalesmanService *--  infrastructure.database.repository.jpa.SalesmanJpaRepository : salesmanJpaRepository
+business.SalesmanService *--  infrastructure.security.UserJpaRepository : userJpaRepository
+business.ServiceCatalogService *--  business.dao.ServiceDAO : serviceDAO
+business.UserService *--  business.dao.UserDAO : userDAO
+business.UserService *--  infrastructure.security.RoleRepository : roleJpaRepository
+business.UserService *--  infrastructure.security.UserJpaRepository : userJpaRepository
+business.UserService *--  infrastructure.security.UserRoleJpaRepository : userRoleJpaRepository
+domain.Address *--  domain.Customer : customer
+domain.Address$AddressBuilder -->  domain.Customer : customer
+domain.BikeHistory "1" o-- "0..*"  domain.BikeHistory$BikeServiceRequest : bikeServiceRequests
+domain.BikeHistory$BikeHistoryBuilder "1" o-- "0..*"  domain.BikeHistory$BikeServiceRequest : bikeServiceRequests
+domain.BikeHistory$BikeServiceRequest "1" o-- "0..*"  domain.Part : parts
+domain.BikeHistory$BikeServiceRequest "1" o-- "0..*"  domain.Service : services
+domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder "1" o-- "0..*"  domain.Part : parts
+domain.BikeHistory$BikeServiceRequest$BikeServiceRequestBuilder "1" o-- "0..*"  domain.Service : services
+domain.BikeServiceRequest "1" o-- "0..*"  domain.ServicePart : servicePart
+domain.BikeServiceRequest "1" o-- "0..*"  domain.ServicePerson : servicePersons
+domain.BikeServiceRequest *--  domain.BikeToService : bike
+domain.BikeServiceRequest *--  domain.Customer : customer
+domain.BikeServiceRequest$BikeServiceRequestBuilder "1" o-- "0..*"  domain.ServicePart : servicePart
+domain.BikeServiceRequest$BikeServiceRequestBuilder "1" o-- "0..*"  domain.ServicePerson : servicePersons
+domain.BikeServiceRequest$BikeServiceRequestBuilder -->  domain.BikeToService : bike
+domain.BikeServiceRequest$BikeServiceRequestBuilder -->  domain.Customer : customer
+domain.BikeToBuy *--  domain.Invoice : invoice
+domain.BikeToBuy$BikeToBuyBuilder -->  domain.Invoice : invoice
+domain.BikeToService "1" o-- "0..*"  domain.BikeServiceRequest : bikeServiceRequests
+domain.BikeToService$BikeToServiceBuilder "1" o-- "0..*"  domain.BikeServiceRequest : bikeServiceRequests
+domain.Customer "1" o-- "0..*"  domain.BikeServiceRequest : bikeServiceRequests
+domain.Customer "1" o-- "0..*"  domain.Invoice : invoices
+domain.Customer *--  domain.Address : address
+domain.Customer$CustomerBuilder "1" o-- "0..*"  domain.BikeServiceRequest : bikeServiceRequests
+domain.Customer$CustomerBuilder "1" o-- "0..*"  domain.Invoice : invoices
+domain.Customer$CustomerBuilder -->  domain.Address : address
+domain.Invoice *--  domain.BikeToBuy : bike
+domain.Invoice *--  domain.Customer : customer
+domain.Invoice *--  domain.Salesman : salesman
+domain.Invoice$InvoiceBuilder -->  domain.BikeToBuy : bike
+domain.Invoice$InvoiceBuilder -->  domain.Customer : customer
+domain.Invoice$InvoiceBuilder -->  domain.Salesman : salesman
+domain.Part "1" o-- "0..*"  domain.ServicePart : servicePart
+domain.Part$PartBuilder "1" o-- "0..*"  domain.ServicePart : servicePart
+domain.PersonRepairing "1" o-- "0..*"  domain.ServicePerson : servicePerson
+domain.PersonRepairing$PersonRepairingBuilder "1" o-- "0..*"  domain.ServicePerson : servicePerson
+domain.Salesman "1" o-- "0..*"  domain.Invoice : invoices
+domain.Salesman$SalesmanBuilder "1" o-- "0..*"  domain.Invoice : invoices
+domain.Service "1" o-- "0..*"  domain.ServicePerson : servicePersons
+domain.Service$ServiceBuilder "1" o-- "0..*"  domain.ServicePerson : servicePersons
+domain.ServicePart *--  domain.BikeServiceRequest : bikeServiceRequest
+domain.ServicePart *--  domain.Part : part
+domain.ServicePart$ServicePartBuilder -->  domain.BikeServiceRequest : bikeServiceRequest
+domain.ServicePart$ServicePartBuilder -->  domain.Part : part
+domain.ServicePerson *--  domain.BikeServiceRequest : bikeServiceRequest
+domain.ServicePerson *--  domain.PersonRepairing : personRepairing
+domain.ServicePerson *--  domain.Service : service
+domain.ServicePerson$ServicePersonBuilder -->  domain.BikeServiceRequest : bikeServiceRequest
+domain.ServicePerson$ServicePersonBuilder -->  domain.PersonRepairing : personRepairing
+domain.ServicePerson$ServicePersonBuilder -->  domain.Service : service
+domain.User "1" o-- "0..*"  infrastructure.security.RoleEntity : roles
+domain.User$UserBuilder "1" o-- "0..*"  infrastructure.security.RoleEntity : roles
+infrastructure.database.entity.AddressEntity -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.AddressEntity$AddressEntityBuilder -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.BikeServiceRequestEntity "1" o-- "0..*"  infrastructure.database.entity.ServicePartEntity : servicePart
+infrastructure.database.entity.BikeServiceRequestEntity "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePerson
+infrastructure.database.entity.BikeServiceRequestEntity -->  infrastructure.database.entity.BikeToServiceEntity : bike
+infrastructure.database.entity.BikeServiceRequestEntity -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.ServicePartEntity : servicePart
+infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePerson
+infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder -->  infrastructure.database.entity.BikeToServiceEntity : bike
+infrastructure.database.entity.BikeServiceRequestEntity$BikeServiceRequestEntityBuilder -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.BikeToBuyEntity -->  infrastructure.database.entity.InvoiceEntity : invoice
+infrastructure.database.entity.BikeToBuyEntity$BikeToBuyEntityBuilder -->  infrastructure.database.entity.InvoiceEntity : invoice
+infrastructure.database.entity.BikeToServiceEntity "1" o-- "0..*"  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequests
+infrastructure.database.entity.BikeToServiceEntity$BikeToServiceEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequests
+infrastructure.database.entity.CustomerEntity "1" o-- "0..*"  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequests
+infrastructure.database.entity.CustomerEntity "1" o-- "0..*"  infrastructure.database.entity.InvoiceEntity : invoices
+infrastructure.database.entity.CustomerEntity -->  infrastructure.database.entity.AddressEntity : address
+infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequests
+infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.InvoiceEntity : invoices
+infrastructure.database.entity.CustomerEntity$CustomerEntityBuilder -->  infrastructure.database.entity.AddressEntity : address
+infrastructure.database.entity.InvoiceEntity -->  infrastructure.database.entity.BikeToBuyEntity : bike
+infrastructure.database.entity.InvoiceEntity -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.InvoiceEntity -->  infrastructure.database.entity.SalesmanEntity : salesman
+infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder -->  infrastructure.database.entity.BikeToBuyEntity : bike
+infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder -->  infrastructure.database.entity.CustomerEntity : customer
+infrastructure.database.entity.InvoiceEntity$InvoiceEntityBuilder -->  infrastructure.database.entity.SalesmanEntity : salesman
+infrastructure.database.entity.PartEntity "1" o-- "0..*"  infrastructure.database.entity.ServicePartEntity : serviceParts
+infrastructure.database.entity.PartEntity$PartEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.ServicePartEntity : serviceParts
+infrastructure.database.entity.PersonRepairingEntity "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePerson
+infrastructure.database.entity.PersonRepairingEntity$PersonRepairingEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePerson
+infrastructure.database.entity.SalesmanEntity "1" o-- "0..*"  infrastructure.database.entity.InvoiceEntity : invoices
+infrastructure.database.entity.SalesmanEntity$SalesmanEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.InvoiceEntity : invoices
+infrastructure.database.entity.ServiceEntity "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePersons
+infrastructure.database.entity.ServiceEntity$ServiceEntityBuilder "1" o-- "0..*"  infrastructure.database.entity.ServicePersonEntity : servicePersons
+infrastructure.database.entity.ServicePartEntity -->  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequest
+infrastructure.database.entity.ServicePartEntity -->  infrastructure.database.entity.PartEntity : part
+infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder -->  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequest
+infrastructure.database.entity.ServicePartEntity$ServicePartEntityBuilder -->  infrastructure.database.entity.PartEntity : part
+infrastructure.database.entity.ServicePersonEntity -->  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequest
+infrastructure.database.entity.ServicePersonEntity -->  infrastructure.database.entity.PersonRepairingEntity : personRepairing
+infrastructure.database.entity.ServicePersonEntity -->  infrastructure.database.entity.ServiceEntity : service
+infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder -->  infrastructure.database.entity.BikeServiceRequestEntity : bikeServiceRequest
+infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder -->  infrastructure.database.entity.PersonRepairingEntity : personRepairing
+infrastructure.database.entity.ServicePersonEntity$ServicePersonEntityBuilder -->  infrastructure.database.entity.ServiceEntity : service
+infrastructure.database.repository.BikeServiceRequestRepository *--  infrastructure.database.repository.jpa.BikeServiceRequestJpaRepository : bikeServiceRequestJpaRepository
+infrastructure.database.repository.BikeServiceRequestRepository *--  infrastructure.database.repository.mapper.BikeServiceRequestEntityMapper : bikeServiceRequestEntityMapper
+infrastructure.database.repository.BikeServiceRequestRepository ..|>  business.dao.BikeServiceRequestDAO
+infrastructure.database.repository.BikeToBuyRepository *--  infrastructure.database.repository.jpa.BikeToBuyJpaRepository : bikeToBuyJpaRepository
+infrastructure.database.repository.BikeToBuyRepository *--  infrastructure.database.repository.mapper.BikeToBuyEntityMapper : bikeToBuyEntityMapper
+infrastructure.database.repository.BikeToBuyRepository ..|>  business.dao.BikeToBuyDAO
+infrastructure.database.repository.BikeToServiceRepository *--  infrastructure.database.repository.jpa.BikeToServiceJpaRepository : bikeToServiceJpaRepository
+infrastructure.database.repository.BikeToServiceRepository *--  infrastructure.database.repository.mapper.BikeToServiceEntityMapper : bikeToServiceEntityMapper
+infrastructure.database.repository.BikeToServiceRepository ..|>  business.dao.BikeToServiceDAO
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.jpa.BikeServiceRequestJpaRepository : bikeServiceRequestJpaRepository
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.jpa.CustomerJpaRepository : customerJpaRepository
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.jpa.InvoiceJpaRepository : invoiceJpaRepository
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.mapper.BikeServiceRequestEntityMapper : bikeServiceRequestEntityMapper
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.mapper.CustomerEntityMapper : customerEntityMapper
+infrastructure.database.repository.CustomerRepository *--  infrastructure.database.repository.mapper.InvoiceEntityMapper : invoiceEntityMapper
+infrastructure.database.repository.CustomerRepository ..|>  business.dao.CustomerDAO
+infrastructure.database.repository.InvoiceRepository *--  infrastructure.database.repository.jpa.InvoiceJpaRepository : invoiceJpaRepository
+infrastructure.database.repository.InvoiceRepository *--  infrastructure.database.repository.mapper.InvoiceEntityMapper : invoiceEntityMapper
+infrastructure.database.repository.InvoiceRepository ..|>  business.dao.InvoiceDAO
+infrastructure.database.repository.PartRepository *--  infrastructure.database.repository.jpa.PartJpaRepository : partJpaRepository
+infrastructure.database.repository.PartRepository *--  infrastructure.database.repository.mapper.PartEntityMapper : mapper
+infrastructure.database.repository.PartRepository ..|>  business.dao.PartDAO
+infrastructure.database.repository.PersonRepairingRepository *--  infrastructure.database.repository.jpa.PersonRepairingJpaRepository : personRepairingJpaRepository
+infrastructure.database.repository.PersonRepairingRepository *--  infrastructure.database.repository.mapper.PersonRepairingEntityMapper : personRepairingEntityMapper
+infrastructure.database.repository.PersonRepairingRepository ..|>  business.dao.PersonRepairingDAO
+infrastructure.database.repository.SalesmanRepository *--  infrastructure.database.repository.jpa.SalesmanJpaRepository : salesmanJpaRepository
+infrastructure.database.repository.SalesmanRepository *--  infrastructure.database.repository.mapper.SalesmanEntityMapper : salesmanEntityMapper
+infrastructure.database.repository.SalesmanRepository ..|>  business.dao.SalesmanDAO
+infrastructure.database.repository.ServiceRepository *--  infrastructure.database.repository.jpa.ServiceJpaRepository : serviceJpaRepository
+infrastructure.database.repository.ServiceRepository *--  infrastructure.database.repository.mapper.ServiceEntityMapper : mapper
+infrastructure.database.repository.ServiceRepository ..|>  business.dao.ServiceDAO
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.jpa.BikeServiceRequestJpaRepository : bikeServiceRequestJpaRepository
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.jpa.PartJpaRepository : partJpaRepository
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.jpa.ServicePartJpaRepository : servicePartJpaRepository
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.jpa.ServicePersonJpaRepository : servicePersonJpaRepository
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.mapper.ServicePartEntityMapper : servicePartEntityMapper
+infrastructure.database.repository.ServiceRequestProcessingRepository *--  infrastructure.database.repository.mapper.ServicePersonEntityMapper : servicePersonEntityMapper
+infrastructure.database.repository.ServiceRequestProcessingRepository ..|>  business.dao.ServiceRequestProcessingDAO
+infrastructure.database.repository.UserRepository *--  infrastructure.database.repository.mapper.UserEntityMapper : userEntityMapper
+infrastructure.database.repository.UserRepository *--  infrastructure.security.UserJpaRepository : userJpaRepository
+infrastructure.database.repository.UserRepository ..|>  business.dao.UserDAO
+infrastructure.database.repository.mapper.BikeServiceRequestEntityMapperImpl ..|>  infrastructure.database.repository.mapper.BikeServiceRequestEntityMapper
+infrastructure.database.repository.mapper.BikeToBuyEntityMapperImpl ..|>  infrastructure.database.repository.mapper.BikeToBuyEntityMapper
+infrastructure.database.repository.mapper.BikeToServiceEntityMapperImpl ..|>  infrastructure.database.repository.mapper.BikeToServiceEntityMapper
+infrastructure.database.repository.mapper.CustomerEntityMapperImpl ..|>  infrastructure.database.repository.mapper.CustomerEntityMapper
+infrastructure.database.repository.mapper.InvoiceEntityMapperImpl ..|>  infrastructure.database.repository.mapper.InvoiceEntityMapper
+infrastructure.database.repository.mapper.PartEntityMapperImpl ..|>  infrastructure.database.repository.mapper.PartEntityMapper
+infrastructure.database.repository.mapper.PersonRepairingEntityMapperImpl ..|>  infrastructure.database.repository.mapper.PersonRepairingEntityMapper
+infrastructure.database.repository.mapper.SalesmanEntityMapperImpl ..|>  infrastructure.database.repository.mapper.SalesmanEntityMapper
+infrastructure.database.repository.mapper.ServiceEntityMapperImpl ..|>  infrastructure.database.repository.mapper.ServiceEntityMapper
+infrastructure.database.repository.mapper.ServicePartEntityMapperImpl ..|>  infrastructure.database.repository.mapper.ServicePartEntityMapper
+infrastructure.database.repository.mapper.ServicePersonEntityMapperImpl ..|>  infrastructure.database.repository.mapper.ServicePersonEntityMapper
+infrastructure.database.repository.mapper.UserEntityMapperImpl ..|>  infrastructure.database.repository.mapper.UserEntityMapper
+infrastructure.security.CodfishBikeUserDetailsService *--  infrastructure.security.UserJpaRepository : userJpaRepository
+infrastructure.security.UserEntity "1" o-- "0..*"  infrastructure.security.RoleEntity : roles
+infrastructure.security.UserEntity$UserEntityBuilder "1" o-- "0..*"  infrastructure.security.RoleEntity : roles
+
+hide methods
+
+@enduml
