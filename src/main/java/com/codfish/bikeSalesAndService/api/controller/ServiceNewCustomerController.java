@@ -23,19 +23,17 @@ import java.util.Map;
 @Log4j2
 public class ServiceNewCustomerController {
 
-    private static final String SERVICE_NEW_CUSTOMER = "/service/new-customer";
-    private static final String SERVICE_REQUEST_NEW_CUSTOMER = "/service/request-new-customer";
+    private static final String SERVICE_NEW_CUSTOMER = "/service/new_customer";
+    private static final String SERVICE_REQUEST_NEW_CUSTOMER = "/service/request_new_customer";
 
     private final BikeServiceRequestService bikeServiceRequestService;
-
     private final BikeServiceRequestMapper bikeServiceRequestMapper;
 
     @GetMapping(value = SERVICE_NEW_CUSTOMER)
-    public ModelAndView bikeServicePage() {
-        Map<String, ?> model = Map.of(
-                "bikeServiceRequestDTO", BikeServiceCustomerRequestDTO.buildDefault()
-        );
-        return new ModelAndView("info/bike_service_request_new_customer", model);
+    public ModelAndView newCustomerServicePage() {
+        var bikeServiceRequestDTO = BikeServiceCustomerRequestDTO.buildDefault();
+        var viewName = "info/bike_service_request_new_customer";
+        return new ModelAndView(viewName, Map.of("bikeServiceRequestDTO", bikeServiceRequestDTO));
     }
 
     @PostMapping(value = SERVICE_REQUEST_NEW_CUSTOMER)
@@ -44,19 +42,24 @@ public class ServiceNewCustomerController {
             BindingResult result
     ) throws ServletRequestBindingException {
         if (result.hasErrors()) {
-            FieldError fieldError = result.getFieldError();
-            String errorMessage = "Validation error";
-            if (fieldError != null) {
-                errorMessage = String.format("Validation error on field: [%s], rejected value: [%s], because: [%s]",
-                        fieldError.getField(),
-                        fieldError.getRejectedValue(),
-                        fieldError.getDefaultMessage());
-            }
+            String errorMessage = buildErrorMessage(result);
             log.error(errorMessage);
             throw new ServletRequestBindingException(errorMessage);
         }
         BikeServiceRequest serviceRequest = bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
         bikeServiceRequestService.makeServiceRequest(serviceRequest);
         return "info/bike_service_request_new_customer_done";
+    }
+
+    private String buildErrorMessage(BindingResult result) {
+        FieldError fieldError = result.getFieldError();
+        String errorMessage = "Validation error";
+        if (fieldError != null) {
+            errorMessage = String.format("Validation error on field: [%s], rejected value: [%s], because: [%s]",
+                    fieldError.getField(),
+                    fieldError.getRejectedValue(),
+                    fieldError.getDefaultMessage());
+        }
+        return errorMessage;
     }
 }

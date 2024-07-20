@@ -2,26 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br>
-<br>
-<br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman - Retail Sale New Customer</h1>
+    <h2 class="centered-title">Salesman Sale</h2>
 </div>
-
 <div class="container">
     <div>
-        <form action="#" th:action="@{/purchase-new-customer}" th:method="POST" th:object="${bikePurchaseDTO}">
+        <form action="#" th:action="@{/purchase_new_customer}" th:method="POST" th:object="${bikePurchaseDTO}">
             <div class="col-12">
                 <div class="button-row">
-                    <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>
-                        Go
-                        back</a>
+                    <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
                 </div>
             </div>
             <br>

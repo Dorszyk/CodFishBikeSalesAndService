@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @TestPropertySource(locations = "classpath:application-test.yml")
 @WebMvcTest(AddUpdatePartsController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -32,7 +33,7 @@ class AddUpdatePartsControllerTest {
     private PartJpaRepository partJpaRepository;
 
     @Test
-    public void testPersonRepairingCheckPage() throws Exception {
+    public void testPartsAddUpdatePartPage() throws Exception {
         mockMvc.perform(get("/add_update_parts"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("info/add_update_parts"))

@@ -2,20 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Bike Purchase - Invoices</h1>
+    <h1 class="centered-title">Invoices</h1>
 </div>
 
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back to home</a>
+            <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
 </div>
@@ -23,7 +21,7 @@
 <div class="container-fluid">
     <div class="container">
         <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj fakturę ...">
-        <form action="#" th:action="@{/invoices-purchases}" th:method="POST" th:object="${InvoiceDTO}">
+        <form action="#" th:action="@{/invoices_purchases}" th:method="POST" th:object="${InvoiceDTO}">
             <table class="table" id="invoice-table">
                 <thead class="table-dark">
                 <tr>

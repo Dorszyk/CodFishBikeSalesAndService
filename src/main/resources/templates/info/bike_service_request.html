@@ -1,22 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br>
 <div class="header">
     <div class="header text-center mb-4">
-        <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-        <h1 class="centered-title">Salesman - Service a Bike</h1>
+        <h1 class="centered-title">Salesman Service</h1>
     </div>
 </div>
 
 <div class="container">
     <div class="col-12 mb-3">
         <div class="button-row">
-            <a th:href="@{/service/new-customer}" class="btn btn-info">New Customer Service</a>
+            <a th:href="@{/service/new_customer}" class="btn btn-info"><i class="fas fa-hands-helping"></i> New Customer Service</a>
             <a th:href="@{/salesman}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Go back
             </a>
@@ -49,7 +47,7 @@
         </form>
         <br>
         <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta lub rower...">
-        <form action="#" th:action="@{/invoices-purchases}" th:method="POST" th:object="${InvoiceDTO}">
+        <form action="#" th:action="@{/invoices_purchases}" th:method="POST" th:object="${InvoiceDTO}">
             <table class="table" id="service-table">
                 <thead class="table-dark">
                 <h4>Bikes sold:</h4>
@@ -114,4 +112,3 @@
 </script>
 </body>
 </html>
-

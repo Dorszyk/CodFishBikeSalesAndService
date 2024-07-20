@@ -1,14 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
-
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman - History of bicycle services</h1>
+    <h2 class="centered-title">Bike History</h2>
 </div>
 <div class="container">
     <div class="col-12">
@@ -16,30 +13,24 @@
             <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
-    <h2>Bike history:</h2>
+    <br>
     <form action="#" th:action="@{/bike/history}" th:method="GET">
         <div class="row mt-3">
             <div class="col-md-6">
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="bikesSerial">Bike Serial:</label>
-                        <select id="bikesSerial" th:name="bikeSerial" class="form-control">
-                            <option th:each="bikeSerial : ${allBikeSerials}"
-                                    th:value="${bikeSerial}"
-                                    th:text="${bikeSerial}"></option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="submit" value="Find" class="btn btn-success">
-                    </div>
-                </div>
+                <label for="bikesSerial">Bike Serial:</label>
+                <select id="bikesSerial" th:name="bikeSerial" class="form-control">
+                    <option th:each="bikeSerial : ${allBikeSerials}"
+                            th:value="${bikeSerial}"
+                            th:text="${bikeSerial}"></option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input type="submit" value="Find" class="btn btn-success mt-4">
             </div>
         </div>
     </form>
     <div class="row mt-3">
-        <p>Bike history for serial: <b><span
-                th:if="${bikeHistoryDTO.bikeSerial}"
-                th:text="${bikeHistoryDTO.bikeSerial}">BIKE SERIAL:</span></b></p>
+        <p>Bike history for serial: <b><span th:if="${bikeHistoryDTO.bikeSerial}" th:text="${bikeHistoryDTO.bikeSerial}">BIKE SERIAL:</span></b></p>
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -52,73 +43,74 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}"
-                th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}">
+            <tr th:if="${bikeHistoryDTO == null || bikeHistoryDTO.bikeServiceRequests.size() == 0}">
+                <td colspan="6">Select a bike serial to view history</td>
+            </tr>
+            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}">
                 <td th:text="${serviceRequest.bikeServiceRequestNumber}"></td>
                 <td th:text="${serviceRequest.receivedDateTime}"></td>
                 <td th:text="${serviceRequest.completedDateTime}"></td>
                 <td th:text="${serviceRequest.customerComment}"></td>
                 <td>
-                    <table class="table">
-                        <thead class="table-dark">
-                        <tr>
-                            <th>Id:</th>
-                            <th>Service Code:</th>
-                            <th>Description:</th>
-                            <th>Price PLN:</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="service, stat : ${serviceRequest.services}">
-                            <td th:text="${stat.count}"></td>
-                            <td th:text="${service.serviceCode}"></td>
-                            <td th:text="${service.description}"></td>
-                            <td th:text="${service.price}"></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th colspan="3">Total Price:</th>
-                            <th>
-                                <span th:text="${serviceRequest.getTotalServicePrice()}"></span> zł
-                            </th>
-                        </tr>
-                        </tfoot>
-                    </table>
-
+                    <div th:if="${serviceRequest.services != null && serviceRequest.services.size() > 0}">
+                        <table class="table">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Id:</th>
+                                <th>Service Code:</th>
+                                <th>Description:</th>
+                                <th>Price PLN:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="service, stat : ${serviceRequest.services}">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${service.serviceCode}"></td>
+                                <td th:text="${service.description}"></td>
+                                <td th:text="${service.price}"></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="3">Total Price:</th>
+                                <th><span th:text="${serviceRequest.getTotalServicePrice()}"></span> zł</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                     <div th:if="${serviceRequest.services == null || serviceRequest.services.size() == 0}">
-                        No services recorded
+                        No services added
                     </div>
                 </td>
                 <td>
-                    <table class="table">
-                        <thead class="table-dark">
-                        <tr>
-                            <th>Id:</th>
-                            <th>Serial Number:</th>
-                            <th>Description:</th>
-                            <th>Price PLN:</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="part, stat: ${serviceRequest.parts}">
-                            <td th:text="${stat.count}"></td>
-                            <td th:text="${part.serialNumber}"></td>
-                            <td th:text="${part.description}"></td>
-                            <td th:text="${part.price}"></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th colspan="3">Total Price:</th>
-                            <th>
-                                <span th:text="${serviceRequest.getTotalPartsPrice()}"></span> zł
-                            </th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    <div th:if="${serviceRequest.parts != null && serviceRequest.parts.size() > 0}">
+                        <table class="table">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Id:</th>
+                                <th>Serial Number:</th>
+                                <th>Description:</th>
+                                <th>Price PLN:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="part, stat : ${serviceRequest.parts}">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${part.serialNumber}"></td>
+                                <td th:text="${part.description}"></td>
+                                <td th:text="${part.price}"></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="3">Total Price:</th>
+                                <th><span th:text="${serviceRequest.getTotalPartsPrice()}"></span> zł</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                     <div th:if="${serviceRequest.parts == null || serviceRequest.parts.size() == 0}">
-                        No parts recorded
+                        No parts added
                     </div>
                 </td>
             </tr>
@@ -131,15 +123,11 @@
                     <span th:text="${serviceRequest.getTotalPrice()}"></span> zł
                 </td>
             </tr>
-            <tr th:if="${bikeHistoryDTO == null || bikeHistoryDTO.bikeServiceRequests.size() == 0}">
-                <td colspan="6">Select a bike serial to view history</td>
-            </tr>
             </tbody>
         </table>
     </div>
 </div>
-</body>
 <br><br><br>
-<div th:replace='~{/fragments/footer.html :: template}'></div>
+<footer th:replace='~{/fragments/footer.html :: template}'></footer>
+</body>
 </html>
-

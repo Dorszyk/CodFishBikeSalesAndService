@@ -2,22 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman - Retail Sale</h1>
+    <h2 class="centered-title">Salesman Sale</h2>
 </div>
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/purchase-new-customer}" class="btn btn-info" role="button">New customer order</a>
-            <a th:href="@{/customers-purchases}" class="btn btn-info" role="button">Customers</a>
-            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go
-                back</a>
+            <a th:href="@{/purchase_new_customer}" class="btn btn-info" role="button"><i class="fas fa-user-plus"></i> New Client</a>
+            <a th:href="@{/customers_purchases}" class="btn btn-info" role="button"> <i class="fas fa-users"></i> Customers</a>
+            <a th:href="@{/invoices_purchases}" class="btn btn-info" role="button"><i class="fas fa-file-invoice"></i> Invoices</a>
+            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
     <br>

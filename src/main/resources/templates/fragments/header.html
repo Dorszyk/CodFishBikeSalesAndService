@@ -2,32 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<header th:fragment="template" class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
+<header th:fragment="template" class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/codfish-bike">
-            <img th:src="@{/images/bike.png}" alt="" width="30" height="24" class="d-inline-block align-top">
-            Codfish Bikes
+            <img th:src="@{/images/logo/logo2.png}" alt="" width="90" height="96" class="d-inline-block align-top">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/salesman">Salesman-Portal</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/purchase">Salesman-Sale</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/add_update_salesman">Salesmen-Management</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/service/new">Bike-Service</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/bike/history">Bike-History</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/personRepairing">Person Repairing-Portal</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/add_update_person_repairing">Person Repairing-Management</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/customers-purchases">Customers</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/invoices-purchases">Invoices</a></li>
-                <li class="nav-item"><a class="nav-link" href="/codfish-bike/user/info">User</a></li>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/salesman">Salesman Portal</a>
+                </li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/purchase">Salesman Sale</a></li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/add_update_salesman">Salesmen
+                    Manager</a></li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/service/newBikeService">Bike
+                    Service</a></li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/bike/history">Bike History</a>
+                </li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/personRepairing">Person
+                    Repairing Portal</a></li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/add_update_person_repairing">Person
+                    Repairing Manager</a></li>
+                <li class="nav-item"><a class="nav-link large-font"
+                                        href="/codfish-bike/customers_purchases">Customers</a></li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/invoices_purchases">Invoices</a>
+                </li>
+                <li class="nav-item"><a class="nav-link large-font" href="/codfish-bike/user/info">Users</a></li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" th:text="${username}" style="color: #259125; font-size: 1.05em;">User Name</a>
+                    <a class="nav-link disabled" href="#" th:text="${username}"
+                       style="color: #c03e3e; font-size: 1.05em;">User Name</a>
                 </li>
             </ul>
         </div>
@@ -37,5 +48,8 @@
         </form>
     </div>
 </header>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

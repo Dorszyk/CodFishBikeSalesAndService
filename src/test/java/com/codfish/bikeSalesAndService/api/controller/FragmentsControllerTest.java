@@ -1,15 +1,12 @@
 package com.codfish.bikeSalesAndService.api.controller;
 
-import com.codfish.bikeSalesAndService.api.dto.CustomerDTO;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -49,9 +46,10 @@ class FragmentsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("info/add_update_person_repairing"));
     }
+
     @Test
     void getFragmentsInvoicesTest() throws Exception {
-        mockMvc.perform(get("/info/invoice-purchases"))
+        mockMvc.perform(get("/info/invoice_purchases"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("info/invoice_purchases"));
     }

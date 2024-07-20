@@ -14,7 +14,8 @@ import com.codfish.bikeSalesAndService.domain.Part;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,14 +49,13 @@ public class PersonRepairingController {
 
     private Map<String, ?> prepareNecessaryData() {
         var availableServiceRequests = getAvailableServiceRequests();
-        var availableBikeSerials = availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
+        var availableBikeSerials = getAvailableBikeSerials(availableServiceRequests);
         var availablePersonRepairing = getAvailablePersonRepairing();
-        var availablePersonRepairingCodeNameSurnames = availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
+        var availablePersonRepairingCodeNameSurnames = getAvailablePersonRepairingCodeNameSurnames(availablePersonRepairing);
         var parts = findParts();
         var services = findServices();
         var partSerialNumbers = preparePartSerialNumbers(parts);
-        var serviceCodes = services.stream().map(ServiceDTO::getServiceCode).toList();
-
+        var serviceCodes = getServiceCodes(services);
         return Map.of(
                 "availableServiceRequestDTOs", availableServiceRequests,
                 "availableBikeSerials", availableBikeSerials,
@@ -69,31 +69,28 @@ public class PersonRepairingController {
         );
     }
 
-    @PostMapping(value = PERSON_REPAIRING_WORK_UNIT)
-    public String PersonRepairingWorkUnit(
-            @Valid @ModelAttribute("bikeServiceRequestProcessDTO") BikeServicePersonProcessingUnitDTO dto,
-            ModelMap modelMap
-    ) {
-        BikeServiceProcessingRequest request = bikeServiceRequestMapper.map(dto);
-        bikeServiceProcessingService.process(request);
-        if (dto.getDone()) {
-            return "info/person_repairing_service_done";
-        } else {
-            modelMap.addAllAttributes(prepareNecessaryData());
-            return "redirect:/personRepairing";
-        }
-    }
-
     private List<BikeServiceRequestDTO> getAvailableServiceRequests() {
         return bikeServiceRequestService.availableServiceRequest().stream()
                 .map(bikeServiceRequestMapper::map)
                 .toList();
     }
 
+    private List<String> getAvailableBikeSerials(List<BikeServiceRequestDTO> availableServiceRequests) {
+        return availableServiceRequests.stream().map(BikeServiceRequestDTO::getBikeSerial).toList();
+    }
+
     private List<PersonRepairingDTO> getAvailablePersonRepairing() {
         return bikeServiceRequestService.availablePersonRepairing().stream()
                 .map(personRepairingMapper::map)
                 .toList();
+    }
+
+    private List<String> getAvailablePersonRepairingCodeNameSurnames(List<PersonRepairingDTO> availablePersonRepairing) {
+        return availablePersonRepairing.stream().map(PersonRepairingDTO::getCodeNameSurname).toList();
+    }
+
+    private List<String> getServiceCodes(List<ServiceDTO> services) {
+        return services.stream().map(ServiceDTO::getServiceCode).toList();
     }
 
     private List<PartDTO> findParts() {
@@ -117,6 +114,27 @@ public class PersonRepairingController {
                 .toList());
         return partSerialNumbers;
     }
+
+    @PostMapping(value = PERSON_REPAIRING_WORK_UNIT)
+    public String processServiceRequest(
+            @Valid @ModelAttribute("bikeServiceRequestProcessDTO") BikeServicePersonProcessingUnitDTO dto,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "error";
+        }
+        BikeServiceProcessingRequest request = bikeServiceRequestMapper.map(dto);
+        bikeServiceProcessingService.process(request);
+        if (dto.getDone()) {
+            return "info/person_repairing_service_done";
+        } else {
+            addNecessaryDataToModel(model);
+            return "redirect:/personRepairing";
+        }
+    }
+
+    private void addNecessaryDataToModel(Model model) {
+        model.addAllAttributes(prepareNecessaryData());
+    }
 }
-
-

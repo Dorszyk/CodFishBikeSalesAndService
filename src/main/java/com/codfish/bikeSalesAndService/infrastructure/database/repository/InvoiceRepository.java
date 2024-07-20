@@ -24,4 +24,11 @@ public class InvoiceRepository implements InvoiceDAO {
                 .map(invoiceEntityMapper::mapToDto)
                 .collect(Collectors.toList());
     }
+
+    public List<InvoiceDTO> findAllInvoicesDTO() {
+        List<InvoiceEntity> invoiceEntities = invoiceJpaRepository.findAll();
+        return invoiceEntities.stream()
+                .map(invoiceEntityMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
 }

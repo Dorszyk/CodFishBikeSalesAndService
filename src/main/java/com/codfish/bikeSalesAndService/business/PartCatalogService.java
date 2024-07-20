@@ -3,6 +3,8 @@ package com.codfish.bikeSalesAndService.business;
 import com.codfish.bikeSalesAndService.business.dao.PartDAO;
 import com.codfish.bikeSalesAndService.domain.Part;
 import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
+import com.codfish.bikeSalesAndService.infrastructure.database.entity.PartEntity;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.PartJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,15 +21,7 @@ public class PartCatalogService {
 
 
     private final PartDAO partDAO;
-
-    @Transactional
-    public Part findPart(String partSerialNumber) {
-        Optional<Part> part = partDAO.finBySerialNumber(partSerialNumber);
-        if (part.isEmpty()) {
-            throw new NotFoundException("Could not find part by part serial number: [%s]".formatted(partSerialNumber));
-        }
-        return part.get();
-    }
+    private final PartJpaRepository partJpaRepository;
 
     @Transactional
     public List<Part> findAllByParts(List<String> partSerialNumbers) {
@@ -49,5 +42,15 @@ public class PartCatalogService {
         List<Part> parts = partDAO.findAll();
         log.info("Available parts: [{}]", parts.size());
         return parts;
+    }
+
+    @Transactional
+    public void deletePart(String serialNumber) {
+        Optional<PartEntity> optionalPartEntity = partJpaRepository.findBySerialNumber(serialNumber);
+        if (optionalPartEntity.isEmpty()) {
+            log.error("Cannot delete part. No part found with serial number: {}", serialNumber);
+            throw new NotFoundException(String.format("No part found with serial number: %s", serialNumber));
+        }
+        partJpaRepository.delete(optionalPartEntity.get());
     }
 }

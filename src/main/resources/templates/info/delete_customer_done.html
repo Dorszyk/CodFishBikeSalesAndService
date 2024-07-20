@@ -2,25 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br>
-<br>
-<br>
-<div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Customer- deleted a database</h1>
-</div>
+<br><br><br>
+<br><br><br>
 <div class="centered">
-    <h3><p>"Completed delete customer!"</p></h3>
+    <h3><p> Client removed!</p></h3>
 </div>
 <br>
 <div class="container">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/customers-purchases}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
+            <a th:href="@{/customers_purchases}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go
                 back</a>
         </div>
     </div>

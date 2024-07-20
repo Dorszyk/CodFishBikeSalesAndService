@@ -1,14 +1,11 @@
 package com.codfish.bikeSalesAndService.api.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @Data
@@ -202,23 +199,4 @@ public class BikeToBuyDTO {
                 .price(generateRandomPrice())
                 .build();
     }
-
-    private static void addFieldToMap(Map<String, String> map, String fieldName, String value) {
-        if (value != null) {
-            map.put(fieldName, value);
-        }
-    }
-
-   /* public Map<String, String> asMap() {
-        Map<String, String> result = new HashMap<>();
-        addFieldToMap(result, "category", category);
-        addFieldToMap(result, "subcategory", subcategory);
-        addFieldToMap(result, "serial", serial);
-        addFieldToMap(result, "brand", brand);
-        addFieldToMap(result, "model", model);
-        addFieldToMap(result, "year", String.valueOf(year));
-        addFieldToMap(result, "color", color);
-        addFieldToMap(result, "price", String.valueOf(price));
-        return result;
-    }*/
 }

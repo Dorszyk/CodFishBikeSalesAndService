@@ -12,7 +12,7 @@
     <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE_ROLLING}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${user.dir}/my-logs/archived/rolled.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <fileNamePattern>${user.dir}/my-logs/archived/rolled.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>20MB</maxFileSize>
             <toalSizeCap>1GB</toalSizeCap>
             <maxHistory>30</maxHistory>

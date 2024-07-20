@@ -2,21 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
+
 <body class="bg-light">
-<br>
-<br>
-<br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Person repairing-service</h1>
+    <h2 class="centered-title">Person Repairing Portal</h2>
 </div>
 <div class="container my-4">
     <div class="col-12">
         <div class="button-row">
-            <a th:href="@{/add_update_parts}" class="btn btn-info" role="button"> Parts</a>
-            <a th:href="@{/add_update_services}" class="btn btn-info" role="button"> Services</a>
+            <a th:href="@{/add_update_parts}" class="btn btn-info" role="button"><i class="fas fa-cogs"> Parts</i></a>
+            <a th:href="@{/add_update_services}" class="btn btn-info" role="button"><i class="fas fa-wrench"></i> Services</a>
             <a th:href="@{/}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
         </div>
     </div>
@@ -139,150 +136,159 @@
                 </div>
             </div>
             <br>
-            <div class="row">
-                <h3><p>Person repairing comment: </p></h3>
-                <div class="col-md-6">
-                    <textarea id="personRepairingComment" th:field="*{personRepairingComment}" rows="3" cols="165"
-                              class="form-control"
-                              required="required">
-                    </textarea>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Person Repairing Comment</h3>
+                </div>
+                <div class="card-body">
+                    <textarea id="personRepairingComment" th:field="*{personRepairingComment}" rows="3"
+                              class="form-control" placeholder="Enter your comment here..." required></textarea>
                 </div>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3><p>Repair confirmation: </p></h3>
-                    <label for="doneYes">YES</label>
-                    <input type="radio" id="doneYes" value="true" th:field="*{done}">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Repair Confirmation</h4>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <input type="submit" value="CONFIRM" class="btn btn-success">
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Has the repair been completed?</legend>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="doneYes" value="true" th:field="*{done}"
+                                   name="repairDone">
+                            <label class="form-check-label" for="doneYes">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="doneNo" value="false" th:field="*{done}"
+                                   name="repairDone">
+                            <label class="form-check-label" for="doneNo">No</label>
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
             </div>
         </form>
     </div>
-</div>
-<br>
-<div class="container">
-    <div>
-        <input type="text" id="searchInput" class="form-control mb-2" placeholder="Wyszukaj dostępne części...">
-        <h3><p>Available parts:</p></h3>
-        <table class="table" id="parts-bikes">
-            <thead class="table-dark">
-            <tr>
-                <th>Id:</th>
-                <th>Serial:</th>
-                <th>Description:</th>
-                <th>Price PLN:</th>
-                <th>Actions:</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="part, stat : ${partDTOs}">
-                <td th:text="${stat.count}"></td>
-                <td th:text="${part.serialNumber}"></td>
-                <td th:text="${part.description}"></td>
-                <td th:text="${part.price}"></td>
-                <td>
-                    <form>
-                        <a th:href="@{/add_update_parts}" class="btn btn-info" role="button">Edit</a>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="pagination-container"></div>
+    <br>
+    <div class="container">
+        <div>
+            <input type="text" id="searchInput" class="form-control mb-2" placeholder="Wyszukaj dostępne części...">
+            <h3><p>Available parts:</p></h3>
+            <table class="table" id="parts-bikes">
+                <thead class="table-dark">
+                <tr>
+                    <th>Id:</th>
+                    <th>Serial:</th>
+                    <th>Description:</th>
+                    <th>Price PLN:</th>
+                    <th>Actions:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="part, stat : ${partDTOs}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${part.serialNumber}"></td>
+                    <td th:text="${part.description}"></td>
+                    <td th:text="${part.price}"></td>
+                    <td>
+                        <form>
+                            <a th:href="@{/add_update_parts}" class="btn btn-info" role="button">Edit</a>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination-container"></div>
+        </div>
     </div>
-</div>
-<div class="container">
-    <div>
-        <input type="text" id="searchInput1" class="form-control mb-2" placeholder="SWyszukaj dostępną usługę...">
-        <h3>Available services:</h3>
-        <table class="table" id="parts-serial">
-            <thead class="table-dark">
-            <tr>
-                <th>Id:</th>
-                <th>Service Code:</th>
-                <th>Description:</th>
-                <th>Price PLN:</th>
-                <th>Actions:</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="service,stat : ${serviceDTOs}">
-                <td th:text="${stat.count}"></td>
-                <td th:text="${service.serviceCode}"></td>
-                <td th:text="${service.description}"></td>
-                <td th:text="${service.price}"></td>
-                <td>
-                    <form>
-                        <a th:href="@{/add_update_services}" class="btn btn-info" role="button">Edit</a>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="pagination-container1"></div>
-        </section>
-    </div>
-    <script>
-        $(document).ready(function () {
-            var items = $("#parts-bikes tr");
-            var numItems = items.length;
-            var perPage = 7;
+    <div class="container">
+        <div>
+            <input type="text" id="searchInput1" class="form-control mb-2" placeholder="SWyszukaj dostępną usługę...">
+            <h3>Available services:</h3>
+            <table class="table" id="parts-serial">
+                <thead class="table-dark">
+                <tr>
+                    <th>Id:</th>
+                    <th>Service Code:</th>
+                    <th>Description:</th>
+                    <th>Price PLN:</th>
+                    <th>Actions:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="service,stat : ${serviceDTOs}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${service.serviceCode}"></td>
+                    <td th:text="${service.description}"></td>
+                    <td th:text="${service.price}"></td>
+                    <td>
+                        <form>
+                            <a th:href="@{/add_update_services}" class="btn btn-info" role="button">Edit</a>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination-container1"></div>
+            </section>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var items = $("#parts-bikes tr");
+                var numItems = items.length;
+                var perPage = 7;
 
-            items.slice(perPage).hide();
+                items.slice(perPage).hide();
 
-            $('#pagination-container').twbsPagination({
-                totalPages: Math.ceil(numItems / perPage),
-                visiblePages: 5,
-                onPageClick: function (event, page) {
-                    var start = perPage * (page - 1);
-                    var end = start + perPage;
+                $('#pagination-container').twbsPagination({
+                    totalPages: Math.ceil(numItems / perPage),
+                    visiblePages: 5,
+                    onPageClick: function (event, page) {
+                        var start = perPage * (page - 1);
+                        var end = start + perPage;
 
-                    items.hide().slice(start, end).show();
-                }
-            });
-        });
-        $(document).ready(function () {
-            var items = $("#parts-serial tr");
-            var numItems = items.length;
-            var perPage = 7;
-
-            items.slice(perPage).hide();
-
-            $('#pagination-container1').twbsPagination({
-                totalPages: Math.ceil(numItems / perPage),
-                visiblePages: 5,
-                onPageClick: function (event, page) {
-                    var start = perPage * (page - 1);
-                    var end = start + perPage;
-
-                    items.hide().slice(start, end).show();
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#searchInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#parts-bikes tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        items.hide().slice(start, end).show();
+                    }
                 });
             });
-        });
-        $(document).ready(function () {
-            $("#searchInput1").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#parts-serial tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(document).ready(function () {
+                var items = $("#parts-serial tr");
+                var numItems = items.length;
+                var perPage = 7;
+
+                items.slice(perPage).hide();
+
+                $('#pagination-container1').twbsPagination({
+                    totalPages: Math.ceil(numItems / perPage),
+                    visiblePages: 5,
+                    onPageClick: function (event, page) {
+                        var start = perPage * (page - 1);
+                        var end = start + perPage;
+
+                        items.hide().slice(start, end).show();
+                    }
                 });
             });
-        });
-    </script>
-    <div th:replace='~{/fragments/footer.html :: template}'></div>
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#searchInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#parts-bikes tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+            $(document).ready(function () {
+                $("#searchInput1").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#parts-serial tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        <div th:replace='~{/fragments/footer.html :: template}'></div>
+    </div>
 </div>
 </body>
 </html>
-

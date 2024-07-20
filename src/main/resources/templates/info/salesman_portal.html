@@ -2,28 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br>
-<br>
-<br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman - Bicycle Sale</h1>
+    <h2 class="centered-title">Salesman Portal</h2>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="col-12">
             <div class="button-row">
-                <a th:href="@{/purchase}" class="btn btn-success" role="button"><i class="fas fa-bicycle"></i> Sale </a>
-                <a th:href="@{/service/new}" class="btn btn-success" role="button"><i class="fas fa-tools"></i> Service
-                    a bike</a>
-                <a th:href="@{/bike/history}" class="btn btn-success" role="button"><i class="fas fa-history"></i> Bike
+                <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-shopping-cart"></i> Sale </a>
+                <a th:href="@{/service/newBikeService}" class="btn btn-info" role="button"><i class="fas fa-wrench"></i> Service Bike </a>
+                <a th:href="@{/bike/history}" class="btn btn-info" role="button"><i class="fas fa-book"></i>
                     history</a>
-                <a th:href="@{/}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go back</a>
+                <a th:href="@{/}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back </a>
             </div>
             <br>
         </div>

@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @Data
@@ -159,6 +157,7 @@ public class BikeServiceCustomerRequestDTO {
     private static String generateRandomAddressApartmentNumber() {
         return String.valueOf(new Random().nextInt(50) + 1);
     }
+
     private static String generateRandomCustomerComment() {
         String[] issues = {
                 "Przegląd podstawowy po zakupie nowego roweru",
@@ -231,33 +230,4 @@ public class BikeServiceCustomerRequestDTO {
     private static boolean isNullOrEmpty(String existingBikeSerialCustomerEmail) {
         return existingBikeSerialCustomerEmail == null || existingBikeSerialCustomerEmail.isBlank();
     }
-
-    private static void addFieldToMap(Map<String, String> map, String fieldName, String value) {
-        if (value != null) {
-            map.put(fieldName, value);
-        }
-    }
-
-    public Map<String, String> asMap() {
-        Map<String, String> result = new HashMap<>();
-        addFieldToMap(result, "existingCustomerEmail", existingCustomerEmail);
-        addFieldToMap(result, "customerComment", customerComment);
-        addFieldToMap(result, "customerName", customerName);
-        addFieldToMap(result, "customerSurname", customerSurname);
-        addFieldToMap(result, "customerPhone", customerPhone);
-        addFieldToMap(result, "customerEmail", customerEmail);
-        addFieldToMap(result, "customerAddressCountry", customerAddressCountry);
-        addFieldToMap(result, "customerAddressCity", customerAddressCity);
-        addFieldToMap(result, "customerAddressPostalCode", customerAddressPostalCode);
-        addFieldToMap(result, "customerAddressStreet", customerAddressStreet);
-        addFieldToMap(result, "customerAddressHouseNumber", customerAddressHouseNumber);
-        addFieldToMap(result, "customerAddressApartmentNumber", customerAddressApartmentNumber);
-        addFieldToMap(result, "existingBikeSerial", existingBikeSerial);
-        addFieldToMap(result, "bikeSerial", bikeSerial);
-        addFieldToMap(result, "bikeBrand", bikeBrand);
-        addFieldToMap(result, "bikeModel", bikeModel);
-        addFieldToMap(result, "bikeYear", String.valueOf(bikeYear));
-        return result;
-    }
-
 }

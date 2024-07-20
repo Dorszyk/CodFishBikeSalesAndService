@@ -1,10 +1,6 @@
 package com.codfish.bikeSalesAndService.domain;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
-import lombok.With;
+import lombok.*;
 
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +9,7 @@ import java.util.Set;
 @Value
 @Builder
 @EqualsAndHashCode(of = "serial")
-@ToString(of = {"bikeToServiceId","serial","brand","model","year"})
+@ToString(of = {"bikeToServiceId", "serial", "brand", "model", "year"})
 public class BikeToService {
 
     Integer bikeToServiceId;
@@ -24,11 +20,10 @@ public class BikeToService {
 
     Set<BikeServiceRequest> bikeServiceRequests;
 
-    public boolean shouldExistsInBikeToBuy(){
+    public boolean shouldExistsInBikeToBuy() {
         return Objects.nonNull(serial)
                 && Objects.isNull(brand)
                 && Objects.isNull(model)
                 && Objects.isNull(year);
     }
-
 }

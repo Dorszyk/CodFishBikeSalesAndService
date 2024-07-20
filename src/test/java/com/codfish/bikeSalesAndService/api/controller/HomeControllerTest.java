@@ -26,9 +26,8 @@ class HomeControllerTest {
     @Test
     void homeWorksCorrectly() throws Exception {
         // given, when, then
-        mockMvc.perform(get(HomeController.HOME))
+        mockMvc.perform(get(HomeController.HOME_PAGE_URL))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home/home"));
     }
-
 }

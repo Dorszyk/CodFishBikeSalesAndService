@@ -30,10 +30,8 @@ public class PersonRepairingDTO {
 
     private Integer userId;
 
-
     @Size(min = 3, max = 50)
     private String userName;
-
 
     @Size(min = 3, max = 132)
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")

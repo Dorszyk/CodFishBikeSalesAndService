@@ -1,6 +1,7 @@
 package com.codfish.bikeSalesAndService.api.controller;
 
 import com.codfish.bikeSalesAndService.api.dto.SalesmanDTO;
+import com.codfish.bikeSalesAndService.api.dto.UserDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.SalesmanMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.UserMapper;
 import com.codfish.bikeSalesAndService.business.BikePurchaseService;
@@ -10,7 +11,6 @@ import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.domain.exception.ProcessingException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.SalesmanEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.SalesmanJpaRepository;
-import com.codfish.bikeSalesAndService.infrastructure.security.RoleEntity;
 import com.codfish.bikeSalesAndService.infrastructure.security.RoleRepository;
 import com.codfish.bikeSalesAndService.infrastructure.security.UserEntity;
 import com.codfish.bikeSalesAndService.infrastructure.security.UserJpaRepository;
@@ -21,17 +21,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class AddUpdateSalesmanController {
+
     private static final String ADD_UPDATE_SALESMAN = "/add_update_salesman";
     private static final String ADD_SALESMAN = "/add_salesman";
     private static final String UPDATE_SALESMAN = "/update_salesman";
     private static final String DELETE_SALESMAN = "/delete_salesman";
+    private static final String SALESMAN_ROLE_NAME = "SALESMAN";
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final BikePurchaseService bikePurchaseService;
@@ -45,97 +47,118 @@ public class AddUpdateSalesmanController {
 
     @GetMapping(value = ADD_UPDATE_SALESMAN)
     public String salesmanAddUpdatePage(Model model) {
-        var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
-                .map(salesmanMapper::map)
-                .toList();
-        var availableUser = userService.findAllUsers()
-                .stream()
-                .map(userMapper::map)
-                .toList();
-        model.addAttribute("availableUserDTOs", availableUser);
-        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
+        addAttributesToModel(model, getAvailableUsers(), getAvailableSalesmen());
         return "info/add_update_salesman";
     }
 
-    @PostMapping(value = ADD_SALESMAN)
-    public String addSalesman(
-            @Valid @ModelAttribute("newSalesmanDTO") SalesmanDTO salesmanDTO, Model model
-    ) {
+    private List<UserDTO> getAvailableUsers() {
+        return userService.findAllUsers()
+                .stream()
+                .map(userMapper::map)
+                .toList();
+    }
 
-        Optional<SalesmanEntity> existingSalesman = salesmanJpaRepository.findByCodeNameSurname(salesmanDTO.getCodeNameSurname());
+    private List<SalesmanDTO> getAvailableSalesmen() {
+        return bikePurchaseService.availableSalesmen()
+                .stream()
+                .map(salesmanMapper::map)
+                .toList();
+    }
+
+    private void addAttributesToModel(Model model, List<UserDTO> availableUser, List<SalesmanDTO> availableSalesmen) {
+        model.addAttribute("availableUserDTOs", availableUser);
+        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
+    }
+
+    @PostMapping(value = ADD_SALESMAN)
+    public String addSalesman
+            (@Valid @ModelAttribute("newSalesmanDTO") SalesmanDTO salesmanDTO, Model model
+            ) {
+        checkSalesmenAlreadyExists(salesmanDTO.getCodeNameSurname());
+        UserEntity savedUser = createAndSaveUser(salesmanDTO);
+        createAndSaveSalesman(salesmanDTO, savedUser.getUserId());
+        addAttributesToModel(model, getAvailableUsers(), getAvailableSalesmen());
+        return "info/add_salesman_done";
+    }
+
+    private void checkSalesmenAlreadyExists(String codeNameSurname) {
+        Optional<SalesmanEntity> existingSalesman = salesmanJpaRepository.findByCodeNameSurname(codeNameSurname);
         if (existingSalesman.isPresent()) {
             throw new ProcessingException(
-                    "Salesman already exists, CodeNameSurname: [%s]".formatted(salesmanDTO.getCodeNameSurname()));
+                    "Salesman already exists: [%s]".formatted(codeNameSurname));
         }
+    }
 
+    private UserEntity createAndSaveUser(SalesmanDTO salesmanDTO) {
         int nextUserId = userJpaRepository.findMaxUserId().orElse(0) + 1;
-
-        Set<RoleEntity> roles = new HashSet<>();
-        RoleEntity salesmanRole = roleRepository.findByRole("SALESMAN");
-        roles.add(salesmanRole);
-
         String hashedPassword = bCryptPasswordEncoder.encode(salesmanDTO.getPassword());
         UserEntity newUser = UserEntity.builder()
                 .userName(salesmanDTO.getUserName())
                 .email(salesmanDTO.getEmail())
                 .password(hashedPassword)
                 .userId(nextUserId)
-                .roles(roles)
+                .roles(Collections.singleton(roleRepository.findByRole(SALESMAN_ROLE_NAME)))
                 .active(true)
                 .build();
-        UserEntity savedUser = userJpaRepository.save(newUser);
+        return userJpaRepository.save(newUser);
+    }
 
+    private void createAndSaveSalesman(SalesmanDTO salesmanDTO, int userId) {
         SalesmanEntity newSalesman = SalesmanEntity.builder()
                 .name(salesmanDTO.getName())
                 .surname(salesmanDTO.getSurname())
                 .codeNameSurname(salesmanDTO.getCodeNameSurname())
-                .userId(savedUser.getUserId())
+                .userId(userId)
                 .build();
         salesmanJpaRepository.save(newSalesman);
-
-        updateModelWithAvailableSalesmen(model);
-        return "info/add_salesman_done";
-    }
-
-    private void updateModelWithAvailableSalesmen(Model model) {
-        var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
-                .map(salesmanMapper::map)
-                .toList();
-        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
     }
 
     @PutMapping(value = UPDATE_SALESMAN)
     public String updateSalesman(
-            @Valid @ModelAttribute("salesmanDTO") SalesmanDTO salesmanDTO, Model model
-    ) {
+            @Valid @ModelAttribute("salesmanDTO") SalesmanDTO salesmanDTO, Model model) {
 
-        SalesmanEntity salesmanToUpdate = salesmanJpaRepository.findByCodeNameSurname(salesmanDTO.getCodeNameSurname())
-                .orElseThrow(() -> new NotFoundException(
-                        "Salesman not found, CodeNameSurname: [%s]".formatted(salesmanDTO.getCodeNameSurname())));
+        var salesmanToUpdate = findSalesmanEntity(salesmanDTO);
+        var userToUpdate = findUserEntity(salesmanToUpdate);
 
-        UserEntity userToUpdate = userJpaRepository.findById(salesmanToUpdate.getUserId())
-                .orElseThrow(() -> new NotFoundException(
-                        "User not found for given salesman, UserId: [%d]".formatted(salesmanToUpdate.getUserId())));
+        updateSalesmanEntity(salesmanDTO, salesmanToUpdate);
+        updateUserEntity(salesmanDTO, userToUpdate);
 
-        salesmanToUpdate.setCodeNameSurname(salesmanDTO.getCodeNameSurname());
-        salesmanToUpdate.setName(salesmanDTO.getName());
-        salesmanToUpdate.setSurname(salesmanDTO.getSurname());
-
-        userToUpdate.setUserName(salesmanDTO.getUserName());
-        userToUpdate.setEmail(salesmanDTO.getEmail());
-
-        if (salesmanDTO.getPassword() != null && !salesmanDTO.getPassword().isEmpty()) {
-            String hashedPassword = bCryptPasswordEncoder.encode(salesmanDTO.getPassword());
-            userToUpdate.setPassword(hashedPassword);
-        }
         userJpaRepository.save(userToUpdate);
         salesmanJpaRepository.save(salesmanToUpdate);
 
-        var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
-                .map(salesmanMapper::map)
-                .toList();
-        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
+        addAttributesToModel(model, getAvailableUsers(), getAvailableSalesmen());
+
         return "info/update_salesman_done";
+    }
+
+    private SalesmanEntity findSalesmanEntity(SalesmanDTO salesmanDTO) {
+        return salesmanJpaRepository.findByCodeNameSurname(salesmanDTO.getCodeNameSurname())
+                .orElseThrow(() -> new NotFoundException(
+                        generateErrorMessage("Salesman", salesmanDTO.getCodeNameSurname())));
+    }
+
+    private UserEntity findUserEntity(SalesmanEntity salesmanToUpdate) {
+        return userJpaRepository.findById(salesmanToUpdate.getUserId())
+                .orElseThrow(() -> new NotFoundException(
+                        generateErrorMessage("User", Long.toString(salesmanToUpdate.getUserId()))));
+    }
+
+    private void updateSalesmanEntity(SalesmanDTO dto, SalesmanEntity entity) {
+        entity.setCodeNameSurname(dto.getCodeNameSurname());
+        entity.setName(dto.getName());
+        entity.setSurname(dto.getSurname());
+    }
+
+    private void updateUserEntity(SalesmanDTO dto, UserEntity entity) {
+        entity.setUserName(dto.getUserName());
+        entity.setEmail(dto.getEmail());
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+            entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        }
+    }
+
+    private String generateErrorMessage(String entityName, String identifier) {
+        return "%s not found, identifier: [%s]".formatted(entityName, identifier);
     }
 
     @DeleteMapping(value = DELETE_SALESMAN)
@@ -143,12 +166,7 @@ public class AddUpdateSalesmanController {
             @RequestParam("codeNameSurname") String codeNameSurname, Model model
     ) {
         salesmanService.deleteSalesmanByCodeNameSurname(codeNameSurname);
-
-        var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
-                .map(salesmanMapper::map)
-                .toList();
-        model.addAttribute("availableSalesmenDTOs", availableSalesmen);
-
+        addAttributesToModel(model, getAvailableUsers(), getAvailableSalesmen());
         return "info/delete_salesman_done";
     }
 }

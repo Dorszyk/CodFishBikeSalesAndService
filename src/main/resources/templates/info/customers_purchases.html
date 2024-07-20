@@ -2,14 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace='~{/fragments/head.html :: template}'></div>
-
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
 <body class="bg-light">
-<br><br><br>
+<br><br><br><br><br>
 <div class="header">
-    <img th:src="@{/images/bike.png}" alt="CodFish Logo" class="logo">
-    <h1 class="centered-title">Salesman - Customer Database</h1>
+    <h1 class="centered-title">Customers</h1>
 </div>
 
 <div class="container">
@@ -23,7 +21,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <h4>Add a customer</h4>
+            <h4>Add client </h4>
             <form action="#" th:action="@{/add_customer}" th:object="${availableCustomerDTOs}" th:method="POST">
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -79,10 +77,68 @@
                 <button type="submit" class="btn btn-primary">Add Customer</button>
             </form>
         </div>
+        <div class="col-lg-6">
+            <h4>Edit client</h4>
+            <form action="#" th:action="@{/update_customer}" th:object="${availableCustomerDTOs}" th:method="POST">
+                <div class="form-group">
+                    <label for="email">Enter Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${customerDTOs.email}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${customerDTOs.name}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname:</label>
+                    <input type="text" class="form-control" id="surname" name="surname"
+                           th:value="${customerDTOs.surname}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" th:value="${customerDTOs.phone}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" class="form-control" id="country" name="country"
+                           th:value="${customerDTOs.country}" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city" name="city" th:value="${customerDTOs.city}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code:</label>
+                    <input type="text" class="form-control" id="postalCode" name="postalCode"
+                           th:value="${customerDTOs.postalCode}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Street Address:</label>
+                    <input type="text" class="form-control" id="address" name="address"
+                           th:value="${customerDTOs.address}" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseNumber">House Number:</label>
+                    <input type="text" class="form-control" id="houseNumber" name="houseNumber"
+                           th:value="${customerDTOs.houseNumber}" required>
+                </div>
+                <div class="form-group">
+                    <label for="apartmentNumber">Apartment Number:</label>
+                    <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber"
+                           th:value="${customerDTOs.apartmentNumber}" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Edit Customer</button>
+            </form>
+        </div>
         <div class="col-xl-*">
             <div class="container">
+                <br>
                 <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta ...">
-                <form action="#" th:action="@{/customers-purchases}" th:method="POST" th:object="${CustomerDTO}">
+                <form action="#" th:action="@{/customers_purchases}" th:method="POST" th:object="${CustomerDTO}">
                     <table class="table" id="customer-table">
                         <thead class="table-dark">
                         <tr>
@@ -91,7 +147,6 @@
                             <th class="col-0">Surname:</th>
                             <th class="col-2">Email:</th>
                             <th class="col-3">Phone number:</th>
-                            <th class="col-2">Country:</th>
                             <th class="col-0">City:</th>
                             <th class="col-4">Postal code:</th>
                             <th class="col-2">Street:</th>
@@ -107,7 +162,6 @@
                             <td th:text="${customer.surname}"></td>
                             <td th:text="${customer.email}"></td>
                             <td th:text="${customer.phone}"></td>
-                            <td th:text="${customer.country}"></td>
                             <td th:text="${customer.city}"></td>
                             <td th:text="${customer.postalCode}"></td>
                             <td th:text="${customer.address}"></td>
@@ -128,7 +182,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         var items = $("#customer-table tr");

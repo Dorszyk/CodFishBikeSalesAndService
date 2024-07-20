@@ -30,10 +30,8 @@ public class SalesmanDTO {
 
     private Integer userId;
 
-
     @Size(min = 3, max = 50)
     private String userName;
-
 
     @NotBlank
     @Size(min = 3, max = 132)

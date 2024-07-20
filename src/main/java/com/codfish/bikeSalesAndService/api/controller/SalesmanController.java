@@ -1,6 +1,8 @@
 package com.codfish.bikeSalesAndService.api.controller;
 
 import com.codfish.bikeSalesAndService.api.dto.BikeToBuyDTO;
+import com.codfish.bikeSalesAndService.api.dto.PersonRepairingDTO;
+import com.codfish.bikeSalesAndService.api.dto.SalesmanDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikeMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.PersonRepairingMapper;
 import com.codfish.bikeSalesAndService.api.dto.mapper.SalesmanMapper;
@@ -18,8 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,40 +42,61 @@ public class SalesmanController {
     private final BikeToBuyJpaRepository bikeToBuyJpaRepository;
 
     @GetMapping(value = SALESMAN)
-    public ModelAndView homePage() {
+    public ModelAndView displaySalesmanHomePage() {
         Map<String, Object> model = prepareSalesmanPortalData();
         return new ModelAndView("info/salesman_portal", model);
     }
 
     private Map<String, Object> prepareSalesmanPortalData() {
-        var availableBikes = bikePurchaseService.availableBikes().stream()
-                .map(bikeMapper::map)
-                .toList();
-        var availableSalesmen = bikePurchaseService.availableSalesmen().stream()
-                .map(salesmanMapper::map)
-                .toList();
-        var availablePersonRepairing = bikeServiceRequestService.availablePersonRepairing().stream()
-                .map(personRepairingMapper::map)
-                .toList();
+        var availableBikeDTOs = mapAvailableBikes();
+        var availableSalesmenDTOs = mapAvailableSalesmen();
+        var availablePersonRepairingDTOs = mapAvailablePersonRepairing();
+
         return Map.of(
-                "availableBikeDTOs", availableBikes,
-                "availableSalesmenDTOs", availableSalesmen,
-                "availablePersonRepairingDTOs", availablePersonRepairing,
+                "availableBikeDTOs", availableBikeDTOs,
+                "availableSalesmenDTOs", availableSalesmenDTOs,
+                "availablePersonRepairingDTOs", availablePersonRepairingDTOs,
                 "bikeToBuyDTO", BikeToBuyDTO.buildDefault()
         );
     }
 
-    @PostMapping(value = ADD_BIKE)
-    public String addBike(
-            @Valid @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model
-    ) {
+    private List<BikeToBuyDTO> mapAvailableBikes() {
+        return bikePurchaseService.availableBikes().stream()
+                .map(bikeMapper::map)
+                .collect(Collectors.toList());
+    }
 
-        Optional<BikeToBuyEntity> existingBike = bikeToBuyJpaRepository.findBySerial(bikeDTO.getSerial());
-        if (existingBike.isPresent()) {
-            throw new ProcessingException(
-                    "Bike with serial: [%s] already exists in the database.".formatted(bikeDTO.getSerial()));
-        }
-        BikeToBuyEntity newBike = BikeToBuyEntity.builder()
+    private List<SalesmanDTO> mapAvailableSalesmen() {
+        return bikePurchaseService.availableSalesmen().stream()
+                .map(salesmanMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    private List<PersonRepairingDTO> mapAvailablePersonRepairing() {
+        return bikeServiceRequestService.availablePersonRepairing().stream()
+                .map(personRepairingMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping(value = ADD_BIKE)
+    public String addBike(@Valid @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO, Model model) {
+        BikeToBuyEntity newBike = constructBikeEntity(bikeDTO);
+        bikeToBuyJpaRepository.save(newBike);
+        updateAvailableBikes(model);
+        return "info/add_bike";
+    }
+
+    private void validateBikeExistence(BikeToBuyDTO bikeDTO) {
+        bikeToBuyJpaRepository.findBySerial(bikeDTO.getSerial())
+                .ifPresent(existingBike -> {
+                    throw new ProcessingException(
+                            String.format("Bike with serial: [%s] already exists in the database.", bikeDTO.getSerial()));
+                });
+    }
+
+    private BikeToBuyEntity constructBikeEntity(BikeToBuyDTO bikeDTO) {
+        validateBikeExistence(bikeDTO);
+        return BikeToBuyEntity.builder()
                 .serial(bikeDTO.getSerial())
                 .category(bikeDTO.getCategory())
                 .subcategory(bikeDTO.getSubcategory())
@@ -82,20 +106,23 @@ public class SalesmanController {
                 .color(bikeDTO.getColor())
                 .price(bikeDTO.getPrice())
                 .build();
-        bikeToBuyJpaRepository.save(newBike);
+    }
 
-        var availableBikes = bikePurchaseService.availableBikes().stream()
-                .map(bikeMapper::map)
-                .toList();
+    private void updateAvailableBikes(Model model) {
+        var availableBikes = mapAvailableBikes();
         model.addAttribute("availableBikeDTOs", availableBikes);
-        return "info/add_bike";
     }
 
     @PutMapping(value = UPDATE_BIKE)
     public String updateBike(
             @Valid @ModelAttribute("availableBikeDTOs") BikeToBuyDTO bikeDTO,
-            Model model
-    ) {
+            Model model) {
+        updateBikeDetails(bikeDTO);
+        model.addAttribute("availableBikeDTOs", getAvailableBikeDTOs());
+        return "info/update_bike";
+    }
+
+    private void updateBikeDetails(BikeToBuyDTO bikeDTO) {
         BikeToBuyEntity bikeToUpdate = bikeToBuyJpaRepository.findBySerial(bikeDTO.getSerial())
                 .orElseThrow(() -> new NotFoundException(
                         "Serial Bike not found, serial: [%s]".formatted(bikeDTO.getSerial())));
@@ -107,23 +134,18 @@ public class SalesmanController {
         bikeToUpdate.setColor(bikeDTO.getColor());
         bikeToUpdate.setPrice(bikeDTO.getPrice());
         bikeToBuyJpaRepository.save(bikeToUpdate);
+    }
 
-        var availableBikes = bikePurchaseService.availableBikes().stream()
+    private List<BikeToBuyDTO> getAvailableBikeDTOs() {
+        return bikePurchaseService.availableBikes().stream()
                 .map(bikeMapper::map)
                 .toList();
-        model.addAttribute("availableBikeDTOs", availableBikes);
-
-        return "info/update_bike";
     }
 
     @DeleteMapping(value = DELETE_BIKE)
-    public String deleteBike(
-            @RequestParam("serial") String serial, Model model
-    ) {
+    public String deleteBike(@RequestParam("serial") String serial, Model model) {
         bikeService.deleteBike(serial);
-        var availableBikes = bikePurchaseService.availableBikes().stream()
-                .map(bikeMapper::map)
-                .toList();
+        List<BikeToBuyDTO> availableBikes = getAvailableBikeDTOs();
         model.addAttribute("availableBikeDTOs", availableBikes);
         return "info/delete_bike_done";
     }

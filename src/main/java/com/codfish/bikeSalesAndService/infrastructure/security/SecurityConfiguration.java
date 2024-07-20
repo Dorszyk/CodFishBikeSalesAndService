@@ -15,7 +15,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration{
+public class SecurityConfiguration {
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
@@ -43,45 +43,72 @@ public class SecurityConfiguration{
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/login", "/error", "/images/**").permitAll()
-                .requestMatchers("/personRepairing/**","/add_update_parts/**","/add_part/**","/update_part/**","/delete_part/**",
-                        "/add_update_services/**","/add_service/**","/update_service/**","/delete_service**",
-                        "/add_update_person_repairing/**","/add_person_repairing/**","/update_person_repairing/**","/delete_person_repairing/**")
-                .hasAnyAuthority("PERSON_REPAIRING")
+        http.csrf().disable();
+        configureHttpRequests(http);
+        configureExceptionHandling(http);
+        configureLogin(http);
+        configureLogout(http);
 
-                .requestMatchers("/salesman/**", "/purchase/**","/purchase-new-customer/**", "/add_bike/**","/update_bike/**",
-                        "/deleteBike/{serial}/**","/add_update_salesman/**",
-                        "/add_salesman/**","/update_salesman/**","/delete_salesman/**")
-                .hasAnyAuthority("SALESMAN")
+        return http.build();
+    }
 
-                .requestMatchers("/", "/bike/**", "/images/bike.png","/images/oh_no.png","/service/**","/customers-purchases/**","/invoices-purchases/**","/add_customer/**","/deleteCustomer/**","/user/info").hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler())
-                .and()
-                .formLogin()
-                .permitAll()
-                .and()
-                .logout()
+    private void configureHttpRequests(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests()
+                .requestMatchers(openAccessUrls()).permitAll()
+                .requestMatchers(personRepairingUrls()).hasAnyAuthority("PERSON_REPAIRING")
+                .requestMatchers(salesmanUrls()).hasAnyAuthority("SALESMAN")
+                .requestMatchers(generalUrls()).hasAnyAuthority("PERSON_REPAIRING", "SALESMAN");
+    }
+
+    private void configureExceptionHandling(HttpSecurity http) throws Exception {
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+    }
+
+    private void configureLogin(HttpSecurity http) throws Exception {
+        http.formLogin().permitAll();
+    }
+
+    private void configureLogout(HttpSecurity http) throws Exception {
+        http.logout()
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();
-        return http.build();
+    }
+
+    private String[] openAccessUrls() {
+        return new String[]{"/login", "/error", "/images/**"};
+    }
+
+    private String[] personRepairingUrls() {
+        return new String[]{"/personRepairing/**", "/add_update_parts/**", "/add_part/**", "/update_part/**", "/delete_part/**",
+                "/add_update_services/**", "/add_service/**", "/update_service/**", "/delete_service**",
+                "/add_update_person_repairing/**", "/add_person_repairing/**", "/update_person_repairing/**", "/delete_person_repairing/**"};
+    }
+
+    private String[] salesmanUrls() {
+        return new String[]{"/salesman/**", "/purchase/**", "/purchase_new_customer/**", "/add_bike/**", "/update_bike/**",
+                "/delete_bike/**", "/add_update_salesman/**",
+                "/add_salesman/**", "/update_salesman/**", "/delete_salesman/**"};
+    }
+
+    private String[] generalUrls() {
+        return new String[]{"/", "/bike/**", "/images/logo/logo2.png", "/images/error.png", "/service/**", "/customers_purchases/**",
+                "/invoices_purchases/**", "/add_customer/**", "/update_customer/**", "/delete_customer/**",  "/user/info","/error",};
     }
 
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
+        configureHttpSecurity(http);
+        return http.build();
+    }
+
+    private void configureHttpSecurity(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
                 .anyRequest()
                 .permitAll();
-
-        return http.build();
     }
 }
