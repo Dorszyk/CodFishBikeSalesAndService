@@ -27,7 +27,6 @@ public class SalesmanService {
     @Transactional
     public List<Salesman> findAvailable() {
         List<Salesman> availableSalesmen = salesmanDAO.findAvailable();
-        log.info("Available salesmen: [{}]", availableSalesmen.size());
         return availableSalesmen;
     }
 
@@ -54,7 +53,6 @@ public class SalesmanService {
 
         user.getRoles().clear();
         userJpaRepository.save(user);
-
         userJpaRepository.delete(user);
     }
 }

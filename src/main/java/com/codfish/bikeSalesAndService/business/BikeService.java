@@ -30,7 +30,6 @@ public class BikeService {
         List<BikeToBuy> availableBike = bikeToBuyDAO.findAvailable();
         List<BikeToBuy> sortAvailableBike = new ArrayList<>(availableBike);
         sortAvailableBike.sort(Comparator.comparing(BikeToBuy::getBrand));
-        log.info("Available bike: [{}]", sortAvailableBike.size());
         return sortAvailableBike;
     }
 
@@ -66,7 +65,6 @@ public class BikeService {
 
     public List<BikeToService> findAllBikesWithHistory() {
         List<BikeToService> allBikes = bikeToServiceDAO.findAll();
-        log.info("Bike to show history: [{}]", allBikes.size());
         return allBikes;
     }
 

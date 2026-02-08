@@ -31,7 +31,6 @@ public class ServiceCatalogService {
 
     public List<Service> findAll() {
         List<Service> services = serviceDAO.findAll();
-        log.info("Available services: [{}]", services.size());
         return services;
     }
 

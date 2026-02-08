@@ -38,9 +38,14 @@ public class PartCatalogService {
         return parts;
     }
 
+    @Transactional
+    public Part findPart(String serialNumber) {
+        return partDAO.finBySerialNumber(serialNumber)
+                .orElseThrow(() -> new NotFoundException("Could not find part by serial number: " + serialNumber));
+    }
+
     public List<Part> findAll() {
         List<Part> parts = partDAO.findAll();
-        log.info("Available parts: [{}]", parts.size());
         return parts;
     }
 
@@ -48,7 +53,6 @@ public class PartCatalogService {
     public void deletePart(String serialNumber) {
         Optional<PartEntity> optionalPartEntity = partJpaRepository.findBySerialNumber(serialNumber);
         if (optionalPartEntity.isEmpty()) {
-            log.error("Cannot delete part. No part found with serial number: {}", serialNumber);
             throw new NotFoundException(String.format("No part found with serial number: %s", serialNumber));
         }
         partJpaRepository.delete(optionalPartEntity.get());

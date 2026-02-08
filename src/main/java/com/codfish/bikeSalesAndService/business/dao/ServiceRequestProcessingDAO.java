@@ -9,9 +9,9 @@ import java.util.List;
 public interface ServiceRequestProcessingDAO {
 
     void process (BikeServiceRequest serviceRequest,
-                  ServicePerson servicePerson);
+                  List<ServicePerson> servicePeople);
 
     void process (BikeServiceRequest serviceRequest,
-                  ServicePerson servicePerson,
+                  List<ServicePerson> servicePeople,
                   List<ServicePart> servicePart);
 }

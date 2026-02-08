@@ -27,7 +27,6 @@ public class PersonRepairingService {
     @Transactional
     public List<PersonRepairing> findAvailable() {
         List<PersonRepairing> availablePersonRepairing = personRepairingDAO.findAvailable();
-        log.info("Available Person Repairing: [{}]", availablePersonRepairing.size());
         return availablePersonRepairing;
     }
 

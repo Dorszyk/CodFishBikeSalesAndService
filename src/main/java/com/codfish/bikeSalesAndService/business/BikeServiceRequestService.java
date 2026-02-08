@@ -57,7 +57,8 @@ public class BikeServiceRequestService {
     private void processServiceRequestForNewBike(BikeServiceRequest request) {
         validateSingleActiveRequest(request.getBike().getSerial());
 
-        BikeToService bike = bikeService.saveBikeToService(request.getBike());
+        BikeToService bike = bikeService.findBikeToService(request.getBike().getSerial())
+                .orElseGet(() -> bikeService.saveBikeToService(request.getBike()));
         Customer customer = customerService.saveCustomer(request.getCustomer());
 
         BikeServiceRequest bikeServiceRequest = buildBikeServiceRequest(request, bike, customer);

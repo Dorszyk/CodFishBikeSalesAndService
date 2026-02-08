@@ -48,7 +48,6 @@ public class UserService {
     @Transactional
     public List<User> findAllUsers() {
         List<User> availableUser = userDAO.findAvailable();
-        log.info("Available User: [{}]", availableUser.size());
         return availableUser;
     }
 
