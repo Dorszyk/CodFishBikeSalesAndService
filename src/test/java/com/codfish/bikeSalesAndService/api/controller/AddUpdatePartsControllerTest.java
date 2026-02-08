@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,13 +23,13 @@ class AddUpdatePartsControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private PartCatalogService partCatalogService;
 
-    @MockBean
+    @MockitoBean
     private PartMapper partMapper;
 
-    @MockBean
+    @MockitoBean
     private PartJpaRepository partJpaRepository;
 
     @Test
@@ -37,6 +37,6 @@ class AddUpdatePartsControllerTest {
         mockMvc.perform(get("/add_update_parts"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("info/add_update_parts"))
-                .andExpect(model().attributeExists("partDTOs", "partSerialNumbers"));
+                .andExpect(model().attributeExists("availablePartsDTOs", "partDTO", "partSerialNumbers"));
     }
 }

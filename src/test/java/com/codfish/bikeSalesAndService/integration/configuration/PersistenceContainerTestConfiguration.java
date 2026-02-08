@@ -1,40 +1,25 @@
 package com.codfish.bikeSalesAndService.integration.configuration;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 
-import javax.sql.DataSource;
+import java.time.Duration;
 
 @TestConfiguration
 public class PersistenceContainerTestConfiguration {
 
-    private static final String USERNAME = "test";
-    private static final String PASSWORD = "test";
-    private static final String POSTGRESQL = "postgresql";
-    private static final String POSTGRESQL_CONTAINER = "postgres:15.0";
+    private static final String POSTGRESQL_CONTAINER = "postgres:17.0";
 
     @Bean
-    @Qualifier(POSTGRESQL)
-    PostgreSQLContainer<?> postgresqlContainer() {
-        PostgreSQLContainer<?> postgresqlContainer = new PostgreSQLContainer<>(POSTGRESQL_CONTAINER)
-            .withUsername(USERNAME)
-            .withPassword(PASSWORD);
-        postgresqlContainer.start();
-        return postgresqlContainer;
-    }
-
-    @Bean
-    DataSource dataSource(final PostgreSQLContainer<?> container) {
-        return DataSourceBuilder.create()
-            .type(HikariDataSource.class)
-            .driverClassName(container.getDriverClassName())
-            .url(container.getJdbcUrl())
-            .username(container.getUsername())
-            .password(container.getPassword())
-            .build();
+    @ServiceConnection
+    public PostgreSQLContainer<?> postgresqlContainer() {
+        return new PostgreSQLContainer<>(POSTGRESQL_CONTAINER)
+            .withUsername("test")
+            .withPassword("test")
+            .withStartupTimeout(Duration.ofMinutes(2))
+            .waitingFor(Wait.forListeningPort());
     }
 }

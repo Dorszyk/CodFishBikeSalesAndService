@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -40,25 +40,25 @@ public class PurchaseControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private CustomerMapper customerMapper;
 
-    @MockBean
+    @MockitoBean
     private BikePurchaseService bikePurchaseService;
 
-    @MockBean
+    @MockitoBean
     @SuppressWarnings("unused")
     private BikePurchaseMapper bikePurchaseMapper;
 
-    @MockBean
+    @MockitoBean
     @SuppressWarnings("unused")
     private BikeMapper bikeMapper;
 
-    @MockBean
+    @MockitoBean
     @SuppressWarnings("unused")
     private CustomerRepository customerRepository;
 
-    @MockBean
+    @MockitoBean
     @SuppressWarnings("unused")
     private CustomerService customerService;
 

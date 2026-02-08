@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,31 +35,31 @@ class AddUpdatePersonRepairingControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @MockBean
+    @MockitoBean
     PersonRepairingService personRepairingService;
 
-    @MockBean
+    @MockitoBean
     PersonRepairingJpaRepository personRepairingJpaRepository;
 
-    @MockBean
+    @MockitoBean
     PersonRepairingMapper personRepairingMapper;
 
-    @MockBean
+    @MockitoBean
     BikeServiceRequestService bikeServiceRequestService;
 
-    @MockBean
+    @MockitoBean
     UserJpaRepository userJpaRepository;
 
-    @MockBean
+    @MockitoBean
     RoleRepository roleRepository;
 
-    @MockBean
+    @MockitoBean
     UserService userService;
 
-    @MockBean
+    @MockitoBean
     UserMapper userMapper;
     private AddUpdatePersonRepairingController controller;
 
