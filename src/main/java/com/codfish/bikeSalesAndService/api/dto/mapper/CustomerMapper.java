@@ -22,5 +22,6 @@ public interface CustomerMapper {
     @Mapping(source = "surname", target = "surname")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phone", target = "phone")
+    @Mapping(target = "existingEmail", ignore = true)
     CustomerDTO map(final Customer customer);
 }

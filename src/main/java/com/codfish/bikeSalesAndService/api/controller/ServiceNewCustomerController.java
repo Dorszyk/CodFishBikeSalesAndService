@@ -48,7 +48,7 @@ public class ServiceNewCustomerController {
         }
         BikeServiceRequest serviceRequest = bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
         bikeServiceRequestService.makeServiceRequest(serviceRequest);
-        return "info/bike_service_request_new_customer_done";
+        return "redirect:/service/request_done";
     }
 
     private String buildErrorMessage(BindingResult result) {

@@ -30,6 +30,8 @@ public class CustomerDTO {
 
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
     private String email;
+
+    private String existingEmail;
     @Size
     @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String phone;
@@ -93,17 +95,17 @@ public class CustomerDTO {
                 .replaceAll("ż", "z");
     }
 
-    private static String generateRandomEmail() {
+    private static String generateRandomEmail(String name, String surname) {
         Random random = new Random();
         int randomNumber = random.nextInt(10000);
 
-        String name = removePolishCharacters(generateRandomName().toLowerCase());
-        String surname = removePolishCharacters(generateRandomSurname().toLowerCase());
+        String normalizedName = removePolishCharacters(name.toLowerCase());
+        String normalizedSurname = removePolishCharacters(surname.toLowerCase());
 
         String[] domains = {"mailbox.net", "myinbox.org", "emailworld.com", "digitalmail.net"};
         String domain = domains[random.nextInt(domains.length)];
 
-        return name + "." + surname + randomNumber + "@" + domain;
+        return normalizedName + "." + normalizedSurname + randomNumber + "@" + domain;
     }
 
 
@@ -153,11 +155,14 @@ public class CustomerDTO {
     }
 
     public static CustomerDTO buildDefault() {
+        String randomName = generateRandomName();
+        String randomSurname = generateRandomSurname();
+
         return CustomerDTO.builder()
-                .name(generateRandomName())
-                .surname(generateRandomSurname())
+                .name(randomName)
+                .surname(randomSurname)
                 .phone(generateRandomPhone())
-                .email(generateRandomEmail())
+                .email(generateRandomEmail(randomName, randomSurname))
                 .country(generateRandomAddressCountry())
                 .city(generateRandomAddressCity())
                 .postalCode(generateRandomAddressPostalCode())

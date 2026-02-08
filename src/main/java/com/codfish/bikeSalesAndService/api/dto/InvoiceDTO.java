@@ -21,5 +21,6 @@ public class InvoiceDTO {
     private BikeToBuyDTO bike;
     private CustomerDTO customer;
     private SalesmanEntity salesman;
+    private BikeHistoryDTO.ServiceRequestDTO serviceRequest;
 
 }

@@ -27,11 +27,17 @@ public class ServiceController {
 
     private static final String SERVICE_NEW = "/service/newBikeService";
     private static final String SERVICE_REQUEST = "/service/request";
+    private static final String SERVICE_REQUEST_DONE = "/service/request_done";
 
     private final BikeServiceRequestService bikeServiceRequestService;
     private final BikeServiceRequestMapper bikeServiceRequestMapper;
     private final InvoiceMapper invoiceMapper;
     private final InvoiceRepository invoiceRepository;
+
+    @GetMapping(value = SERVICE_REQUEST_DONE)
+    public String bikeServiceRequestDone() {
+        return "info/bike_service_request_done";
+    }
 
     @GetMapping(value = SERVICE_NEW)
     public ModelAndView bikeServicePage() {
@@ -40,8 +46,7 @@ public class ServiceController {
     }
 
     private Map<String, ?> getInvoiceAndCustomerRequestDataForPage() {
-        var availableInvoiceDTOs = invoiceRepository.findAll().stream()
-                .map(invoiceMapper::map)
+        var availableInvoiceDTOs = invoiceRepository.findAllBikeSales().stream()
                 .toList();
         return Map.of(
                 "availableInvoicesDTOs", availableInvoiceDTOs,
@@ -50,26 +55,24 @@ public class ServiceController {
     }
 
     @PostMapping(value = SERVICE_REQUEST)
-    public ModelAndView makeServiceRequest(@Valid @ModelAttribute("bikeServiceRequestDTO") BikeServiceCustomerRequestDTO bikeServiceCustomerRequestDTO, BindingResult result) {
+    public String makeServiceRequest(@Valid @ModelAttribute("bikeServiceRequestDTO") BikeServiceCustomerRequestDTO bikeServiceCustomerRequestDTO, BindingResult result) {
 
         if (result.hasErrors()) {
-            return handleBikeServiceRequestValidationErrors(result);
+            return handleBikeServiceRequestValidationErrorsAsString(result);
         }
         BikeServiceRequest serviceRequest = createServiceRequest(bikeServiceCustomerRequestDTO);
         bikeServiceRequestService.makeServiceRequest(serviceRequest);
-        return new ModelAndView("info/bike_service_request_done");
+        return "redirect:/service/request_done";
+    }
+
+    private String handleBikeServiceRequestValidationErrorsAsString(BindingResult result) {
+        String errorMessage = generateErrorMessage(result);
+        log.error(errorMessage);
+        return "error";
     }
 
     private BikeServiceRequest createServiceRequest(BikeServiceCustomerRequestDTO bikeServiceCustomerRequestDTO) {
         return bikeServiceRequestMapper.map(bikeServiceCustomerRequestDTO);
-    }
-
-    private ModelAndView handleBikeServiceRequestValidationErrors(BindingResult result) {
-        String errorMessage = generateErrorMessage(result);
-        log.error(errorMessage);
-        var modelAndView = new ModelAndView("error");
-        modelAndView.addObject("errorMessage", errorMessage);
-        return modelAndView;
     }
 
     private String generateErrorMessage(BindingResult result) {

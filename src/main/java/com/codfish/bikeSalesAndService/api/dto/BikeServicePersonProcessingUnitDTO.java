@@ -17,13 +17,30 @@ public class BikeServicePersonProcessingUnitDTO {
 
     private String personRepairingCodeNameSurname;
     private String bikeSerial;
-    private List<String> partSerialNumber;
+    private List<PartEntryDTO> parts;
+    private List<ServiceEntryDTO> services;
     private String description;
-    private Integer partQuantity;
-    private String serviceCode;
     private Integer hours;
     private String personRepairingComment;
     private Boolean done;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PartEntryDTO {
+        private String partSerialNumber;
+        private Integer partQuantity;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ServiceEntryDTO {
+        private String serviceCode;
+        private Integer hours;
+    }
 
     private static String generateRandomPersonRepairingComment() {
         String[] repairs = {
@@ -61,7 +78,6 @@ public class BikeServicePersonProcessingUnitDTO {
 
     public static BikeServicePersonProcessingUnitDTO buildDefault(){
         return BikeServicePersonProcessingUnitDTO.builder()
-                .partQuantity(1)
                 .hours(1)
                 .personRepairingComment(generateRandomPersonRepairingComment())
                 .done(true)

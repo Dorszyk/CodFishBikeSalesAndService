@@ -76,17 +76,17 @@ public class BikePurchaseDTO {
                 .replaceAll("ż", "z");
     }
 
-    private static String generateRandomEmail() {
+    private static String generateRandomEmail(String name, String surname) {
         Random random = new Random();
         int randomNumber = random.nextInt(10000);
 
-        String name = removePolishCharacters(generateRandomName().toLowerCase());
-        String surname = removePolishCharacters(generateRandomSurname().toLowerCase());
+        String normalizedName = removePolishCharacters(name.toLowerCase());
+        String normalizedSurname = removePolishCharacters(surname.toLowerCase());
 
         String[] domains = {"example.com", "sample.net", "demo.org", "testmail.com"};
         String domain = domains[random.nextInt(domains.length)];
 
-        return name + "." + surname + randomNumber + "@" + domain;
+        return normalizedName + "." + normalizedSurname + randomNumber + "@" + domain;
     }
 
     private static String generateRandomPhone() {
@@ -135,11 +135,14 @@ public class BikePurchaseDTO {
     }
 
     public static BikePurchaseDTO buildDefaultData() {
+        String randomName = generateRandomName();
+        String randomSurname = generateRandomSurname();
+
         return BikePurchaseDTO.builder()
-                .customerName(generateRandomName())
-                .customerSurname(generateRandomSurname())
+                .customerName(randomName)
+                .customerSurname(randomSurname)
                 .customerPhone(generateRandomPhone())
-                .customerEmail(generateRandomEmail())
+                .customerEmail(generateRandomEmail(randomName, randomSurname))
                 .customerAddressCountry(generateRandomAddressCountry())
                 .customerAddressCity(generateRandomAddressCity())
                 .customerAddressPostalCode(generateRandomAddressPostalCode())

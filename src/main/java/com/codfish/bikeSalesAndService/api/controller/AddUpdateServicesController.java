@@ -37,7 +37,8 @@ public class AddUpdateServicesController {
     public ModelAndView serviceAddUpdateServicePage() {
         var model = new ModelAndView("info/add_update_services");
         List<ServiceDTO> services = findServices();
-        model.addObject("serviceDTOs", services);
+        model.addObject("availableServicesDTOs", services);
+        model.addObject("serviceDTO", new ServiceDTO());
         model.addObject("serviceCodes", extractServiceCodes(services));
         return model;
     }
@@ -56,7 +57,7 @@ public class AddUpdateServicesController {
 
     @PostMapping(value = SERVICE_ADD)
     public String addServices(
-            @Valid @ModelAttribute("serviceDTOs") ServiceDTO serviceDTO, Model model) {
+            @Valid @ModelAttribute("serviceDTO") ServiceDTO serviceDTO, Model model) {
         Optional<ServiceEntity> existingService = serviceJpaRepository.findByServiceCode(serviceDTO.getServiceCode());
         if (existingService.isPresent()) {
             throw new ProcessingException("Service already exists: [%s]".formatted(serviceDTO.getServiceCode()));
@@ -64,7 +65,7 @@ public class AddUpdateServicesController {
             ServiceEntity newService = createServiceEntity(serviceDTO);
             serviceJpaRepository.save(newService);
         }
-        model.addAttribute("serviceDTOs", findServices());
+        model.addAttribute("availableServicesDTOs", findServices());
         return "info/add_service";
     }
 
@@ -79,7 +80,7 @@ public class AddUpdateServicesController {
 
     @PutMapping(value = SERVICE_UPDATE)
     public String updateService(
-            @Valid @ModelAttribute("serviceDTOs") ServiceDTO serviceDTO,
+            @Valid @ModelAttribute("serviceDTO") ServiceDTO serviceDTO,
             Model model
     ) {
         ServiceEntity updateService = serviceJpaRepository.findByServiceCode(serviceDTO.getServiceCode())
@@ -88,7 +89,7 @@ public class AddUpdateServicesController {
         updateServiceEntity(updateService, serviceDTO);
         serviceJpaRepository.save(updateService);
 
-        model.addAttribute("serviceDTOs", findServices());
+        model.addAttribute("availableServicesDTOs", findServices());
         return "info/update_service";
     }
 

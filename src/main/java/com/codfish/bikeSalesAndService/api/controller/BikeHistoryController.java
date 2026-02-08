@@ -2,9 +2,11 @@ package com.codfish.bikeSalesAndService.api.controller;
 
 import com.codfish.bikeSalesAndService.api.dto.BikeHistoryDTO;
 import com.codfish.bikeSalesAndService.api.dto.BikeToServiceDTO;
+import com.codfish.bikeSalesAndService.api.dto.InvoiceDTO;
 import com.codfish.bikeSalesAndService.api.dto.mapper.BikeMapper;
 import com.codfish.bikeSalesAndService.business.BikeService;
 import com.codfish.bikeSalesAndService.domain.BikeToService;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ public class BikeHistoryController {
     private static final String BIKE_HISTORY = "/bike/history";
     private final BikeService bikeService;
     private final BikeMapper bikeMapper;
+    private final InvoiceRepository invoiceRepository;
 
     @GetMapping(value = BIKE_HISTORY)
     public ModelAndView bikeHistory(@RequestParam(value = "bikeSerial", required = false) String bikeSerial) {
@@ -54,7 +57,16 @@ public class BikeHistoryController {
         BikeHistoryDTO bikeHistoryDTO = Optional.ofNullable(bikeSerial)
                 .map(bikeService::findBikeHistoryBySerial)
                 .map(bikeMapper::map)
+                .map(this::enrichWithInvoiceNumbers)
                 .orElse(BikeHistoryDTO.buildDefault());
         model.addObject("bikeHistoryDTO", bikeHistoryDTO);
+    }
+
+    private BikeHistoryDTO enrichWithInvoiceNumbers(BikeHistoryDTO bikeHistoryDTO) {
+        bikeHistoryDTO.getBikeServiceRequests().forEach(request -> {
+            invoiceRepository.findByBikeServiceRequestNumber(request.getBikeServiceRequestNumber())
+                    .ifPresent(invoice -> request.setInvoiceNumber(invoice.getInvoiceNumber()));
+        });
+        return bikeHistoryDTO;
     }
 }

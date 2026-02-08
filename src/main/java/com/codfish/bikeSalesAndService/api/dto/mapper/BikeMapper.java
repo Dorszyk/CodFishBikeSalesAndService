@@ -27,10 +27,14 @@ public interface BikeMapper extends OffsetDateTimeMapper {
     default List<BikeHistoryDTO.ServiceRequestDTO> mapServiceRequests(
             List<BikeHistory.BikeServiceRequest> requests
     ) {
+        if (requests == null) {
+            return null;
+        }
         return requests.stream().map(this::mapServiceRequest).toList();
     }
 
     @Mapping(source = "receivedDateTime", target = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
     @Mapping(source = "completedDateTime", target = "completedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
+    @Mapping(target = "invoiceNumber", ignore = true)
     BikeHistoryDTO.ServiceRequestDTO mapServiceRequest(BikeHistory.BikeServiceRequest bikeServiceRequest);
 }

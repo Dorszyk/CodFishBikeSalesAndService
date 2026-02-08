@@ -11,6 +11,9 @@ import org.mapstruct.Mapping;
 public interface BikeServiceRequestMapper extends OffsetDateTimeMapper {
 
     default BikeServiceRequest map(BikeServiceCustomerRequestDTO dto) {
+        if (dto == null) {
+            return null;
+        }
         if (dto.isNewBikeCandidate()) {
             return BikeServiceRequest.builder()
                     .customer(Customer.builder()
@@ -55,4 +58,8 @@ public interface BikeServiceRequestMapper extends OffsetDateTimeMapper {
 
     @Mapping(source = "personRepairingComment", target = "comment")
     BikeServiceProcessingRequest map(BikeServicePersonProcessingUnitDTO dto);
+
+    BikeServiceProcessingRequest.PartEntry map(BikeServicePersonProcessingUnitDTO.PartEntryDTO dto);
+
+    BikeServiceProcessingRequest.ServiceEntry map(BikeServicePersonProcessingUnitDTO.ServiceEntryDTO dto);
 }

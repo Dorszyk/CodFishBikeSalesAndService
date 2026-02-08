@@ -132,7 +132,10 @@ public class CustomerController {
     }
 
     private void updateCustomerWithDTO(@Valid @ModelAttribute("availableCustomerDTOs") CustomerDTO customerDTO) {
-        CustomerEntity existingCustomerEntity = findExistingCustomer(customerDTO.getEmail());
+        String lookupEmail = customerDTO.getExistingEmail() != null && !customerDTO.getExistingEmail().isBlank()
+                ? customerDTO.getExistingEmail()
+                : customerDTO.getEmail();
+        CustomerEntity existingCustomerEntity = findExistingCustomer(lookupEmail);
 
         existingCustomerEntity.setName(customerDTO.getName());
         existingCustomerEntity.setSurname(customerDTO.getSurname());

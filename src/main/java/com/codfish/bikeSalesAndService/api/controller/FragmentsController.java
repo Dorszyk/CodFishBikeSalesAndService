@@ -44,15 +44,7 @@ public class FragmentsController {
         return INFO_PATH + "/add_update_person_repairing";
     }
 
-    @GetMapping("/" + INFO_PATH + "/customers_purchases")
-    public String getFragmentsCustomers() {
-        return INFO_PATH + "/customers_purchases";
-    }
 
-    @GetMapping("/" + INFO_PATH + "/invoice_purchases")
-    public String getFragmentsInvoices() {
-        return INFO_PATH + "/invoice_purchases";
-    }
 
     @GetMapping("/" + INFO_PATH + "/user_info")
     public String getFragmentsUserInfo() {

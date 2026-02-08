@@ -117,19 +117,26 @@ public class PersonRepairingController {
 
     @PostMapping(value = PERSON_REPAIRING_WORK_UNIT)
     public String processServiceRequest(
-            @Valid @ModelAttribute("bikeServiceRequestProcessDTO") BikeServicePersonProcessingUnitDTO dto,
+            @Valid @ModelAttribute("bikeServiceProcessDTO") BikeServicePersonProcessingUnitDTO dto,
             BindingResult bindingResult,
             Model model
     ) {
         if (bindingResult.hasErrors()) {
-            return "error";
+            addNecessaryDataToModel(model);
+            return "info/person_repairing_service";
         }
+
+        if (dto.getServices() == null || dto.getServices().isEmpty()) {
+            model.addAttribute("errorMessage", "Proszę dodać przynajmniej jeden serwis.");
+            addNecessaryDataToModel(model);
+            return "info/person_repairing_service";
+        }
+
         BikeServiceProcessingRequest request = bikeServiceRequestMapper.map(dto);
         bikeServiceProcessingService.process(request);
         if (dto.getDone()) {
             return "info/person_repairing_service_done";
         } else {
-            addNecessaryDataToModel(model);
             return "redirect:/personRepairing";
         }
     }

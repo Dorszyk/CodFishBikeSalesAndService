@@ -34,11 +34,14 @@ public class BikeHistoryDTO {
     @AllArgsConstructor
     public static class ServiceRequestDTO {
         private String bikeServiceRequestNumber;
+        private String invoiceNumber;
         private String receivedDateTime;
         private String completedDateTime;
         private String customerComment;
+        private String technicianComment;
         private List<ServiceDTO> services;
         private List<PartDTO> parts;
+        private List<String> technicians;
 
         public BigDecimal getTotalPartsPrice() {
             return parts.stream()

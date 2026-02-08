@@ -40,7 +40,8 @@ public class AddUpdatePartsController {
     public ModelAndView partsAddUpdatePartPage() {
         var model = new ModelAndView("info/add_update_parts");
         List<PartDTO> parts = findParts();
-        model.addObject("partDTOs", parts);
+        model.addObject("availablePartsDTOs", parts);
+        model.addObject("partDTO", new PartDTO());
         model.addObject("partSerialNumbers", preparePartSerialNumbers(parts));
         return model;
     }
@@ -61,7 +62,7 @@ public class AddUpdatePartsController {
     }
 
     @PostMapping(value = PARTS_ADD)
-    public String addPart(@Valid @ModelAttribute("partDTOs") PartDTO partDTO, Model model) {
+    public String addPart(@Valid @ModelAttribute("partDTO") PartDTO partDTO, Model model) {
         Optional<PartEntity> existingPart = partJpaRepository.findBySerialNumber(partDTO.getSerialNumber());
         if (existingPart.isPresent()) {
             throw new ProcessingException("Part already exists: [%s]".formatted(partDTO.getSerialNumber()));
@@ -69,7 +70,7 @@ public class AddUpdatePartsController {
             PartEntity newParts = createPartEntity(partDTO);
             partJpaRepository.save(newParts);
         }
-        model.addAttribute("partDTOs", findParts());
+        model.addAttribute("availablePartsDTOs", findParts());
         return "info/add_part";
     }
 
@@ -83,7 +84,7 @@ public class AddUpdatePartsController {
 
     @PutMapping(value = PARTS_UPDATE)
     public String updatePart(
-            @Valid @ModelAttribute("partDTOs") PartDTO partDTO,
+            @Valid @ModelAttribute("partDTO") PartDTO partDTO,
             Model model
     ) {
         PartEntity partToUpdate = partJpaRepository.findBySerialNumber(partDTO.getSerialNumber())
@@ -92,7 +93,7 @@ public class AddUpdatePartsController {
         updatePartEntity(partToUpdate, partDTO);
         partJpaRepository.save(partToUpdate);
 
-        model.addAttribute("partDTOs", findParts());
+        model.addAttribute("availablePartsDTOs", findParts());
         return "info/update_part";
     }
 
