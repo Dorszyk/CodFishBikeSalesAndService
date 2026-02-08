@@ -1,46 +1,77 @@
 # CodFishBikeSalesAndService
 
-# Jak uruchomić projekt
+Aplikacja wspomagająca zarządzanie sprzedażą i serwisem rowerów.
 
-1. Pobierz repozytorium
-2. Otwórz projekt w IntelliJ
+## 🚀 Jak uruchomić projekt
 
-# Jak połączyć się z bazą danych
+### 1. Pobranie repozytorium
+Sklonuj repozytorium na swój dysk lokalny:
+```bash
+git clone https://github.com/twoj-uzytkownik/CodFishBikeSalesAndService.git
+cd CodFishBikeSalesAndService
+```
 
-1. Dodaj nowe łączenie z Bazą Danych
-2. Wybierz Typ Bazy Danych: "PostgreSQL" z listy dostępnych typów.
-3. Konfiguracja Połączenia: Podaj szczegóły połączenia do swojej bazy danych PostgreSQL:
+### 2. Konfiguracja bazy danych
+Projekt wymaga bazy danych **PostgreSQL**.
+1. Upewnij się, że masz zainstalowanego PostgreSQL (np. przez Docker lub instalację lokalną).
+2. Stwórz bazę danych o nazwie: `cod_fish_bike`.
+3. Domyślne dane logowania w `application.yaml`:
+   - **Port:** 5432
+   - **Database:** `cod_fish_bike`
+   - **User:** `postgres`
+   - **Password:** `postgres`
 
-Port: Domyślny port dla PostgreSQL to 5432.
-Database: cod_fish_bike
-User: postgres
-Password: postgres
-Testuj Połączenie: Po wprowadzeniu wszystkich danych kliknij przycisk "Test Connection".
+*Uwaga: Schemat bazy danych zostanie utworzony automatycznie przy starcie aplikacji dzięki Flyway.*
 
-# Szczegóły połączenia znajdują się w application.yaml
+### 3. Uruchomienie aplikacji w IntelliJ IDEA
+1. Otwórz projekt w IntelliJ (wybierz plik `build.gradle` jako projekt).
+2. Poczekaj na załadowanie zależności Gradle.
+3. Uruchom klasę główną: `BikeSalesAndServiceApplication`.
 
-Następnie uruchom program:
-BikeSalesAndServiceApplication #RUN
+---
 
-dostępy dla Salesman:
-login: user_1
-hasło: password
+## 🔐 Logowanie i uprawnienia
 
-dostępy dla PersonRepairing:
-login: user_2
-hasło: password
+Aplikacja posiada zaimplementowany system Spring Security. Po uruchomieniu wejdź na:
+👉 [http://localhost:8180/codfish-bike/](http://localhost:8180/codfish-bike/)
 
-# wybierz przeglądarkę i wpisz adres:
-http://localhost:8180/codfish-bike/ dla user_1 lub user_2
+### Dostępne konta testowe:
+| Rola | Login | Hasło |
+| :--- | :--- | :--- |
+| **Salesman** | `user_1` | `password` |
+| **PersonRepairing** | `user_2` | `password` |
 
-# w zależności, jaką osobą się zalogujesz, masz swoje uprawnienia w wyświetlaniu danych na stronie.
-Jeżeli chcesz przeglądać program jako administrator bez użycia security (logowania, dostęp do wszystkich uprawnień), to w pliku application-local.yaml
-masz wyłączony spring:security:enabled:false, oraz możesz uruchomić go lokalnie na innym localhost.
-Szczegóły w pliku "active=local.png" znajdziesz jego lokalizację w commit "Starting the CodFishBikes Sales&Service software"
+*Uprawnienia na stronie zmieniają się dynamicznie w zależności od tego, kto jest zalogowany.*
 
-# wybierz przeglądarkę i wpisz adres:
-http://localhost:8081/codfish-bike/ dla administratora
+---
 
-# jeżeli, chcesz sprawdzić napisane testy to w niektórych przypadkach testowych, potrzebny jest Docker-Container.  
+## 🛠 Tryb Administratora (Lokalny bez Security)
+
+Jeśli chcesz przeglądać program z pełnymi uprawnieniami administratora bez konieczności logowania, możesz użyć profilu `local`. 
+
+1. Uruchom aplikację z aktywnym profilem `local`. W IntelliJ możesz to zrobić dodając `-Dspring.profiles.active=local` do VM Options w konfiguracji uruchamiania.
+2. W tym trybie Spring Security jest wyłączony (`enabled: false`).
+3. Adres dla administratora: [http://localhost:8081/codfish-bike/](http://localhost:8081/codfish-bike/)
+
+---
+
+## 🧪 Testy
+
+Aby uruchomić testy integracyjne, wymagany jest zainstalowany i uruchomiony **Docker** (wykorzystywany przez Testcontainers do postawienia tymczasowej bazy danych).
+
+```bash
+./gradlew test
+```
+
+---
+
+## 📝 Technologie
+- Java 17
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- PostgreSQL & Flyway
+- Thymeleaf
+- Testcontainers (do testów integracyjnych)
 
 

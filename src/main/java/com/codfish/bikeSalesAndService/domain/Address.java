@@ -20,5 +20,4 @@ public class Address {
     String address;
     String houseNumber;
     String apartmentNumber;
-    Customer customer;
 }

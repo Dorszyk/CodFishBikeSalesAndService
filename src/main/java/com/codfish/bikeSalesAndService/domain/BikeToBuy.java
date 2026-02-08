@@ -25,5 +25,6 @@ public class BikeToBuy {
     Integer year;
     String color;
     BigDecimal price;
-    Invoice invoice;
+    @Builder.Default
+    java.util.Set<Invoice> invoices = new java.util.HashSet<>();
 }

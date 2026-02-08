@@ -1,0 +1,1 @@
+ALTER TABLE codfish_bike_user ADD COLUMN last_login TIMESTAMP WITH TIME ZONE;

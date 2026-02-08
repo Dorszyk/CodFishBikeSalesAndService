@@ -22,4 +22,5 @@ public class Invoice {
     BikeToBuy bike;
     Customer customer;
     Salesman salesman;
+    BikeServiceRequest bikeServiceRequest;
 }

@@ -14,17 +14,32 @@ public class BikeServiceProcessingRequest {
 
     String personRepairingCodeNameSurname;
     String bikeSerial;
-    List<String> partSerialNumber;
+    List<PartEntry> parts;
+    List<ServiceEntry> services;
     String description;
-    Integer partQuantity;
-    String serviceCode;
     Integer hours;
     String comment;
     Boolean done;
 
-    public boolean partNotIncluded() {
-        return Objects.isNull(getPartSerialNumber())
-                || Objects.isNull(getPartQuantity())
-                || Part.NONE.equals(getPartSerialNumber());
+    @Value
+    @Builder
+    public static class PartEntry {
+        String partSerialNumber;
+        Integer partQuantity;
+    }
+
+    @Value
+    @Builder
+    public static class ServiceEntry {
+        String serviceCode;
+        Integer hours;
+    }
+
+    public boolean partsIncluded() {
+        return Objects.nonNull(parts) && !parts.isEmpty();
+    }
+
+    public boolean servicesIncluded() {
+        return Objects.nonNull(services) && !services.isEmpty();
     }
 }

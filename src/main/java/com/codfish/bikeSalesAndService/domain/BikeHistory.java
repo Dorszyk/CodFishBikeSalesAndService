@@ -17,14 +17,16 @@ public class BikeHistory {
 
     @Value
     @Builder
-    @ToString(of = {"bikeServiceRequestNumber", "receivedDateTime", "completedDateTime", "customerComment","services","parts"})
+    @ToString(of = {"bikeServiceRequestNumber", "receivedDateTime", "completedDateTime", "customerComment", "technicianComment", "services", "parts"})
     public static class BikeServiceRequest {
 
         String bikeServiceRequestNumber;
         OffsetDateTime receivedDateTime;
         OffsetDateTime completedDateTime;
         String customerComment;
+        String technicianComment;
         List<Service> services;
         List<Part> parts;
+        List<String> technicians;
     }
 }

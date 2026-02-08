@@ -5,8 +5,13 @@ plugins {
 }
 
 group = 'com.codfish'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+version = '1.4.4'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
 
 
 configurations {
@@ -28,7 +33,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	//db
-	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-core:10.20.0'
+	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.20.0'
 	runtimeOnly 'org.postgresql:postgresql'
 
 	// annotations
@@ -45,9 +51,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 
 	//plantUml
 	implementation "de.elnarion.util:plantuml-generator-util:${plantUml}"
+
+	// pdf
+	implementation 'com.github.librepdf:openpdf:1.3.30'
 }
 dependencyManagement {
 	imports {
@@ -63,6 +73,19 @@ test {
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
+}
+
+jar {
+	archiveFileName = project.hasProperty('customJarName') ? "${project.property('customJarName')}.jar" : "${project.name}-${project.version}.jar"
+	manifest {
+		attributes(
+				'Main-Class': 'com.codfish.bikeSalesAndService.BikeSalesAndServiceApplication'
+		)
+	}
+}
+
+bootJar {
+	archiveFileName = project.hasProperty('customJarName') ? "${project.property('customJarName')}.jar" : "${project.name}-${project.version}.jar"
 }
 
 compileJava.options.encoding = 'UTF-8'
