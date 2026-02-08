@@ -1,196 +1,240 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <title>Technician Settings</title>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <h1 class="centered-title">Person Repairing Settings</h1>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="button-row">
-                <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go
-                    back</a>
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-user-cog me-2"></i>Technician Management
+            </h2>
+            <p class="text-muted small">Manage repair staff, their codes, and associated system accounts.</p>
+        </div>
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/personRepairing}" class="btn btn-outline-secondary shadow-sm">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Portal
+                </a>
             </div>
-            <br>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Add a Person Repairing</h4>
-            <form action="#" th:action="@{/add_person_repairing}" th:object="${newPersonRepairingDTO}" th:method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name"
-                           placeholder="Imię: Minimalna liczba znaków 3" required>
-                </div>
-                <div class="form-group">
-                    <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" name="surname"
-                           placeholder="Nazwisko: Minimalna liczba znaków 3" required>
-                </div>
-                <div class="form-group">
-                    <label for="codeNameSurname">Code Name Surname</label>
-                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname"
-                           placeholder="Wprowadź zgodnie z następującym wzorem REP17221A-Z(2)" required>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="userName">Username:</label>
-                    <input type="text" class="form-control" id="userName" name="userName"
-                           placeholder="User name: imie_nazwisko" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email"
-                           placeholder="email: imie.nazwisko@codfishbike.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Minimum 8 znaków, jedną cyfra, mała i duża litera oraz znak specjalny."
-                           required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Add Person Repairing</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <h4>Update a Person Repairing</h4>
-            <form action="#" th:action="@{/update_person_repairing}" th:object="${updatePersonRepairingDTO}"
-                  th:method="PUT">
-                <div class="form-group">
-                    <label for="codeNameSurname">Code Name Surname to Update</label>
-                    <input type="text" class="form-control" id="codeNameSurname" name="codeNameSurname"
-                           placeholder="Aktualizacja osoby naprawiającej na podstawie pola Code NameSurname" required>
-                </div>
-                <div class="form-group">
-                    <label for="name">New Name</label>
-                    <input type="text" class="form-control" id="name" name="name"
-                           placeholder="Imię: Minimalna liczba znaków 3" required>
-                </div>
-                <div class="form-group">
-                    <label for="surname">New Surname</label>
-                    <input type="text" class="form-control" id="surname" name="surname"
-                           placeholder="Nazwisko: Minimalna liczba znaków 3" required>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="userName">NewUsername:</label>
-                    <input type="text" class="form-control" id="userName" name="userName"
-                           placeholder="User name: imie_nazwisko" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">NewEmail:</label>
-                    <input type="email" class="form-control" id="email" name="email"
-                           placeholder="email: imie.nazwisko@codfishbike.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">NewPassword:</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Minimum 8 znaków, jedną cyfra, mała i duża litera oraz znak specjalny."
-                           required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-warning">Update Person Repairing</button>
-            </form>
-        </div>
-    </div>
-</div>
-<br>
-<div class="container">
-    <br>
-    <div>
-        <input type="text" id="searchInputPersonRepairing" class="form-control mb-3"
-               placeholder="Wyszukaj dostępne osoby naprawiające ...">
-        <h3><p>Available Persons Repairing:</p></h3>
-        <table class="table" id="personRepairing-table">
-            <thead class="table-dark">
-            <tr>
-                <th>Name:</th>
-                <th>Surname:</th>
-                <th>Code NameSurname:</th>
-                <th>User id:</th>
-                <th>Actions:</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="person : ${availablePersonRepairingDTOs}">
-                <td th:text="${person.name}">Name</td>
-                <td th:text="${person.surname}">Surname</td>
-                <td th:text="${person.codeNameSurname}">Code Name Surname</td>
-                <td th:text="${person.userId}">User Id</td>
-                <td>
-                    <form th:action="@{/delete_person_repairing}" th:method="DELETE">
-                        <input type="hidden" name="codeNameSurname" th:value="${person.codeNameSurname}"/>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="pagination-container-personRepairing"></div>
-    </div>
-</div>
-<div class="container">
-    <h3>Available Users</h3>
-    <table class="table" id="user-table">
-        <thead class="table-dark">
-        <tr>
-            <th>userId</th>
-            <th>userName:</th>
-            <th>email:</th>
-            <th>password:</th>
-            <th>active:</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${availableUserDTOs}">
-            <td th:text="${user.userId}"></td>
-            <td th:text="${user.userName}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.password}"></td>
-            <td th:text="${user.active}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<script>
-    $(document).ready(function () {
-        var items = $("#personRepairing-table tr");
-        var numItems = items.length;
-        var perPage = 10;
-        items.slice(perPage).hide();
-        $('#personRepairing-table').twbsPagination({
-            totalPages: Math.ceil(numItems / perPage),
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-                var start = perPage * (page - 1);
-                var end = start + perPage;
 
-                items.hide().slice(start, end).show();
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#searchInputPersonRepairing").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#personRepairing-table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
+    <div class="row g-4">
+        <!-- Left Column: Technicians List -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-tools me-2"></i>Active Technicians
+                    </h5>
+                    <div class="d-flex align-items-center gap-2 w-50">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInputPersonRepairing" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter staff..." data-search-target="#personRepairing-table">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0 align-middle" id="personRepairing-table">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Name & Surname</th>
+                                <th>Code</th>
+                                <th>User ID</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="person : ${availablePersonRepairingDTOs}" class="technician-row" style="cursor: pointer;"
+                                data-fill-form="#updateForm"
+                                data-tab-target="#update-tab"
+                                th:data-name="${person.name}"
+                                th:data-surname="${person.surname}"
+                                th:data-code="${person.codeNameSurname}"
+                                th:data-username="${person.userName}"
+                                th:data-email="${person.email}"
+                                th:data-update_name="${person.name}"
+                                th:data-update_surname="${person.surname}"
+                                th:data-update_code="${person.codeNameSurname}"
+                                th:data-update_username="${person.userName}"
+                                th:data-update_email="${person.email}">
+                                <td class="ps-3">
+                                    <div class="fw-bold" th:text="${person.name} + ' ' + ${person.surname}">John Doe</div>
+                                </td>
+                                <td class="fw-bold text-primary" th:text="${person.codeNameSurname}">REP-001</td>
+                                <td th:text="${person.userId}">10</td>
+                                <td class="text-center">
+                                    <form th:action="@{/delete_person_repairing}" th:method="DELETE" class="d-inline">
+                                        <input type="hidden" name="codeNameSurname" th:value="${person.codeNameSurname}"/>
+                                        <button type="submit" class="btn btn-link text-danger p-0 shadow-none" onclick="return confirm('Are you sure you want to remove this technician?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0 py-2">
+                    <div id="pagination-container-personRepairing" class="d-flex justify-content-center mt-2"></div>
+                </div>
+            </div>
+
+            <!-- Users Reference Card -->
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-header bg-secondary text-white py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase"><i class="fas fa-user-lock me-2"></i>User System Reference</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0 align-middle" style="font-size: 0.85rem;">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th class="text-center">Active</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${availableUserDTOs}">
+                                <td class="ps-3" th:text="${user.userId}">1</td>
+                                <td class="fw-bold" th:text="${user.userName}">user_name</td>
+                                <td th:text="${user.email}">user@codfish.com</td>
+                                <td class="text-center">
+                                    <span th:class="${user.active} ? 'badge bg-success' : 'badge bg-danger'" 
+                                          style="font-size: 0.65rem;" 
+                                          th:text="${user.active} ? 'ACTIVE' : 'INACTIVE'"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Forms -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white p-0">
+                    <ul class="nav nav-tabs nav-fill border-0" id="techTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active text-white fw-bold py-3 border-0 rounded-0" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-pane" type="button" role="tab">
+                                <i class="fas fa-user-plus me-1"></i>Add Staff
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white fw-bold py-3 border-0 rounded-0" id="update-tab" data-bs-toggle="tab" data-bs-target="#update-pane" type="button" role="tab">
+                                <i class="fas fa-user-edit me-1"></i>Update Staff
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body p-4">
+                    <div class="tab-content">
+                        <!-- Add Form -->
+                        <div class="tab-pane fade show active" id="add-pane" role="tabpanel">
+                            <form th:action="@{/add_person_repairing}" th:object="${newPersonRepairingDTO}" th:method="POST" class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">First Name</label>
+                                    <input type="text" class="form-control shadow-none" name="name" placeholder="John" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Last Name</label>
+                                    <input type="text" class="form-control shadow-none" name="surname" placeholder="Doe" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase">Code Name Surname</label>
+                                    <input type="text" class="form-control shadow-none" name="codeNameSurname" placeholder="Pattern: REP17221AZ" required>
+                                    <div class="form-text xsmall">Unique identifier for technicians.</div>
+                                </div>
+                                <hr class="my-4">
+                                <h6 class="fw-bold small text-muted text-uppercase mb-2">Account Credentials</h6>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Username</label>
+                                    <input type="text" class="form-control shadow-none" name="userName" placeholder="j.doe" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Email</label>
+                                    <input type="email" class="form-control shadow-none" name="email" placeholder="john.doe@codfish.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase">Password</label>
+                                    <input type="password" class="form-control shadow-none" name="password" required>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-success w-100 shadow-sm">
+                                        <i class="fas fa-save me-2"></i>Create Technician Account
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Update Form -->
+                        <div class="tab-pane fade" id="update-pane" role="tabpanel">
+                            <div class="alert alert-warning py-2 px-3 mb-4 border-0 small">
+                                <i class="fas fa-mouse-pointer me-2"></i>Select a technician from the list to edit.
+                            </div>
+                            <form th:action="@{/update_person_repairing}" th:object="${updatePersonRepairingDTO}" th:method="PUT" class="row g-3" id="updateForm">
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase text-danger">Code to Update (Read-only)</label>
+                                    <input type="text" class="form-control shadow-none bg-light border-danger" id="update_code" name="codeNameSurname" readonly required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New First Name</label>
+                                    <input type="text" class="form-control shadow-none" id="update_name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New Last Name</label>
+                                    <input type="text" class="form-control shadow-none" id="update_surname" name="surname" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New Username</label>
+                                    <input type="text" class="form-control shadow-none" id="update_username" name="userName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New Email</label>
+                                    <input type="email" class="form-control shadow-none" id="update_email" name="email" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase">New Password (Optional)</label>
+                                    <input type="password" class="form-control shadow-none" name="password" placeholder="Leave empty to keep current">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-warning w-100 shadow-sm fw-bold">
+                                        <i class="fas fa-sync-alt me-2"></i>Update Technician
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .card { border-radius: 12px; }
+    .nav-tabs .nav-link { border-radius: 0; color: rgba(255,255,255,0.7) !important; transition: all 0.3s; }
+    .nav-tabs .nav-link.active { background-color: white !important; color: #0d6efd !important; }
+    .nav-tabs .nav-link:hover:not(.active) { background-color: rgba(255,255,255,0.1); color: white !important; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .xsmall { font-size: 0.75rem; }
+    .active-row { border-left: 4px solid #0d6efd !important; }
+    .technician-row { transition: background-color 0.2s; }
+</style>
 
 </body>
-<br><br><br>
-<div th:replace='~{/fragments/footer.html :: template}'></div>
 </html>

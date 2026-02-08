@@ -1,201 +1,205 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <title>Process Bike Sale</title>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <h2 class="centered-title">Salesman Sale</h2>
-</div>
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/purchase_new_customer}" class="btn btn-info" role="button"><i class="fas fa-user-plus"></i> New Client</a>
-            <a th:href="@{/customers_purchases}" class="btn btn-info" role="button"> <i class="fas fa-users"></i> Customers</a>
-            <a th:href="@{/invoices_purchases}" class="btn btn-info" role="button"><i class="fas fa-file-invoice"></i> Invoices</a>
-            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-cash-register me-2"></i>Process Bike Sale
+            </h2>
+            <p class="text-muted small">Register a sale for an existing customer and generate an invoice.</p>
+        </div>
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/purchase_new_customer}" class="btn btn-primary shadow-sm">
+                    <i class="fas fa-user-plus me-2"></i>New Customer
+                </a>
+                <a th:href="@{/salesman}" class="btn btn-light shadow-sm">
+                    <i class="fas fa-arrow-left me-1"></i>Back
+                </a>
+            </div>
         </div>
     </div>
-    <br>
-    <div>
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj roweru...">
-        <h4><p>Available bikes:</p></h4>
-        <table class="table" id="bikes-table">
-            <thead class="table-dark">
-            <tr>
-                <th>Id:</th>
-                <th>Category:</th>
-                <th>Subcategory:</th>
-                <th>Serial:</th>
-                <th>Brand:</th>
-                <th>Model:</th>
-                <th>Year:</th>
-                <th>Color:</th>
-                <th>Price PLN:</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="bike, stat : ${availableBikeDTOs}">
-                <td th:text="${stat.count}"></td>
-                <td th:text="${bike.category}"></td>
-                <td th:text="${bike.subcategory}"></td>
-                <td th:text="${bike.serial}"></td>
-                <td th:text="${bike.brand}"></td>
-                <td th:text="${bike.model}"></td>
-                <td th:text="${bike.year}"></td>
-                <td th:text="${bike.color}"></td>
-                <td th:text="${bike.price}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="pagination-container"></div>
-    </div>
-</div>
-<div class="container">
-    <form action="#" th:action="@{/purchase}" th:method="POST" th:object="${bikePurchaseDTO}">
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Existing customer:</h4>
+
+    <div class="row g-4">
+        <!-- Left Column: Searchable Reference -->
+        <div class="col-lg-7">
+            <!-- Inventory Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-bicycle me-2"></i>Available Inventory
+                    </h5>
+                    <div class="d-flex align-items-center gap-2 w-50">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter bikes..." data-search-target="#bikes-table">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0 align-middle" id="bikes-table">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Category</th>
+                                <th>Serial</th>
+                                <th>Brand & Model</th>
+                                <th class="text-end pe-3">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="bike : ${availableBikeDTOs}" class="reference-row" style="cursor: pointer;"
+                                data-fill-form=".col-lg-5 form"
+                                th:data-bike-serial="${bike.serial}"
+                                th:data-serial="${bike.serial}">
+                                <td class="ps-3">
+                                    <span class="badge bg-light text-dark border" th:text="${bike.category}">Category</span>
+                                </td>
+                                <td class="fw-bold text-primary" th:text="${bike.serial}">SN123</td>
+                                <td>
+                                    <div class="fw-bold" th:text="${bike.brand}">Brand</div>
+                                    <div class="small text-muted" th:text="${bike.model}">Model</div>
+                                </td>
+                                <td class="text-end fw-bold pe-3" th:text="${bike.price} + ' zł'">0.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0 py-2">
+                    <div id="pagination-container" class="d-flex justify-content-center mt-2"></div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" id="existingCustomerEmail"
-                           th:field="*{existingCustomerEmail}" required class="form-control "
-                           placeholder="Wprowadź adres e-mail istniejącego klienta..."/>
+
+            <!-- Customers Card -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-secondary text-white d-flex align-items-center justify-content-between py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-address-book me-2"></i>Customer Directory
+                    </h5>
+                    <div class="d-flex align-items-center gap-2 w-50">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInput1" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter customers..." data-search-target="#customer-table1">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0 align-middle" id="customer-table1">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Name & Surname</th>
+                                <th>Email</th>
+                                <th class="text-end pe-3">Phone</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="customer : ${availableCustomerDTOs}" class="reference-row" style="cursor: pointer;"
+                                data-fill-form=".col-lg-5 form"
+                                th:data-existing-customer-email="${customer.email}"
+                                th:data-email="${customer.email}">
+                                <td class="ps-3">
+                                    <div class="fw-bold" th:text="${customer.name} + ' ' + ${customer.surname}">Name</div>
+                                    <small class="text-muted" th:text="${customer.city}">City</small>
+                                </td>
+                                <td class="text-primary fw-bold" th:text="${customer.email}">email@test.com</td>
+                                <td class="text-end pe-3 small" th:text="${customer.phone}">555-0123</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0 py-2">
+                    <div id="pagination-container1" class="d-flex justify-content-center mt-2"></div>
                 </div>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Choose a bike:</h4>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="bikeSerial">Serial: </label>
-                    <select id="bikeSerial" th:field="*{bikeSerial}" class="form-control">
-                        <option th:each="availableBikeSerial : ${availableBikeSerials}"
-                                th:value="${availableBikeSerial}"
-                                th:text="${availableBikeSerial}"></option>
-                    </select>
+
+        <!-- Right Column: Sale Form -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm sticky-top" style="top: 20px; z-index: 10;">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-cash-register me-2"></i>New Transaction</h5>
                 </div>
-                <div class="col-md-6">
-                    <label for="salesmanCodeNameSurname">Salesman ID: </label>
-                    <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}" class="form-control">
-                        <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
-                                th:value="${availableSalesmanCodeNameSurname}"
-                                th:text="${availableSalesmanCodeNameSurname}"></option>
-                    </select>
+                <div class="card-body p-4">
+                    <form action="#" th:action="@{/purchase}" th:method="POST" th:object="${bikePurchaseDTO}">
+                        
+                        <div class="alert alert-info py-2 px-3 mb-4 border-0 small">
+                            <i class="fas fa-info-circle me-2"></i>Select a bike and a customer from the left tables to fill the form.
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="existingCustomerEmail" class="form-label fw-bold small text-uppercase">Customer Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-envelope text-muted"></i></span>
+                                    <input type="email" id="existingCustomerEmail" th:field="*{existingCustomerEmail}" 
+                                           class="form-control shadow-none" placeholder="customer@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="bikeSerial" class="form-label fw-bold small text-uppercase">Bike Serial Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-barcode text-muted"></i></span>
+                                    <select id="bikeSerial" th:field="*{bikeSerial}" class="form-select shadow-none" required>
+                                        <option value="">-- Select or Pick from Table --</option>
+                                        <option th:each="availableBikeSerial : ${availableBikeSerials}"
+                                                th:value="${availableBikeSerial}"
+                                                th:text="${availableBikeSerial}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="salesmanCodeNameSurname" class="form-label fw-bold small text-uppercase">Salesman</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-user-tie text-muted"></i></span>
+                                    <select id="salesmanCodeNameSurname" th:field="*{salesmanCodeNameSurname}" class="form-select shadow-none" required>
+                                        <option value="">-- Choose Salesman --</option>
+                                        <option th:each="availableSalesmanCodeNameSurname : ${availableSalesmanCodeNameSurnames}"
+                                                th:value="${availableSalesmanCodeNameSurname}"
+                                                th:text="${availableSalesmanCodeNameSurname}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4 pt-3 border-top">
+                                <button type="submit" class="btn btn-success btn-lg w-100 shadow">
+                                    <i class="fas fa-file-invoice-dollar me-2"></i>Complete Transaction
+                                </button>
+                                <div class="text-center mt-2 xsmall text-muted">
+                                    Generating this sale will automatically create an invoice PDF.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <br><br>
-        <div class="row-mt-3">
-            <div class="col-md-6">
-                <input type="submit" value="Order" class="btn btn-success">
-            </div>
-        </div>
-    </form>
-</div>
-<div class="container-fluid">
-    <div class="container">
-        <input type="text" id="searchInput1" class="form-control mb-3" placeholder="Wyszukaj klienta...">
-        <form action="#" th:action="@{/purchase}" th:method="POST" th:object="${CustomerDTO}">
-            <table class="table" id="customer-table1">
-                <thead class="table-dark">
-                <tr>
-                    <th class="col-0">Id:</th>
-                    <th class="col-0">Name:</th>
-                    <th class="col-0">Surname:</th>
-                    <th class="col-2">Email:</th>
-                    <th class="col-3">Phone number:</th>
-                    <th class="col-2">Country:</th>
-                    <th class="col-2">City:</th>
-                    <th class="col-2">Postal code:</th>
-                    <th class="col-2">Street:</th>
-                    <th class="col-2">House number:</th>
-                    <th class="col-2">Apartment number:</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="customer,stat : ${availableCustomerDTOs}">
-                    <td th:text="${stat.count}"></td>
-                    <td th:text="${customer.name}"></td>
-                    <td th:text="${customer.surname}"></td>
-                    <td th:text="${customer.email}"></td>
-                    <td th:text="${customer.phone}"></td>
-                    <td th:text="${customer.country}"></td>
-                    <td th:text="${customer.city}"></td>
-                    <td th:text="${customer.postalCode}"></td>
-                    <td th:text="${customer.address}"></td>
-                    <td th:text="${customer.houseNumber}"></td>
-                    <td th:text="${customer.apartmentNumber}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="pagination-container1"></div>
-        </form>
     </div>
-</div>
-<script>
-    $(document).ready(function () {
-        var items = $("#bikes-table tr");
-        var numItems = items.length;
-        var perPage = 10;
+</main>
 
-        items.slice(perPage).hide();
-
-        $('#pagination-container').twbsPagination({
-            totalPages: Math.ceil(numItems / perPage),
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-                var start = perPage * (page - 1);
-                var end = start + perPage;
-
-                items.hide().slice(start, end).show();
-            }
-        });
-    });
-    $(document).ready(function () {
-        var items = $("#customer-table1 tr");
-        var numItems = items.length;
-        var perPage = 10;
-
-        items.slice(perPage).hide();
-
-        $('#pagination-container1').twbsPagination({
-            totalPages: Math.ceil(numItems / perPage),
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-                var start = perPage * (page - 1);
-                var end = start + perPage;
-
-                items.hide().slice(start, end).show();
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#bikes-table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-    $(document).ready(function () {
-        $("#searchInput1").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#customer-table1 tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
-</body>
-<br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .card { border-radius: 12px; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .reference-row { transition: all 0.2s; }
+    .reference-row:hover { background-color: #f0f7ff !important; }
+    .table-primary { background-color: #e7f1ff !important; }
+    .xsmall { font-size: 0.75rem; }
+    .sticky-top { transition: all 0.3s; }
+</style>
+
+</body>
 </html>

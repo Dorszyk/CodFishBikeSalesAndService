@@ -1,122 +1,145 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Customer Service Request</title>
+</head>
+<body>
+<div th:replace='~{/fragments/head.html :: template}'></div>
+<div th:replace='~{/fragments/header.html :: template}'></div>
 
-<head th:replace="~{/fragments/head.html :: template}"></head>
-<header th:replace="~{/fragments/header.html :: template}"></header>
-
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <h2 class="centered-title">Bike Service</h2>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="button-row">
-                <a th:href="@{/service/newBikeService}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Go back</a>
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-user-plus me-2"></i>New Customer Request
+            </h2>
+            <p class="text-muted small">Register a first-time customer and their bike for a service request.</p>
+        </div>
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/service/newBikeService}" class="btn btn-light shadow-sm">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Search
+                </a>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>New Customer:</h3>
-                <section class="customer-info">
-                    <div class="form-group mb-3">
-                        <label for="customerName">Name:</label>
-                        <input type="text" id="customerName" th:field="*{customerName}" class="form-control"
-                               aria-label="Customer Name" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerSurname">Surname:</label>
-                        <input type="text" id="customerSurname" th:field="*{customerSurname}"
-                               class="form-control" aria-label="Customer Surname" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerEmail">Email:</label>
-                        <input type="email" id="customerEmail" th:field="*{customerEmail}"
-                               class="form-control" aria-label="Customer Email" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerPhone">Phone number:</label>
-                        <input type="tel" id="customerPhone" th:field="*{customerPhone}"
-                               class="form-control" aria-label="Customer Phone" required>
-                    </div>
-                </section>
-                <section class="address-info">
-                    <div class="form-group mb-3">
-                        <label for="customerAddressCountry">Country:</label>
-                        <input type="text" id="customerAddressCountry" th:field="*{customerAddressCountry}"
-                               class="form-control" aria-label="Customer Country" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerAddressCity">City:</label>
-                        <input type="text" id="customerAddressCity" th:field="*{customerAddressCity}"
-                               class="form-control" aria-label="Customer City" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerAddressPostalCode">Postal code:</label>
-                        <input type="text" id="customerAddressPostalCode"
-                               th:field="*{customerAddressPostalCode}" class="form-control"
-                               aria-label="Customer Postal Code" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerAddressStreet">Street:</label>
-                        <input type="text" id="customerAddressStreet" th:field="*{customerAddressStreet}"
-                               class="form-control" aria-label="Customer Street" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerAddressHouseNumber">House Number:</label>
-                        <input type="text" id="customerAddressHouseNumber"
-                               th:field="*{customerAddressHouseNumber}" class="form-control"
-                               aria-label="Customer House Number" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="customerAddressApartmentNumber">Apartment Number:</label>
-                        <input type="text" id="customerAddressApartmentNumber"
-                               th:field="*{customerAddressApartmentNumber}" class="form-control"
-                               aria-label="Customer Apartment Number">
-                    </div>
-                </section>
-            </div>
-            <div class="col-md-6">
-                <h3>Bike Data:</h3>
-                <div class="form-group mb-3">
-                    <label for="bikeSerial">Bike Serial:</label>
-                    <input type="text" id="bikeSerial" th:field="*{bikeSerial}" class="form-control"
-                           aria-label="Bike Serial" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="bikeBrand">Bike Brand:</label>
-                    <input type="text" id="bikeBrand" th:field="*{bikeBrand}" class="form-control"
-                           aria-label="Bike Brand" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="bikeModel">Bike Model:</label>
-                    <input type="text" id="bikeModel" th:field="*{bikeModel}" class="form-control"
-                           aria-label="Bike Model" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="bikeYear">Bike Year:</label>
-                    <input type="text" id="bikeYear" th:field="*{bikeYear}" class="form-control"
-                           aria-label="Bike Year" required>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="customerComment" class="form-label">Service Comment:</label>
-                    <textarea id="customerComment" th:field="*{customerComment}" rows="4" class="form-control"
-                              aria-label="Service Comment" required></textarea>
-                </div>
-                <div class="text-center mt-3">
-                    <input type="submit" value="Request" class="btn btn-success">
-                </div>
-            </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0 fw-bold"><i class="fas fa-id-card me-2"></i>Full Registration Form</h5>
         </div>
-    </form>
-</div>
-<footer th:replace="~{/fragments/footer.html :: template}"></footer>
+        <div class="card-body p-4">
+            <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
+                <div class="row g-4">
+                    <!-- Customer Section -->
+                    <div class="col-lg-7 border-end pe-lg-4">
+                        <h5 class="fw-bold mb-3 pb-2 border-bottom text-dark">
+                            <i class="fas fa-user text-primary me-2"></i>Customer Information
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="customerName" class="form-label fw-bold small text-uppercase">First Name</label>
+                                <input type="text" id="customerName" th:field="*{customerName}" class="form-control shadow-none" placeholder="John" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="customerSurname" class="form-label fw-bold small text-uppercase">Last Name</label>
+                                <input type="text" id="customerSurname" th:field="*{customerSurname}" class="form-control shadow-none" placeholder="Doe" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="customerEmail" class="form-label fw-bold small text-uppercase">Email Address</label>
+                                <input type="email" id="customerEmail" th:field="*{customerEmail}" class="form-control shadow-none" placeholder="john.doe@example.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="customerPhone" class="form-label fw-bold small text-uppercase">Phone Number</label>
+                                <input type="tel" id="customerPhone" th:field="*{customerPhone}" class="form-control shadow-none" placeholder="+48 123 456 789" required>
+                            </div>
+                            
+                            <!-- Address Sub-section -->
+                            <div class="col-12 mt-4">
+                                <h6 class="fw-bold mb-2 text-muted small text-uppercase">Address Details</h6>
+                                <div class="row g-2 p-3 bg-light rounded-3 border">
+                                    <div class="col-md-6">
+                                        <label for="customerAddressCountry" class="form-label small">Country</label>
+                                        <input type="text" id="customerAddressCountry" th:field="*{customerAddressCountry}" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="customerAddressCity" class="form-label small">City</label>
+                                        <input type="text" id="customerAddressCity" th:field="*{customerAddressCity}" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="customerAddressPostalCode" class="form-label small">Postal Code</label>
+                                        <input type="text" id="customerAddressPostalCode" th:field="*{customerAddressPostalCode}" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="customerAddressStreet" class="form-label small">Street / Road</label>
+                                        <input type="text" id="customerAddressStreet" th:field="*{customerAddressStreet}" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="customerAddressHouseNumber" class="form-label small">House No.</label>
+                                        <input type="text" id="customerAddressHouseNumber" th:field="*{customerAddressHouseNumber}" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="customerAddressApartmentNumber" class="form-label small">Apartment No. (Optional)</label>
+                                        <input type="text" id="customerAddressApartmentNumber" th:field="*{customerAddressApartmentNumber}" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bike & Issue Section -->
+                    <div class="col-lg-5 ps-lg-4">
+                        <h5 class="fw-bold mb-3 pb-2 border-bottom text-dark">
+                            <i class="fas fa-bicycle text-primary me-2"></i>Bike & Issue Information
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="bikeSerial" class="form-label fw-bold small text-uppercase">Bike Serial Number</label>
+                                <input type="text" id="bikeSerial" th:field="*{bikeSerial}" class="form-control shadow-none" placeholder="SN-XXXXX" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bikeBrand" class="form-label fw-bold small text-uppercase">Brand</label>
+                                <input type="text" id="bikeBrand" th:field="*{bikeBrand}" class="form-control shadow-none" placeholder="Giant" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bikeModel" class="form-label fw-bold small text-uppercase">Model</label>
+                                <input type="text" id="bikeModel" th:field="*{bikeModel}" class="form-control shadow-none" placeholder="Anyroad" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="bikeYear" class="form-label fw-bold small text-uppercase">Production Year</label>
+                                <input type="text" id="bikeYear" th:field="*{bikeYear}" class="form-control shadow-none" placeholder="2023" required>
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <label for="customerComment" class="form-label fw-bold small text-uppercase d-flex align-items-center">
+                                    <i class="fas fa-comment-medical me-2 text-warning"></i>Service Description
+                                </label>
+                                <textarea id="customerComment" th:field="*{customerComment}" rows="6" 
+                                          class="form-control shadow-none" placeholder="Describe the reported issues in detail..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-5 pt-3 border-top">
+                    <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                        <i class="fas fa-paper-plane me-2"></i>Register New Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .card { border-radius: 12px; }
+    .form-control:focus { border-color: #0d6efd; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1); }
+    .form-label { margin-bottom: 0.25rem; }
+    .btn-lg { border-radius: 10px; }
+</style>
+
 </body>
 </html>

@@ -1,107 +1,136 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel="icon" th:href="@{/images/logo/logo2.png}" type="image/x-icon">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1a1a1a;
-            color: #ddd;
-        }
-        .header {
-            background: #89b789;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        .logo {
-            max-width: 80px;
-            transition: transform 0.3s;
-        }
-        .logo:hover {
-            transform: scale(1.1);
-        }
-        .centered-title {
-            font-size: 2.5rem;
-            margin-top: 10px;
-        }
-        .btn-custom {
-            background-color: #0062cc;
-            border-color: #0056b3;
-            color: #fff;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .btn-custom:hover {
-            background-color: #004085;
-            transform: translateY(-2px);
-        }
-        .footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
-        }
-        .card-custom {
-            width: 22rem;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .card-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-        .card-title {
-            font-size: 1.5rem;
-        }
-    </style>
+    <title>Home - Codfish Bike Sales & Service</title>
 </head>
-<body>
+<body class="bg-light">
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
-<br><br><br><br>
-<div class="header">
-    <h1 class="centered-title">Codfish Bike Sales & Service</h1>
-</div>
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card card-custom">
-                <img class="card-img-top" th:src="@{/images/logo/logo4.png}" alt="Salesman Image">
-                <div class="card-body">
-                    <h5 class="card-title">SALESMEN PORTAL</h5>
-                    <p class="card-text">Access the seller portal to manage sales and customer interactions</p>
-                    <a th:href="@{/salesman}" class="btn btn-primary">Enter</a>
+
+<main class="container py-5 mt-2">
+    <!-- Hero Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10 text-center">
+            <h1 class="display-4 fw-bold text-primary mb-3">Codfish Bike Sales & Service</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 700px;">
+                Zintegrowany system zarządzania salonem rowerowym i profesjonalnym serwisem. 
+                Usprawnij sprzedaż, kontroluj naprawy i buduj relacje z klientami w jednym miejscu.
+            </p>
+        </div>
+    </div>
+
+    <!-- Portal Cards -->
+    <div class="row g-4 justify-content-center mb-5">
+        <!-- Salesman Portal -->
+        <div class="col-md-5">
+            <div class="card card-custom h-100 border-0 shadow-lg overflow-hidden">
+                <div class="position-relative overflow-hidden" style="height: 200px;">
+                    <img class="card-img-top w-100 h-100" th:src="@{/images/logo/logo4.jpg}" alt="Salesman Image" style="object-fit: cover; transition: transform 0.5s ease;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-end p-0">
+                        <div class="w-100 p-3 bg-dark bg-opacity-75 text-white backdrop-blur-sm">
+                            <h4 class="card-title mb-0 fw-bold"><i class="fas fa-shopping-basket me-2 text-accent"></i>SALES PORTAL</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text text-muted mb-4">
+                        Zarządzaj procesem sprzedaży rowerów i akcesoriów. Obsługuj zamówienia klientów, wystawiaj faktury i monitoruj wyniki sprzedaży w czasie rzeczywistym.
+                    </p>
+                    <ul class="list-unstyled mb-4 small">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Realizacja zakupów</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Zarządzanie bazą klientów</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Podgląd faktur i historii</li>
+                    </ul>
+                    <a th:href="@{/salesman}" class="btn btn-primary w-100 py-2 shadow-sm fw-bold">
+                        Wejdź do Portalu Sprzedaży <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="card card-custom">
-                <img class="card-img-top" th:src="@{/images/logo/logo1.png}" alt="Repairing Image">
-                <div class="card-body">
-                    <h5 class="card-title">PERSON REPAIRING PORTAL </h5>
-                    <p class="card-text">Access the repair portal to get service orders and repair management.</p>
-                    <a th:href="@{/personRepairing}" class="btn btn-primary">Enter</a>
+
+        <!-- Repairing Portal -->
+        <div class="col-md-5">
+            <div class="card card-custom h-100 border-0 shadow-lg overflow-hidden">
+                <div class="position-relative overflow-hidden" style="height: 200px;">
+                    <img class="card-img-top w-100 h-100" th:src="@{/images/logo/logo1.jpg}" alt="Repairing Image" style="object-fit: cover; transition: transform 0.5s ease;">
+                    <div class="card-img-overlay d-flex flex-column justify-content-end p-0">
+                        <div class="w-100 p-3 bg-dark bg-opacity-75 text-white backdrop-blur-sm">
+                            <h4 class="card-title mb-0 fw-bold"><i class="fas fa-tools me-2 text-warning"></i>REPAIR PORTAL</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text text-muted mb-4">
+                        Centrum dowodzenia serwisem rowerowym. Przyjmuj zgłoszenia, przypisuj mechaników do zadań i aktualizuj statusy napraw dla Twoich klientów.
+                    </p>
+                    <ul class="list-unstyled mb-4 small">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Obsługa zleceń serwisowych</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Zarządzanie katalogiem części</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Historia napraw i serwisów</li>
+                    </ul>
+                    <a th:href="@{/personRepairing}" class="btn btn-primary w-100 py-2 shadow-sm fw-bold">
+                        Wejdź do Portalu Serwisu <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="footer">
-    <p>© 2024 CodFish Bike Sales & Service. Contact: piotr.dorszynski@gmail.com</p>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- Features Quick View -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-4 text-center">
+            <div class="p-3">
+                <div class="feature-icon bg-white shadow-sm rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <i class="fas fa-shield-alt text-primary fs-4"></i>
+                </div>
+                <h5 class="fw-bold">Bezpieczeństwo</h5>
+                <p class="text-muted small">Zaawansowany system uprawnień i bezpieczne zarządzanie kontami użytkowników.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="p-3">
+                <div class="feature-icon bg-white shadow-sm rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <i class="fas fa-chart-line text-primary fs-4"></i>
+                </div>
+                <h5 class="fw-bold">Efektywność</h5>
+                <p class="text-muted small">Szybki dostęp do wszystkich modułów dzięki nowoczesnemu paskowi bocznemu.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="p-3">
+                <div class="feature-icon bg-white shadow-sm rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                    <i class="fas fa-tachometer-alt text-primary fs-4"></i>
+                </div>
+                <h5 class="fw-bold">Analityka</h5>
+                <p class="text-muted small">Kompletna historia zakupów i napraw dostępna na jedno kliknięcie.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+    }
+    .text-accent {
+        color: var(--accent-color);
+    }
+    .card-custom:hover img {
+        transform: scale(1.05);
+    }
+    .feature-icon {
+        transition: all 0.3s ease;
+    }
+    .feature-icon:hover {
+        transform: translateY(-5px);
+        background-color: var(--accent-color) !important;
+    }
+    .feature-icon:hover i {
+        color: white !important;
+    }
+</style>
+
 </body>
 </html>

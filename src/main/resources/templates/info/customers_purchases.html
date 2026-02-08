@@ -1,219 +1,257 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+    <title>Customer Management</title>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <h1 class="centered-title">Customers</h1>
-</div>
-
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/purchase}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i>Go
-                back</a>
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-address-book me-2"></i>Customer Management
+            </h2>
+            <p class="text-muted small">Maintain your customer database, update contact details, and manage relationships.</p>
         </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-            <h4>Add client </h4>
-            <form action="#" th:action="@{/add_customer}" th:object="${availableCustomerDTOs}" th:method="POST">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${customerDTOs.name}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="surname">Surname:</label>
-                    <input type="text" class="form-control" id="surname" name="surname"
-                           th:value="${customerDTOs.surname}" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" th:value="${customerDTOs.email}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="text" class="form-control" id="phone" name="phone" th:value="${customerDTOs.phone}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country:</label>
-                    <input type="text" class="form-control" id="country" name="country"
-                           th:value="${customerDTOs.country}" required>
-                </div>
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" class="form-control" id="city" name="city" th:value="${customerDTOs.city}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="postalCode">Postal Code:</label>
-                    <input type="text" class="form-control" id="postalCode" name="postalCode"
-                           th:value="${customerDTOs.postalCode}" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Street Address:</label>
-                    <input type="text" class="form-control" id="address" name="address"
-                           th:value="${customerDTOs.address}" required>
-                </div>
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input type="text" class="form-control" id="houseNumber" name="houseNumber"
-                           th:value="${customerDTOs.houseNumber}" required>
-                </div>
-                <div class="form-group">
-                    <label for="apartmentNumber">Apartment Number:</label>
-                    <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber"
-                           th:value="${customerDTOs.apartmentNumber}" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Add Customer</button>
-            </form>
-        </div>
-        <div class="col-lg-6">
-            <h4>Edit client</h4>
-            <form action="#" th:action="@{/update_customer}" th:object="${availableCustomerDTOs}" th:method="POST">
-                <div class="form-group">
-                    <label for="email">Enter Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" th:value="${customerDTOs.email}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${customerDTOs.name}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="surname">Surname:</label>
-                    <input type="text" class="form-control" id="surname" name="surname"
-                           th:value="${customerDTOs.surname}" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="text" class="form-control" id="phone" name="phone" th:value="${customerDTOs.phone}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country:</label>
-                    <input type="text" class="form-control" id="country" name="country"
-                           th:value="${customerDTOs.country}" required>
-                </div>
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" class="form-control" id="city" name="city" th:value="${customerDTOs.city}"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="postalCode">Postal Code:</label>
-                    <input type="text" class="form-control" id="postalCode" name="postalCode"
-                           th:value="${customerDTOs.postalCode}" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Street Address:</label>
-                    <input type="text" class="form-control" id="address" name="address"
-                           th:value="${customerDTOs.address}" required>
-                </div>
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input type="text" class="form-control" id="houseNumber" name="houseNumber"
-                           th:value="${customerDTOs.houseNumber}" required>
-                </div>
-                <div class="form-group">
-                    <label for="apartmentNumber">Apartment Number:</label>
-                    <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber"
-                           th:value="${customerDTOs.apartmentNumber}" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Edit Customer</button>
-            </form>
-        </div>
-        <div class="col-xl-*">
-            <div class="container">
-                <br>
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta ...">
-                <form action="#" th:action="@{/customers_purchases}" th:method="POST" th:object="${CustomerDTO}">
-                    <table class="table" id="customer-table">
-                        <thead class="table-dark">
-                        <tr>
-                            <th class="col-0">Id:</th>
-                            <th class="col-0">Name:</th>
-                            <th class="col-0">Surname:</th>
-                            <th class="col-2">Email:</th>
-                            <th class="col-3">Phone number:</th>
-                            <th class="col-0">City:</th>
-                            <th class="col-4">Postal code:</th>
-                            <th class="col-2">Street:</th>
-                            <th class="col-2">House number:</th>
-                            <th class="col-2">Apartment number:</th>
-                            <th class="col-2">Actions:</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="customer,stat : ${availableCustomerDTOs}">
-                            <td th:text="${stat.count}"></td>
-                            <td th:text="${customer.name}"></td>
-                            <td th:text="${customer.surname}"></td>
-                            <td th:text="${customer.email}"></td>
-                            <td th:text="${customer.phone}"></td>
-                            <td th:text="${customer.city}"></td>
-                            <td th:text="${customer.postalCode}"></td>
-                            <td th:text="${customer.address}"></td>
-                            <td th:text="${customer.houseNumber}"></td>
-                            <td th:text="${customer.apartmentNumber}"></td>
-                            <td>
-                                <form th:action="@{/delete_customer}" th:method="DELETE">
-                                    <input type="hidden" name="email" th:value="${customer.email}"/>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div id="pagination-container"></div>
-                </form>
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/purchase}" class="btn btn-outline-secondary shadow-sm">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Sale
+                </a>
             </div>
         </div>
     </div>
-</div>
-<script>
-    $(document).ready(function () {
-        var items = $("#customer-table tr");
-        var numItems = items.length;
-        var perPage = 10;
 
-        items.slice(perPage).hide();
+    <div class="row g-4">
+        <!-- Left Column: Customer List -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-users me-2"></i>Active Customers
+                    </h5>
+                    <div class="d-flex align-items-center gap-2 w-50">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInputCustomers" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter customers..." data-search-target="#customers-table">
+                        </div>
+                        <span class="badge bg-primary" th:text="${availableCustomerDTOs.size()}">0</span>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0 align-middle" id="customers-table">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Customer</th>
+                                <th>Contact</th>
+                                <th>Location</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="customer : ${availableCustomerDTOs}" class="customer-row" style="cursor: pointer;"
+                                data-fill-form="#updateForm"
+                                data-tab-target="#update-tab"
+                                th:data-name="${customer.name}"
+                                th:data-surname="${customer.surname}"
+                                th:data-email="${customer.email}"
+                                th:data-phone="${customer.phone}"
+                                th:data-country="${customer.country}"
+                                th:data-city="${customer.city}"
+                                th:data-postalcode="${customer.postalCode}"
+                                th:data-address="${customer.address}"
+                                th:data-housenumber="${customer.houseNumber}"
+                                th:data-apartmentnumber="${customer.apartmentNumber}"
+                                th:data-update_name="${customer.name}"
+                                th:data-update_surname="${customer.surname}"
+                                th:data-update_email="${customer.email}"
+                                th:data-update_existingemail="${customer.email}"
+                                th:data-update_phone="${customer.phone}"
+                                th:data-update_country="${customer.country}"
+                                th:data-update_city="${customer.city}"
+                                th:data-update_postalcode="${customer.postalCode}"
+                                th:data-update_address="${customer.address}"
+                                th:data-update_housenumber="${customer.houseNumber}"
+                                th:data-update_apartmentnumber="${customer.apartmentNumber}">
+                                <td class="ps-3">
+                                    <div class="fw-bold" th:text="${customer.name} + ' ' + ${customer.surname}">John Doe</div>
+                                </td>
+                                <td>
+                                    <div class="small fw-bold text-primary" th:text="${customer.email}">john@example.com</div>
+                                    <div class="small text-muted" th:text="${customer.phone}">555-0123</div>
+                                </td>
+                                <td>
+                                    <div class="small fw-bold" th:text="${customer.address} + ' ' + ${customer.houseNumber} + (${customer.apartmentNumber} != null and ${customer.apartmentNumber} != '' ? '/' + ${customer.apartmentNumber} : '')">Street</div>
+                                    <div class="small text-muted" th:text="${customer.postalCode} + ' ' + ${customer.city}">Postal Code, City</div>
+                                </td>
+                                <td class="text-center">
+                                    <form th:action="@{/delete_customer}" th:method="DELETE" class="d-inline">
+                                        <input type="hidden" name="email" th:value="${customer.email}"/>
+                                        <button type="submit" class="btn btn-link text-danger p-0 shadow-none" onclick="return confirm('Are you sure you want to remove this customer?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0 py-2">
+                    <div id="pagination-container-customers" class="d-flex justify-content-center mt-2"></div>
+                </div>
+            </div>
+        </div>
 
-        $('#pagination-container').twbsPagination({
-            totalPages: Math.ceil(numItems / perPage),
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-                var start = perPage * (page - 1);
-                var end = start + perPage;
+        <!-- Right Column: Forms -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm sticky-top" style="top: 20px; z-index: 10;">
+                <div class="card-header bg-primary text-white p-0">
+                    <ul class="nav nav-tabs nav-fill border-0" id="customerTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active text-white fw-bold py-3 border-0 rounded-0" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-pane" type="button" role="tab">
+                                <i class="fas fa-user-plus me-1"></i>Add
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white fw-bold py-3 border-0 rounded-0" id="update-tab" data-bs-toggle="tab" data-bs-target="#update-pane" type="button" role="tab">
+                                <i class="fas fa-user-edit me-1"></i>Update
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body p-4">
+                    <div class="tab-content">
+                        <!-- Add Form -->
+                        <div class="tab-pane fade show active" id="add-pane" role="tabpanel">
+                            <form th:action="@{/add_customer}" th:object="${customerDTOs}" th:method="POST" class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">First Name</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="name" th:value="${customerDTOs.name}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Last Name</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="surname" th:value="${customerDTOs.surname}" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label small fw-bold text-uppercase">Email Address</label>
+                                    <input type="email" class="form-control form-control-sm shadow-none" name="email" th:value="${customerDTOs.email}" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label small fw-bold text-uppercase">Phone Number</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="phone" th:value="${customerDTOs.phone}" required>
+                                </div>
+                                <hr class="my-3">
+                                <h6 class="fw-bold small text-muted text-uppercase mb-2">Address Information</h6>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Country</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="country" th:value="${customerDTOs.country}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">City</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="city" th:value="${customerDTOs.city}" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold text-uppercase">Postal Code</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="postalCode" th:value="${customerDTOs.postalCode}" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label small fw-bold text-uppercase">Street Address</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="address" th:value="${customerDTOs.address}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">House No.</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="houseNumber" th:value="${customerDTOs.houseNumber}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Apartment</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" name="apartmentNumber" th:value="${customerDTOs.apartmentNumber}">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-success w-100 shadow-sm">
+                                        <i class="fas fa-save me-2"></i>Register Customer
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
 
-                items.hide().slice(start, end).show();
-            }
-        });
-    });
-</script>
-<script>
+                        <!-- Update Form -->
+                        <div class="tab-pane fade" id="update-pane" role="tabpanel">
+                            <div class="alert alert-warning py-2 px-3 mb-4 border-0 small">
+                                <i class="fas fa-mouse-pointer me-2"></i>Select a customer from the list to edit.
+                            </div>
+                            <form th:action="@{/update_customer}" th:object="${customerDTOs}" th:method="POST" class="row g-3" id="updateForm">
+                                <input type="hidden" id="update_existingemail" name="existingEmail">
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase">New Email</label>
+                                    <input type="email" class="form-control form-control-sm shadow-none" id="update_email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New First Name</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">New Last Name</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_surname" name="surname" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-uppercase">New Phone</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_phone" name="phone" required>
+                                </div>
+                                <hr class="my-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Country</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_country" name="country" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">City</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_city" name="city" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold text-uppercase">Postal Code</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_postalcode" name="postalCode" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label small fw-bold text-uppercase">Street</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_address" name="address" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">House No.</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_housenumber" name="houseNumber" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-uppercase">Apartment</label>
+                                    <input type="text" class="form-control form-control-sm shadow-none" id="update_apartmentnumber" name="apartmentNumber">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-warning w-100 shadow-sm fw-bold">
+                                        <i class="fas fa-sync-alt me-2"></i>Update Customer
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
-    $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#customer-table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
-</body>
-<br><br><br>
 <div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .card { border-radius: 12px; }
+    .nav-tabs .nav-link { border-radius: 0; color: rgba(255,255,255,0.7) !important; transition: all 0.3s; }
+    .nav-tabs .nav-link.active { background-color: white !important; color: #0d6efd !important; }
+    .nav-tabs .nav-link:hover:not(.active) { background-color: rgba(255,255,255,0.1); color: white !important; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .active-row { border-left: 4px solid #0d6efd !important; }
+    .customer-row { transition: background-color 0.2s; }
+</style>
+
+</body>
 </html>

@@ -1,133 +1,200 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bike Service History</title>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <h2 class="centered-title">Bike History</h2>
-</div>
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/salesman}" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-history me-2"></i>Bike Service History
+            </h2>
+            <p class="text-muted small">Browse through the complete maintenance and repair records of the bikes.</p>
         </div>
-    </div>
-    <br>
-    <form action="#" th:action="@{/bike/history}" th:method="GET">
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <label for="bikesSerial">Bike Serial:</label>
-                <select id="bikesSerial" th:name="bikeSerial" class="form-control">
-                    <option th:each="bikeSerial : ${allBikeSerials}"
-                            th:value="${bikeSerial}"
-                            th:text="${bikeSerial}"></option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <input type="submit" value="Find" class="btn btn-success mt-4">
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/salesman}" class="btn btn-light shadow-sm">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                </a>
             </div>
         </div>
-    </form>
-    <div class="row mt-3">
-        <p>Bike history for serial: <b><span th:if="${bikeHistoryDTO.bikeSerial}" th:text="${bikeHistoryDTO.bikeSerial}">BIKE SERIAL:</span></b></p>
-        <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th>Service Number:</th>
-                <th>Received Date:</th>
-                <th>Completed Date:</th>
-                <th>Comment:</th>
-                <th>SERVICES:</th>
-                <th>PARTS:</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${bikeHistoryDTO == null || bikeHistoryDTO.bikeServiceRequests.size() == 0}">
-                <td colspan="6">Select a bike serial to view history</td>
-            </tr>
-            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}">
-                <td th:text="${serviceRequest.bikeServiceRequestNumber}"></td>
-                <td th:text="${serviceRequest.receivedDateTime}"></td>
-                <td th:text="${serviceRequest.completedDateTime}"></td>
-                <td th:text="${serviceRequest.customerComment}"></td>
-                <td>
-                    <div th:if="${serviceRequest.services != null && serviceRequest.services.size() > 0}">
-                        <table class="table">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>Id:</th>
-                                <th>Service Code:</th>
-                                <th>Description:</th>
-                                <th>Price PLN:</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="service, stat : ${serviceRequest.services}">
-                                <td th:text="${stat.count}"></td>
-                                <td th:text="${service.serviceCode}"></td>
-                                <td th:text="${service.description}"></td>
-                                <td th:text="${service.price}"></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th colspan="3">Total Price:</th>
-                                <th><span th:text="${serviceRequest.getTotalServicePrice()}"></span> zł</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div th:if="${serviceRequest.services == null || serviceRequest.services.size() == 0}">
-                        No services added
-                    </div>
-                </td>
-                <td>
-                    <div th:if="${serviceRequest.parts != null && serviceRequest.parts.size() > 0}">
-                        <table class="table">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>Id:</th>
-                                <th>Serial Number:</th>
-                                <th>Description:</th>
-                                <th>Price PLN:</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="part, stat : ${serviceRequest.parts}">
-                                <td th:text="${stat.count}"></td>
-                                <td th:text="${part.serialNumber}"></td>
-                                <td th:text="${part.description}"></td>
-                                <td th:text="${part.price}"></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th colspan="3">Total Price:</th>
-                                <th><span th:text="${serviceRequest.getTotalPartsPrice()}"></span> zł</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div th:if="${serviceRequest.parts == null || serviceRequest.parts.size() == 0}">
-                        No parts added
-                    </div>
-                </td>
-            </tr>
-            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}"
-                th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}">
-            </tr>
-            <tr th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}"
-                th:if="${bikeHistoryDTO != null && bikeHistoryDTO.bikeServiceRequests.size() > 0}">
-                <td colspan="3" style="font-weight: bold; font-size: medium;">Total Price (Services + Parts):
-                    <span th:text="${serviceRequest.getTotalPrice()}"></span> zł
-                </td>
-            </tr>
-            </tbody>
-        </table>
     </div>
-</div>
-<br><br><br>
-<footer th:replace='~{/fragments/footer.html :: template}'></footer>
+
+    <div class="row g-4">
+        <!-- Left Column: Bike Inventory -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-bicycle me-2"></i>Bike Inventory
+                    </h5>
+                    <span class="badge bg-primary" th:text="${allBikeDTOs.size()}">0</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="p-3 bg-light border-bottom">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0 ps-0 shadow-none" placeholder="Search by brand, model or serial..." data-search-target=".scrollarea">
+                        </div>
+                    </div>
+                    <div class="list-group list-group-flush scrollarea" style="max-height: 600px; overflow-y: auto;">
+                        <div th:if="${#lists.isEmpty(allBikeDTOs)}" class="p-5 text-center text-muted">
+                            <i class="fas fa-info-circle fa-3x mb-3 opacity-25"></i>
+                            <p>No bikes found.</p>
+                        </div>
+                        <a th:each="bike : ${allBikeDTOs}" 
+                           th:href="@{/bike/history(bikeSerial=${bike.serial})}"
+                           class="list-group-item list-group-item-action py-3 lh-tight border-start border-4 history-item"
+                           th:classappend="${bike.serial == bikeHistoryDTO.bikeSerial} ? 'border-primary bg-primary-subtle active-bike' : 'border-light'">
+                            <div class="d-flex w-100 align-items-center justify-content-between mb-1">
+                                <strong class="text-primary mb-1" th:text="${bike.brand} + ' ' + ${bike.model}">Giant Anyroad</strong>
+                                <small class="text-muted" th:text="${bike.year}">2022</small>
+                            </div>
+                            <div class="small">
+                                <div class="text-dark fw-bold">Serial: <span th:text="${bike.serial}">SN12345</span></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-center py-2">
+                    <small class="text-muted">Select a bike to view its history</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: History Details -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-file-invoice me-2"></i>Service Records</h5>
+                    <span th:if="${bikeHistoryDTO.bikeSerial != 'empty'}" class="badge bg-white text-primary px-3 py-2" th:text="${bikeHistoryDTO.bikeSerial}">SN12345</span>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <!-- Empty State -->
+                    <div th:if="${bikeHistoryDTO.bikeSerial == 'empty'}" class="text-center py-5">
+                        <i class="fas fa-search-location fa-4x text-muted mb-4 opacity-25"></i>
+                        <h4 class="text-muted">No bike selected</h4>
+                        <p class="text-muted small">Please choose a bike from the inventory list to see its service history.</p>
+                    </div>
+
+                    <div th:if="${bikeHistoryDTO.bikeSerial != 'empty'}">
+                        
+                        <!-- No History State -->
+                        <div th:if="${#lists.isEmpty(bikeHistoryDTO.bikeServiceRequests)}" class="text-center py-5 border rounded-3 bg-light">
+                            <i class="fas fa-calendar-times fa-3x text-muted mb-3 opacity-50"></i>
+                            <h5 class="text-muted">No maintenance history available</h5>
+                            <p class="text-muted small mb-0">This bike hasn't undergone any services yet.</p>
+                        </div>
+
+                        <!-- Timeline / History Cards -->
+                        <div class="timeline">
+                            <div th:each="serviceRequest : ${bikeHistoryDTO.bikeServiceRequests}" class="card border-0 shadow-sm mb-4 bg-light overflow-hidden">
+                                <div class="card-header border-0 d-flex justify-content-between align-items-center py-3 bg-white border-bottom">
+                                    <h6 class="mb-0 text-primary fw-bold">
+                                        <i class="fas fa-tag me-2"></i>Request #<span th:text="${serviceRequest.bikeServiceRequestNumber}">REQ-001</span>
+                                    </h6>
+                                    <div class="text-end">
+                                        <div class="small fw-bold text-success">
+                                            <i class="fas fa-check-circle me-1"></i>Completed: <span th:text="${serviceRequest.completedDateTime}">2023-10-01</span>
+                                        </div>
+                                        <div class="small text-muted" style="font-size: 0.75rem;">
+                                            Received: <span th:text="${serviceRequest.receivedDateTime}">2023-09-28</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body p-4 bg-white">
+                                    <div class="row g-4">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold small text-uppercase text-muted tracking-wider mb-2">Customer Issue / Comment</label>
+                                            <p class="mb-0 bg-light p-3 rounded-3 border-start border-4 border-warning small italic" th:text="${serviceRequest.customerComment}">Description...</p>
+                                        </div>
+
+                                        <div class="col-12" th:if="${serviceRequest.technicianComment != null and !serviceRequest.technicianComment.isEmpty()}">
+                                            <label class="form-label fw-bold small text-uppercase text-primary tracking-wider mb-2">Technician Remarks</label>
+                                            <p class="mb-0 bg-light p-3 rounded-3 border-start border-4 border-primary small italic" th:text="${serviceRequest.technicianComment}">Remarks...</p>
+                                        </div>
+                                        
+                                        <!-- Services -->
+                                        <div class="col-md-6" th:if="${not #lists.isEmpty(serviceRequest.services)}">
+                                            <label class="form-label fw-bold small text-uppercase text-primary tracking-wider mb-2">
+                                                <i class="fas fa-wrench me-1"></i>Performed Services
+                                            </label>
+                                            <ul class="list-group list-group-flush border rounded-3 overflow-hidden">
+                                                <li th:each="service : ${serviceRequest.services}" class="list-group-item d-flex justify-content-between align-items-center small py-2">
+                                                    <div>
+                                                        <span class="fw-bold" th:text="${service.description}">Service</span>
+                                                        <br><small class="text-muted" th:text="${service.serviceCode}">CODE</small>
+                                                    </div>
+                                                    <span class="fw-bold text-dark" th:text="${service.price} + ' zł'">0 zł</span>
+                                                </li>
+                                                <li class="list-group-item bg-light d-flex justify-content-between align-items-center py-2">
+                                                    <span class="small fw-bold">Subtotal:</span>
+                                                    <span class="fw-bold text-primary" th:text="${serviceRequest.getTotalServicePrice()} + ' zł'">0 zł</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- Parts -->
+                                        <div class="col-md-6" th:if="${not #lists.isEmpty(serviceRequest.parts)}">
+                                            <label class="form-label fw-bold small text-uppercase text-info tracking-wider mb-2">
+                                                <i class="fas fa-puzzle-piece me-1"></i>Replaced Parts
+                                            </label>
+                                            <ul class="list-group list-group-flush border rounded-3 overflow-hidden">
+                                                <li th:each="part : ${serviceRequest.parts}" class="list-group-item d-flex justify-content-between align-items-center small py-2">
+                                                    <div>
+                                                        <span class="fw-bold" th:text="${part.description}">Part</span>
+                                                        <br><small class="text-muted" th:text="${part.serialNumber}">SERIAL</small>
+                                                    </div>
+                                                    <span class="fw-bold text-dark" th:text="${part.price} + ' zł'">0 zł</span>
+                                                </li>
+                                                <li class="list-group-item bg-light d-flex justify-content-between align-items-center py-2">
+                                                    <span class="small fw-bold">Subtotal:</span>
+                                                    <span class="fw-bold text-info" th:text="${serviceRequest.getTotalPartsPrice()} + ' zł'">0 zł</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between align-items-center border-top py-3 px-4">
+                                    <div th:if="${serviceRequest.invoiceNumber != null}">
+                                        <a th:href="@{'/invoices/download/' + ${serviceRequest.invoiceNumber}}" 
+                                           class="btn btn-sm btn-outline-danger shadow-sm">
+                                            <i class="fas fa-file-pdf me-2"></i>Download Invoice
+                                        </a>
+                                    </div>
+                                    <div class="h5 mb-0 fw-bold text-success ms-auto">
+                                        <small class="text-muted fw-normal me-2">Request Total:</small>
+                                        <span th:text="${serviceRequest.getTotalPrice()}">0</span> zł
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace='~{/fragments/footer.html :: template}'></div>
+
+<style>
+    .scrollarea { overflow-y: auto; }
+    .card { border-radius: 12px; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .history-item { transition: all 0.2s; border-left-width: 4px !important; cursor: pointer; }
+    .history-item:hover { background-color: #f0f7ff; transform: translateX(5px); border-left-color: #0d6efd !important; }
+    .active-bike { border-left-color: #0d6efd !important; }
+    .timeline { position: relative; }
+    .italic { font-style: italic; }
+</style>
+
 </body>
 </html>

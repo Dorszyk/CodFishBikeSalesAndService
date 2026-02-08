@@ -1,114 +1,156 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Service Request</title>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br><br><br>
-<div class="header">
-    <div class="header text-center mb-4">
-        <h1 class="centered-title">Salesman Service</h1>
-    </div>
-</div>
-
-<div class="container">
-    <div class="col-12 mb-3">
-        <div class="button-row">
-            <a th:href="@{/service/new_customer}" class="btn btn-info"><i class="fas fa-hands-helping"></i> New Customer Service</a>
-            <a th:href="@{/salesman}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Go back
-            </a>
+<main class="container py-4 mt-3">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="display-6 fw-bold text-primary mb-0">
+                <i class="fas fa-file-medical me-2"></i>New Service Request
+            </h2>
+            <p class="text-muted small">Register a new bike service for an existing or past customer.</p>
+        </div>
+        <div class="col-md-5 text-md-end">
+            <div class="d-inline-flex gap-2">
+                <a th:href="@{/service/new_customer}" class="btn btn-primary shadow-sm">
+                    <i class="fas fa-user-plus me-2"></i>New Customer
+                </a>
+                <a th:href="@{/salesman}" class="btn btn-light shadow-sm">
+                    <i class="fas fa-arrow-left me-1"></i>Back
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-8 mx-auto">
-        <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
-            <h3>Existing customer:</h3>
-            <div class="mb-3">
-                <label for="existingCustomerEmail" class="form-label">Customer email:</label>
-                <input type="text" id="existingCustomerEmail" th:field="*{existingCustomerEmail}"
-                       class="form-control" aria-label="Customer Email"
-                       placeholder="Wprowadź adres e-mail istniejącego klienta..." required>
+    <div class="row g-4">
+        <!-- Left Column: Searchable History -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between py-3">
+                    <h5 class="mb-0 small fw-bold text-uppercase tracking-wider">
+                        <i class="fas fa-history me-2"></i>Recent Sales History
+                    </h5>
+                    <span class="badge bg-secondary" th:text="${availableInvoicesDTOs.size()}">0</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="p-3 bg-light border-bottom">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0 ps-0 shadow-none" placeholder="Filter by email or serial..." data-search-target=".scrollarea">
+                        </div>
+                    </div>
+                    <div class="list-group list-group-flush scrollarea" style="max-height: 550px; overflow-y: auto;">
+                        <div th:if="${#lists.isEmpty(availableInvoicesDTOs)}" class="p-5 text-center text-muted">
+                            <i class="fas fa-info-circle fa-3x mb-3 opacity-25"></i>
+                            <p>No recent sales found.</p>
+                        </div>
+                        <div th:each="invoice : ${availableInvoicesDTOs}" 
+                             class="list-group-item list-group-item-action py-3 lh-tight border-start border-4 border-light history-item"
+                             data-fill-form=".col-lg-7 form"
+                             th:data-existing-customer-email="${invoice.customer.email}"
+                             th:data-existing-bike-serial="${invoice.bike.serial}">
+                            <div class="d-flex w-100 align-items-center justify-content-between mb-1">
+                                <strong class="text-primary mb-1" 
+                                        th:text="${invoice.bike.serial}">
+                                    SN12345
+                                </strong>
+                                <small class="text-muted" th:text="${invoice.customer.phone}">555-0123</small>
+                            </div>
+                            <div class="small">
+                                <div class="fw-bold text-dark" th:text="${invoice.customer.name} + ' ' + ${invoice.customer.surname}">John Doe</div>
+                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                    <span class="text-muted text-truncate email-text" style="max-width: 80%;" th:text="${invoice.customer.email}">john@example.com</span>
+                                    <div class="btn-group">
+                                        <button class="btn btn-link btn-sm p-0 text-decoration-none" 
+                                                title="Select for service">
+                                            <i class="fas fa-plus-circle text-success"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="existingBikeSerial" class="form-label">Bike Serial:</label>
-                <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}" class="form-control"
-                       aria-label="Bike Serial" placeholder="Wprowadź bike-serial roweru zakupionego przez klienta..."
-                       required>
+        </div>
+
+        <!-- Right Column: Registration Form -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-clipboard-check me-2"></i>Service Registration</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form action="#" th:action="@{/service/request}" th:object="${bikeServiceRequestDTO}" th:method="POST">
+                        
+                        <div class="alert alert-info py-2 px-3 mb-4 border-0 small">
+                            <i class="fas fa-info-circle me-2"></i>Pick a customer from the left list to auto-fill fields.
+                        </div>
+
+                        <!-- Identification Section -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="existingCustomerEmail" class="form-label fw-bold small text-uppercase">Customer Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-envelope text-muted"></i></span>
+                                    <input type="email" id="existingCustomerEmail" th:field="*{existingCustomerEmail}" 
+                                           class="form-control shadow-none" placeholder="customer@example.com" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="existingBikeSerial" class="form-label fw-bold small text-uppercase">Bike Serial Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-barcode text-muted"></i></span>
+                                    <input type="text" id="existingBikeSerial" th:field="*{existingBikeSerial}" 
+                                           class="form-control shadow-none" placeholder="SN-XXXXX" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="section-container mb-4">
+                            <label for="customerComment" class="form-label fw-bold small text-uppercase d-flex align-items-center">
+                                <i class="fas fa-comment-medical me-2 text-warning"></i>Service Notes / Issue Description
+                            </label>
+                            <textarea id="customerComment" th:field="*{customerComment}" class="form-control shadow-none" rows="5" 
+                                      placeholder="Describe the problem, required maintenance, or special instructions..." required></textarea>
+                            <div class="form-text mt-2 small">Provide as much detail as possible to help the technicians.</div>
+                        </div>
+
+                        <!-- Submit Section -->
+                        <div class="text-end border-top pt-4">
+                            <button type="reset" class="btn btn-link text-muted me-3 text-decoration-none">
+                                <i class="fas fa-undo me-1"></i>Clear Form
+                            </button>
+                            <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Request
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="customerComment" class="form-label">Service comment:</label>
-                <textarea id="customerComment" th:field="*{customerComment}" rows="4" class="form-control"
-                          aria-label="Service Comment" required></textarea>
-            </div>
-            <div class="text-center">
-                <input type="submit" value="Request" class="btn btn-success">
-            </div>
-        </form>
-        <br>
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Wyszukaj klienta lub rower...">
-        <form action="#" th:action="@{/invoices_purchases}" th:method="POST" th:object="${InvoiceDTO}">
-            <table class="table" id="service-table">
-                <thead class="table-dark">
-                <h4>Bikes sold:</h4>
-                <tr>
-                    <th class="col-0">Id:</th>
-                    <th class="col-0">Bike Serial:</th>
-                    <th class="col-0">Customer's name:</th>
-                    <th class="col-0">Customer's surname:</th>
-                    <th class="col-0">Customer's email:</th>
-                    <th class="col-0">Customer's phone:</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="invoice,stat : ${availableInvoicesDTOs}">
-                    <td th:text="${stat.count}"></td>
-                    <td th:text="${invoice.bike.serial}"></td>
-                    <td th:text="${invoice.customer.name}"></td>
-                    <td th:text="${invoice.customer.surname}"></td>
-                    <td th:text="${invoice.customer.email}"></td>
-                    <td th:text="${invoice.customer.phone}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="pagination-container"></div>
-        </form>
+        </div>
     </div>
-</div>
-</div>
+</main>
 
-<footer th:replace='~{/fragments/footer.html :: template}'>
-</footer>
-<script>
-    $(document).ready(function () {
-        var items = $("#service-table tr");
-        var numItems = items.length;
-        var perPage = 10;
+<div th:replace='~{/fragments/footer.html :: template}'></div>
 
-        items.slice(perPage).hide();
+<style>
+    .scrollarea { overflow-y: auto; }
+    .card { border-radius: 12px; transition: transform 0.3s; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .section-container { background: #fcfcfc; padding: 20px; border-radius: 12px; border: 1px solid #eee; }
+    .history-item { transition: all 0.2s; border-left-width: 4px !important; cursor: pointer; }
+    .history-item:hover { background-color: #f0f7ff; transform: translateX(5px); border-left-color: #0d6efd !important; }
+    .email-text { font-size: 0.85rem; }
+</style>
 
-        $('#pagination-container').twbsPagination({
-            totalPages: Math.ceil(numItems / perPage),
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-                var start = perPage * (page - 1);
-                var end = start + perPage;
-
-                items.hide().slice(start, end).show();
-            }
-        });
-    });
-</script>
-<script>
-
-    $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#service-table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
 </body>
 </html>

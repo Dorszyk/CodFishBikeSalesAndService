@@ -1,37 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
-<body class="bg-light">
-<br>
-<br>
-<div class="centered">
-    <br>
-    <br>
-    <div>
-        <br>
-        <br>
-        <br>
-        <img th:src="@{/images/error.png}" alt="OH NO" height="300px">
-    </div>
-    <br>
-    <div>
-        <b><span th:if="${errorMessage}" th:text="${errorMessage}"></span></b>
-    </div>
-</div>
-<br><br>
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <button onclick="window.history.back()" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i>
-                Go back
-            </button>
+
+<main class="container py-4 mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card card-custom shadow-sm p-4">
+                <div class="mb-3">
+                    <img th:src="@{/images/error.png}" alt="Error Illustration" class="img-fluid" style="max-height: 180px;">
+                </div>
+                <h3 class="text-danger mb-3">Something went wrong!</h3>
+                <div class="alert alert-warning border-0 bg-light py-2 px-3 mb-3 small">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong th:if="${errorMessage}" th:text="${errorMessage}">Error message details</strong>
+                    <span th:unless="${errorMessage}">An unexpected error has occurred. Please try again.</span>
+                </div>
+                <div>
+                    <button onclick="window.history.back()" class="btn btn-primary btn-sm px-4 shadow-sm">
+                        <i class="fas fa-arrow-left me-2"></i>Go back
+                    </button>
+                    <a href="/codfish-bike" class="btn btn-outline-secondary btn-sm px-4 ms-2">
+                        <i class="fas fa-home me-2"></i>Home
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</body>
-<br>
-<br>
-<br>
+</main>
+
 <div th:replace='~{/fragments/footer.html :: template}'></div>
+</body>
 </html>

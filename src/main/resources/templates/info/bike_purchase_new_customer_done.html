@@ -1,43 +1,60 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br>
-<br><br><br>
-<div class="container">
-    <h4>The bike was sold:</h4>
-    <p>
-        Bike serial number: <b><span th:text="${bikeSerial}">BIKE</span></b>
-    </p>
-    <hr>
-    <p>Applies to the customer:
-        <b>
-            <span th:if="${existingCustomerEmail != null}"
-                  th:text="${existingCustomerEmail}">EXISTING_CUSTOMER_EMAIL</span>
-            <span th:if="${existingCustomerEmail == null}" th:text="${customerName + ' ' + customerSurname}">NEW_CUSTOMER_NAME</span>
-        </b><br>
-        Phone: <b><span th:text="${customerPhone}">PHONE</span></b><br>
-        Address: <b>
-            <span th:text="${customerAddressCity}">CITY</span>,
-            <span th:text="${customerAddressPostalCode}">POSTAL CODE</span><br>
-            <span th:text="${customerAddressStreet}">STREET</span>
-            <span th:text="${customerAddressHouseNumber}">HOUSE NUMBER</span>,
-            <span th:text="${customerAddressApartmentNumber}">APARTMENT NUMBER</span>
-        </b><br>
-        Invoice number: <b><span th:text="${invoiceNumber}">INVOICE NUMBER</span></b>
-    </p>
-</div>
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <a th:href="@{/purchase}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+<main class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card card-custom shadow-sm p-5">
+                <div class="mb-4 text-success">
+                    <i class="fas fa-file-invoice-dollar fa-5x"></i>
+                </div>
+                <h2 class="mb-4">Sale Completed!</h2>
+                <p class="text-muted mb-4">New customer registered and bike sold successfully.</p>
+                
+                <div class="alert alert-success bg-light border-0 py-4 mb-4 text-start">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Bike Serial</small>
+                            <strong th:text="${bikeSerial}">BIKE</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Invoice Number</small>
+                            <strong th:text="${invoiceNumber}">INVOICE NUMBER</strong>
+                        </div>
+                        <div class="col-12">
+                            <small class="text-muted d-block">New Customer</small>
+                            <strong th:text="${customerName + ' ' + customerSurname}">NAME</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Phone</small>
+                            <span th:text="${customerPhone}">PHONE</span>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted d-block">Location</small>
+                            <span th:text="${customerAddressStreet} + ' ' + ${customerAddressHouseNumber} + (${customerAddressApartmentNumber} != null and ${customerAddressApartmentNumber} != '' ? '/' + ${customerAddressApartmentNumber} : '')">Street</span>
+                            <span class="d-block" th:text="${customerAddressPostalCode} + ' ' + ${customerAddressCity}">Postal Code, City</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center gap-2 mt-4">
+                    <a th:href="@{/purchase}" class="btn btn-primary px-4 shadow-sm">
+                        <i class="fas fa-plus me-2"></i>New Sale
+                    </a>
+                    <a th:href="@{/invoices_purchases}" class="btn btn-outline-info px-4 shadow-sm">
+                        <i class="fas fa-list me-2"></i>View Invoices
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</body>
-<br><br><br>
+</main>
+
 <div th:replace='~{/fragments/footer.html :: template}'></div>
+</body>
 </html>

@@ -1,25 +1,30 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head>
+</head>
+<body>
 <div th:replace='~{/fragments/head.html :: template}'></div>
 <div th:replace='~{/fragments/header.html :: template}'></div>
 
-<body class="bg-light">
-<br><br><br>
-<br><br><br>
-<div class="centered">
-    <h3><p> Bike updated!</p></h3>
-</div>
-<br>
-<div class="container">
-    <div class="col-12">
-        <div class="button-row">
-            <a th:href="@{/salesman}" class="btn btn-info" role="button"><i class="fas fa-arrow-left"></i> Go back</a>
+<main class="container py-4 mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card card-custom shadow-sm p-4">
+                <div class="mb-3 text-warning">
+                    <i class="fas fa-edit fa-4x"></i>
+                </div>
+                <h3 class="mb-3">Updated!</h3>
+                <p class="text-muted small mb-4">The bike information has been successfully updated in the inventory.</p>
+                <div>
+                    <a th:href="@{/salesman}" class="btn btn-primary btn-sm px-4 shadow-sm">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Portal
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</body>
-<br>
-<br>
+</main>
+
 <div th:replace='~{/fragments/footer.html :: template}'></div>
+</body>
 </html>
