@@ -20,13 +20,13 @@ public class BikeServiceRequestRepository implements BikeServiceRequestDAO {
     @Override
     public List<BikeServiceRequest> findAvailable() {
         return bikeServiceRequestJpaRepository.findAllByCompletedDateTimeIsNull().stream()
-                .map(bikeServiceRequestEntityMapper::mapFromEntityWithBike)
+                .map(bikeServiceRequestEntityMapper::mapFromEntityWithCustomer)
                 .toList();
     }
     @Override
     public Set<BikeServiceRequest> findActiveServiceRequestByBikeSerial(String bikeSerial) {
         return bikeServiceRequestJpaRepository.findActiveServiceRequestByBikeSerial(bikeSerial).stream()
-                .map(bikeServiceRequestEntityMapper::mapFromEntity)
+                .map(bikeServiceRequestEntityMapper::mapFromEntityWithCustomer)
                 .collect(Collectors.toSet());
     }
 }

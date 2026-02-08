@@ -3,8 +3,10 @@ package com.codfish.bikeSalesAndService.infrastructure.database.repository;
 import com.codfish.bikeSalesAndService.business.dao.BikeToServiceDAO;
 import com.codfish.bikeSalesAndService.domain.BikeHistory;
 import com.codfish.bikeSalesAndService.domain.BikeToService;
+import com.codfish.bikeSalesAndService.domain.exception.NotFoundException;
 import com.codfish.bikeSalesAndService.infrastructure.database.entity.BikeToServiceEntity;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.jpa.BikeToServiceJpaRepository;
+import com.codfish.bikeSalesAndService.infrastructure.database.repository.mapper.BikeServiceRequestEntityMapper;
 import com.codfish.bikeSalesAndService.infrastructure.database.repository.mapper.BikeToServiceEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,7 @@ public class BikeToServiceRepository implements BikeToServiceDAO {
 
     private final BikeToServiceJpaRepository bikeToServiceJpaRepository;
     private final BikeToServiceEntityMapper bikeToServiceEntityMapper;
+    private final BikeServiceRequestEntityMapper bikeServiceRequestEntityMapper;
 
     @Override
     public List<BikeToService> findAll() {
@@ -34,7 +37,18 @@ public class BikeToServiceRepository implements BikeToServiceDAO {
 
     @Override
     public BikeToService saveBikeToService(BikeToService bike) {
-        BikeToServiceEntity toSave = bikeToServiceEntityMapper.mapToEntity(bike);
+        Optional<BikeToServiceEntity> existingBike = bikeToServiceJpaRepository.findOptionalBySerial(bike.getSerial());
+
+        BikeToServiceEntity toSave;
+        if (existingBike.isPresent()) {
+            toSave = existingBike.get();
+            toSave.setBrand(bike.getBrand());
+            toSave.setModel(bike.getModel());
+            toSave.setYear(bike.getYear());
+        } else {
+            toSave = bikeToServiceEntityMapper.mapToEntity(bike);
+        }
+
         BikeToServiceEntity saved = bikeToServiceJpaRepository.save(toSave);
         return bikeToServiceEntityMapper.mapFromEntity(saved);
     }
@@ -42,6 +56,9 @@ public class BikeToServiceRepository implements BikeToServiceDAO {
     @Override
     public BikeHistory findBikeHistoryBySerial(String bikeSerial) {
         BikeToServiceEntity entity = bikeToServiceJpaRepository.findBySerial(bikeSerial);
-        return bikeToServiceEntityMapper.mapFromEntity(bikeSerial, entity);
+        if (entity == null) {
+            throw new NotFoundException("Could not find bike history by serial: " + bikeSerial);
+        }
+        return bikeToServiceEntityMapper.mapFromEntity(bikeSerial, entity, bikeServiceRequestEntityMapper);
     }
 }

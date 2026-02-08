@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerEntityMapper {
 
-    @Mapping(target = "address.customer", ignore = true)
     @Mapping(source = "bikeServiceRequests", target = "bikeServiceRequests", qualifiedByName = "mapBikeServiceRequests")
     @Mapping(source = "invoices", target = "invoices", qualifiedByName = "mapInvoices")
     Customer mapFromEntity(CustomerEntity entity);
@@ -54,7 +53,14 @@ public interface CustomerEntityMapper {
     @Mapping(target = "salesman", ignore = true)
     Invoice mapFromEntity(InvoiceEntity entity);
 
-    @Mapping(target = "bikeServiceRequests", ignore = true)
+    @Mapping(source = "bikeServiceRequests", target = "bikeServiceRequests")
+    @Mapping(source = "invoices", target = "invoices")
     CustomerEntity mapToEntity(Customer customer);
+
+    @Mapping(target = "customer", ignore = true)
+    InvoiceEntity mapToEntity(Invoice invoice);
+
+    @Mapping(target = "customer", ignore = true)
+    BikeServiceRequestEntity mapToEntity(BikeServiceRequest bikeServiceRequest);
 
 }

@@ -15,7 +15,7 @@ public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, Int
 
     Optional<CustomerEntity> findByEmail(String email);
 
-    @Query("SELECT c FROM CustomerEntity c WHERE c.invoices IS EMPTY OR c.bikeServiceRequests IS EMPTY")
+    @Query("SELECT c FROM CustomerEntity c")
     List<CustomerEntity> findAvailable();
 }
 

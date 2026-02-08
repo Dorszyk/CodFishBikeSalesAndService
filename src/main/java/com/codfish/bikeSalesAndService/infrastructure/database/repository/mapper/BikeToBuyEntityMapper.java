@@ -9,8 +9,8 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BikeToBuyEntityMapper {
 
-    @Mapping(target = "invoice", ignore = true)
-    BikeToBuy mapFormEntity(BikeToBuyEntity entity);
+    @Mapping(target = "invoices", ignore = true)
+    BikeToBuy mapFromEntity(BikeToBuyEntity entity);
 
     @Mapping(target = "invoice", ignore = true)
     BikeToBuyEntity mapToEntity(BikeToBuy bike);

@@ -22,7 +22,9 @@ public interface BikeServiceRequestJpaRepository extends JpaRepository<BikeServi
     @EntityGraph(
             type = EntityGraph.EntityGraphType.FETCH,
             attributePaths = {
-                    "bike"
+                    "bike",
+                    "customer",
+                    "customer.address"
             }
     )
     Set<BikeServiceRequestEntity> findAllByCompletedDateTimeIsNull();

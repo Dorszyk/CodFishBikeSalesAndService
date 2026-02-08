@@ -52,4 +52,8 @@ public class InvoiceEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salesman_id")
     private SalesmanEntity salesman;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bike_service_request_id")
+    private BikeServiceRequestEntity bikeServiceRequest;
 }

@@ -21,14 +21,14 @@ public class BikeToBuyRepository implements BikeToBuyDAO {
     @Override
     public List<BikeToBuy> findAvailable() {
         return bikeToBuyJpaRepository.findAvailableBike().stream()
-                .map(bikeToBuyEntityMapper::mapFormEntity)
+                .map(bikeToBuyEntityMapper::mapFromEntity)
                 .toList();
     }
 
     @Override
     public Optional<BikeToBuy> findBikeToBuyBySerial(String bikeSerial) {
         return bikeToBuyJpaRepository.findBySerial(bikeSerial)
-                .map(bikeToBuyEntityMapper::mapFormEntity);
+                .map(bikeToBuyEntityMapper::mapFromEntity);
     }
 
     @Override

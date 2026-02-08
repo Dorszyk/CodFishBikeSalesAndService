@@ -4,18 +4,24 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
@@ -27,57 +33,46 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            HttpSecurity http,
-            PasswordEncoder passwordEncoder,
-            UserDetailsService userDetailsService
-    )
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/images/**", "/css/**", "/js/**", "/favicon.ico");
     }
 
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        configureHttpRequests(http);
-        configureExceptionHandling(http);
-        configureLogin(http);
-        configureLogout(http);
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(openAccessUrls()).permitAll()
+                        .requestMatchers(personRepairingUrls()).hasAnyAuthority("PERSON_REPAIRING")
+                        .requestMatchers(salesmanUrls()).hasAnyAuthority("SALESMAN")
+                        .requestMatchers(generalUrls()).hasAnyAuthority("PERSON_REPAIRING", "SALESMAN")
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(accessDeniedHandler())
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                );
 
         return http.build();
     }
 
-    private void configureHttpRequests(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers(openAccessUrls()).permitAll()
-                .requestMatchers(personRepairingUrls()).hasAnyAuthority("PERSON_REPAIRING")
-                .requestMatchers(salesmanUrls()).hasAnyAuthority("SALESMAN")
-                .requestMatchers(generalUrls()).hasAnyAuthority("PERSON_REPAIRING", "SALESMAN");
-    }
-
-    private void configureExceptionHandling(HttpSecurity http) throws Exception {
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-    }
-
-    private void configureLogin(HttpSecurity http) throws Exception {
-        http.formLogin().permitAll();
-    }
-
-    private void configureLogout(HttpSecurity http) throws Exception {
-        http.logout()
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
-    }
-
     private String[] openAccessUrls() {
-        return new String[]{"/login", "/error", "/images/**"};
+        return new String[]{"/login", "/error", "/images/**", "/css/**", "/js/**", "/favicon.ico"};
     }
 
     private String[] personRepairingUrls() {
@@ -93,22 +88,18 @@ public class SecurityConfiguration {
     }
 
     private String[] generalUrls() {
-        return new String[]{"/", "/bike/**", "/images/logo/logo2.png", "/images/error.png", "/service/**", "/customers_purchases/**",
-                "/invoices_purchases/**", "/add_customer/**", "/update_customer/**", "/delete_customer/**",  "/user/info","/error",};
+        return new String[]{"/", "/bike/**", "/images/logo/logo2.jpg", "/images/error.png", "/service/**", "/customers_purchases/**",
+                "/invoices_purchases/**", "/invoices/download/**", "/add_customer/**", "/update_customer/**", "/delete_customer/**", "/user/info", "/error"};
     }
 
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
-        configureHttpSecurity(http);
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                );
         return http.build();
-    }
-
-    private void configureHttpSecurity(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .anyRequest()
-                .permitAll();
     }
 }

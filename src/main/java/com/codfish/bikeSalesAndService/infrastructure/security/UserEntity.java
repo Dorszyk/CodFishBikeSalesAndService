@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Data
@@ -34,6 +35,9 @@ public class UserEntity {
 
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "last_login")
+    private OffsetDateTime lastLogin;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(

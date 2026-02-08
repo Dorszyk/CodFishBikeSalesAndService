@@ -31,4 +31,22 @@ public class InvoiceRepository implements InvoiceDAO {
                 .map(invoiceEntityMapper::mapToDto)
                 .collect(Collectors.toList());
     }
+
+    public List<InvoiceDTO> findAllBikeSales() {
+        List<InvoiceEntity> invoiceEntities = invoiceJpaRepository.findAllByBikeIsNotNull();
+        return invoiceEntities.stream()
+                .map(invoiceEntityMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    public InvoiceDTO findByInvoiceNumber(String invoiceNumber) {
+        return invoiceJpaRepository.findByInvoiceNumber(invoiceNumber)
+                .map(invoiceEntityMapper::mapToDto)
+                .orElseThrow(() -> new RuntimeException("Invoice not found: " + invoiceNumber));
+    }
+
+    public java.util.Optional<InvoiceDTO> findByBikeServiceRequestNumber(String requestNumber) {
+        return invoiceJpaRepository.findByBikeServiceRequestNumber(requestNumber)
+                .map(invoiceEntityMapper::mapToDto);
+    }
 }

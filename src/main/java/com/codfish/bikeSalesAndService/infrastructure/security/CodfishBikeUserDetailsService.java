@@ -25,6 +25,9 @@ public class CodfishBikeUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserEntity user = userJpaRepository.findByUserName(userName);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found: " + userName);
+        }
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }

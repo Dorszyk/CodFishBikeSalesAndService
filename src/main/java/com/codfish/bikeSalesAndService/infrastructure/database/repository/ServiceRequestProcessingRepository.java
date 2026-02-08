@@ -37,10 +37,12 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
     @Transactional
     public void process(
             BikeServiceRequest serviceRequest,
-            ServicePerson servicePerson
+            List<ServicePerson> servicePeople
     ) {
-        ServicePersonEntity servicePersonEntity = servicePersonEntityMapper.mapToEntity(servicePerson);
-        servicePersonJpaRepository.saveAndFlush(servicePersonEntity);
+        for (ServicePerson servicePerson : servicePeople) {
+            ServicePersonEntity servicePersonEntity = servicePersonEntityMapper.mapToEntity(servicePerson);
+            servicePersonJpaRepository.saveAndFlush(servicePersonEntity);
+        }
         if(Objects.nonNull(serviceRequest.getCompletedDateTime())){
             BikeServiceRequestEntity bikeServiceRequestEntity = bikeServiceRequestJpaRepository
                     .findById(serviceRequest.getBikeServiceRequestId())
@@ -54,7 +56,7 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
     @Transactional
     public void process(
             BikeServiceRequest serviceRequest,
-            ServicePerson servicePerson,
+            List<ServicePerson> servicePeople,
             List<ServicePart> serviceParts
     ) {
 
@@ -65,6 +67,6 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
             servicePartEntity.setPart(partEntity);
             servicePartJpaRepository.save(servicePartEntity);
         }
-        process(serviceRequest, servicePerson);
+        process(serviceRequest, servicePeople);
     }
 }
